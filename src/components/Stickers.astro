@@ -101,18 +101,25 @@ const stickers: Sticker[] = [
     position: absolute;
     inset: 0;
     pointer-events: none;
-    /* z-index 5: sobre el texto del hero (z-index 3).
-       La sección 2 tiene z-index 10 y los tapa al entrar. */
     z-index: 5;
+    overflow: visible;
+
     /*
-      FIX: overflow era 'visible', lo que permitía que los stickers
-      se salieran del hero y solaparan secciones inferiores en móvil.
-      El hero padre DEBE tener position:relative + overflow:hidden.
-      Esta capa hereda ese contenedor; si el padre no lo tiene, añadir
-      overflow:hidden al hero en HeroSection.astro:
-        .hero { position: relative; overflow: hidden; }
+      FIX SCROLL MÓVIL:
+      Ocultamos los stickers en móvil por dos razones:
+      1. A < 768px son demasiado pequeños para apreciarse.
+      2. Al desbordar el hero (overflow:visible en un sticky),
+         los SVGs flotaban sobre las secciones durante el scroll
+         causando el solapamiento visual incorrecto.
+      Se muestran desde 768px donde el hero tiene espacio suficiente.
     */
-    overflow: hidden;
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .stickers-layer {
+      display: block;
+    }
   }
 
   .sticker {

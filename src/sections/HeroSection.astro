@@ -56,9 +56,24 @@ import Stickers from '../components/Stickers.astro';
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Sin overflow:hidden → los stickers en los bordes no se recortan */
     overflow: visible;
-    z-index: 1;
+
+    /*
+      FIX SCROLL MÓVIL — Bug 1:
+      Quitamos z-index explícito del hero.
+
+      Con z-index: 1 en un position:sticky, iOS Safari creaba
+      un stacking context propio que hacía que las secciones
+      parpadearan "debajo" del hero antes de colocarse encima.
+
+      Sin z-index explícito (valor: auto), el hero es la capa base
+      y las secciones con z-index: 11+ siempre se pintan encima
+      de forma fiable en todos los navegadores.
+
+      NOTA: NO añadir overflow:hidden aquí. En iOS Safari,
+      sticky + overflow:hidden rompe el comportamiento sticky
+      (bug de WebKit conocido, sin fix desde 2016).
+    */
   }
 
   /* Ruido de textura sutil */
@@ -66,7 +81,7 @@ import Stickers from '../components/Stickers.astro';
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height%3D'100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
     opacity: 0.5;
     pointer-events: none;
     z-index: 0;
@@ -99,7 +114,6 @@ import Stickers from '../components/Stickers.astro';
     display: flex;
     flex-direction: column;
     gap: var(--space-lg);
-    /* Desplazamiento editorial: contenido ligeramente a la izquierda */
     max-width: 90vw;
   }
 
@@ -129,7 +143,6 @@ import Stickers from '../components/Stickers.astro';
     line-height: 0.95;
     letter-spacing: -0.02em;
     color: var(--color-text-hero);
-    /* Animación de entrada escalonada */
     opacity: 0;
     transform: translateY(30px);
     animation: lineIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -142,7 +155,6 @@ import Stickers from '../components/Stickers.astro';
   .hero__line:nth-child(5) { animation-delay: 0.42s; }
 
   .hero__line--rotating {
-    /* Espacio extra para la palabra rotativa */
     min-height: 1.1em;
     overflow: visible;
   }
@@ -240,7 +252,6 @@ import Stickers from '../components/Stickers.astro';
       opacity: 1;
       transform: none;
     }
-
     .hero__scroll-dot {
       animation: none;
     }
@@ -251,7 +262,6 @@ import Stickers from '../components/Stickers.astro';
     .hero__inner {
       padding: var(--space-xl) var(--space-xl);
     }
-
     .hero__content {
       max-width: 80vw;
     }

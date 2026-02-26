@@ -55,6 +55,19 @@
     border-radius: var(--radius-card) var(--radius-card) 0 0;
     box-shadow: var(--shadow-card);
     overflow: hidden;
+
+    /*
+      FIX SCROLL MÓVIL — Bug 2:
+      will-change: transform fuerza al navegador a reservar una
+      compositing layer propia para esta sección en GPU.
+      Sin esto, en móvil el browser pintaba la sección en el mismo
+      layer que el hero durante el scroll, causando el parpadeo
+      "aparece debajo → luego encima".
+      Con su propia layer, la sección siempre se pinta encima del
+      hero de forma consistente frame a frame.
+    */
+    will-change: transform;
+
     /*
       CONTROL DEL LAYERED SCROLL
       El hero es sticky. Este margin-top determina cuándo
@@ -74,7 +87,6 @@
     display: grid;
     gap: 3rem;
   }
-
 
   /* ── Titular ── */
   .manifiesto__title {
