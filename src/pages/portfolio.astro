@@ -5,7 +5,10 @@
 import { featuredProjects } from '../data/projects';
 import BugSquasher from '../components/BugSquasher.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PortfolioCTA from '../sections/PortfolioCTA.astro';
+
 ---
+
 <BaseLayout>
 <section class="portfolio" id="portfolio">
   <div class="portfolio__inner">
@@ -69,7 +72,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
 
     <BugSquasher />
-
+    <PortfolioCTA />
   </div>
 </section>
 </BaseLayout>

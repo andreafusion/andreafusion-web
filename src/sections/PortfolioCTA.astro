@@ -1,0 +1,248 @@
+---
+// src/sections/PortfolioCTA.astro
+// Portfolio — CTA final: invitación a contactar tras ver los proyectos.
+---
+
+<section class="pcta" aria-labelledby="pcta-heading">
+  <div class="pcta__inner">
+
+    <div class="pcta__noise" aria-hidden="true"></div>
+
+    <div class="pcta__content">
+      <p class="section-num pcta__num" aria-hidden="true">→</p>
+
+      <h2 class="pcta__heading" id="pcta-heading">
+        ¿Tienes un proyecto<br>
+        <em>en mente?</em>
+      </h2>
+
+      <p class="pcta__body">
+        Cuéntame qué necesitas. Trabajo con marcas y negocios que quieren
+        una web que no solo se vea bien, sino que funcione de verdad.
+      </p>
+
+      <div class="pcta__actions">
+        <a href="/contacto" class="pcta__btn pcta__btn--primary">
+          Hablemos →
+        </a>
+        <a href="mailto:hola@andreafusion.com" class="pcta__btn pcta__btn--ghost">
+          hola@andreafusion.com
+        </a>
+      </div>
+    </div>
+
+    <div class="pcta__deco" aria-hidden="true">
+      <span class="pcta__deco-word">disponible</span>
+      <span class="pcta__deco-dot"></span>
+      <span class="pcta__deco-word">2025</span>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .pcta {
+    position: relative;
+    z-index: 16;
+    background: var(--color-text-dark, #1a0a2e);
+    overflow: hidden;
+  }
+
+  /* Ruido de fondo sutil */
+  .pcta__noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+    opacity: 0.04;
+    pointer-events: none;
+  }
+
+  /* Borde lime superior */
+  .pcta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--color-accent-lime, #c8f135);
+  }
+
+  .pcta__inner {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 1.5rem 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  /* ── Número de sección ── */
+  .pcta__num {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-accent-lime, #c8f135);
+    letter-spacing: 0.12em;
+    margin: 0;
+  }
+
+  /* ── Contenido central ── */
+  .pcta__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    max-width: 640px;
+  }
+
+  .pcta__heading {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2.4rem, 6vw, 5rem);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin: 0;
+  }
+
+  .pcta__heading em {
+    font-style: italic;
+    color: var(--color-accent-lime, #c8f135);
+  }
+
+  .pcta__body {
+    font-family: var(--font-body);
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    color: rgba(255, 255, 255, 0.58);
+    line-height: 1.7;
+    max-width: 44ch;
+    margin: 0;
+  }
+
+  /* ── Botones ── */
+  .pcta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.25rem;
+  }
+
+  .pcta__btn {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    border-radius: 9999px;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .pcta__btn:hover {
+    opacity: 0.82;
+    transform: translateY(-1px);
+  }
+
+  .pcta__btn--primary {
+    background: var(--color-accent-lime, #c8f135);
+    color: var(--color-text-dark, #1a0a2e);
+    padding: 0.85em 2em;
+  }
+
+  .pcta__btn--ghost {
+    color: rgba(255, 255, 255, 0.55);
+    padding: 0.85em 0;
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+  }
+
+  .pcta__btn--ghost:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: none;
+    opacity: 1;
+  }
+
+  /* ── Deco inferior ── */
+  .pcta__deco {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .pcta__deco-word {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.25);
+  }
+
+  .pcta__deco-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent-lime, #c8f135);
+    opacity: 0.7;
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.35); }
+  }
+
+  /* ── Responsive ── */
+  @media (min-width: 768px) {
+    .pcta__inner {
+      padding: 8rem 4rem 7rem;
+      gap: 3.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .pcta__inner {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .pcta__content {
+      flex: 1;
+    }
+
+    .pcta__deco {
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.5rem;
+      padding-top: 0;
+      padding-left: 3rem;
+      border-top: none;
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      min-width: 100px;
+      align-self: flex-end;
+      padding-bottom: 0.25rem;
+    }
+
+    .pcta__deco-word {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      letter-spacing: 0.25em;
+    }
+
+    .pcta__deco-dot {
+      writing-mode: initial;
+      transform: none;
+      align-self: center;
+    }
+  }
+</style>
