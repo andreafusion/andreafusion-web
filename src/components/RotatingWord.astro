@@ -1,0 +1,92 @@
+---
+// src/components/RotatingWord.astro
+// Un solo nodo de texto. JS controla el swap con fade + slide.
+// Usa las variables de diseño del proyecto: --font-script, --color-accent-lime.
+---
+
+<span class="rw-wrapper" aria-live="polite" aria-atomic="true">
+  <span class="rw-text" id="rotating-word">se quede</span>
+</span>
+
+<script>
+  const WORDS = [
+    'se quede',
+    'te recuerde',
+    'entienda tu valor',
+    'confíe',
+    'te escriba',
+    'reserve',
+    'compre sin dudar',
+  ];
+
+  const VISIBLE_MS  = 2000;
+  const FADE_MS     = 240;
+
+  const el = document.getElementById('rotating-word');
+  if (!el) throw new Error('rotating-word not found');
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Sin animación: primera palabra estática
+  } else {
+    let index = 0;
+
+    // Estado inicial: visible
+    el.style.opacity    = '1';
+    el.style.transform  = 'translateY(0)';
+    el.style.transition = 'none';
+
+    const rotate = () => {
+      // Fase 1: fade-out hacia arriba
+      el.style.transition = `opacity ${FADE_MS}ms ease, transform ${FADE_MS}ms ease`;
+      el.style.opacity    = '0';
+      el.style.transform  = 'translateY(-40%)';
+
+      setTimeout(() => {
+        // Fase 2: cambiar texto, reposicionar abajo sin transición
+        index = (index + 1) % WORDS.length;
+        el.textContent = WORDS[index] ?? "";
+        el.style.transition = 'none';
+        el.style.opacity    = '0';
+        el.style.transform  = 'translateY(40%)';
+
+        // Forzar reflow para que el navegador aplique el estado "abajo"
+        el.getBoundingClientRect();
+
+        // Fase 3: fade-in desde abajo
+        el.style.transition = `opacity ${FADE_MS}ms ease, transform ${FADE_MS}ms ease`;
+        el.style.opacity    = '1';
+        el.style.transform  = 'translateY(0)';
+      }, FADE_MS);
+    };
+
+    setInterval(rotate, VISIBLE_MS + FADE_MS);
+  }
+</script>
+
+<style>
+  .rw-wrapper {
+    display: inline-block;
+    /* Altura fija = evita que el hero salte al cambiar la palabra */
+    height: 1.1em;
+    min-width: 14ch;
+    vertical-align: bottom;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .rw-text {
+    display: inline-block;
+    /* Hereda el tamaño del h1 del hero donde esté insertado */
+    font-size: inherit;
+    line-height: inherit;
+    /* Variables del diseño global */
+    font-family: var(--font-script);
+    font-style: italic;
+    font-weight: 600;
+    color: var(--color-accent-lime);
+    white-space: nowrap;
+    /* JS controla opacity/transform desde el inicio */
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>

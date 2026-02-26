@@ -1,0 +1,253 @@
+---
+// src/sections/TestimoniosSection.astro
+// Fondo uva oscuro. Carousel CSS puro con scroll snap. Sin JS de librerías.
+
+interface Testimonio {
+  cita: string;
+  nombre: string;
+  proyecto?: string;
+}
+
+const testimonios: Testimonio[] = [
+  {
+    cita: 'Sentí que por fin mi web hablaba como yo.',
+    nombre: 'Cliente',
+    proyecto: 'Marca personal',
+  },
+  {
+    cita: 'Ahora todo tiene coherencia y se entiende muchísimo mejor.',
+    nombre: 'Cliente',
+    proyecto: 'Proyecto creativo',
+  },
+  {
+    cita: 'El proceso fue claro y el resultado superó lo que imaginaba.',
+    nombre: 'Cliente',
+    proyecto: 'Landing estratégica',
+  },
+];
+---
+
+<section class="testimonios" id="testimonios">
+  <div class="testimonios__inner">
+
+    <div class="testimonios__header">
+      <p class="section-num-light" aria-hidden="true">06</p>
+      <h2 class="testimonios__title">
+        Lo que dicen después de<br>
+        <em>ver su web terminada.</em>
+      </h2>
+    </div>
+
+    <!-- Carousel con scroll snap — sin JS -->
+    <div class="testimonios__track-wrap">
+      <ul class="testimonios__track" role="list" aria-label="Testimonios de clientes">
+        {testimonios.map((t, i) => (
+          <li class="testimonio-card">
+            <!-- Número decorativo -->
+            <span class="testimonio-card__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <!-- Comillas decorativas -->
+            <span class="testimonio-card__open" aria-hidden="true">"</span>
+            <blockquote class="testimonio-card__cita">
+              <p>{t.cita}</p>
+            </blockquote>
+            <footer class="testimonio-card__footer">
+              <cite class="testimonio-card__nombre">— {t.nombre}</cite>
+              {t.proyecto && (
+                <span class="testimonio-card__proyecto">{t.proyecto}</span>
+              )}
+            </footer>
+          </li>
+        ))}
+      </ul>
+
+      <!-- Indicadores de posición -->
+      <div class="testimonios__dots" aria-hidden="true">
+        {testimonios.map((_) => (
+          <span class="testimonios__dot"></span>
+        ))}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Decoración: gran comilla fantasma -->
+  <span class="testimonios__ghost" aria-hidden="true">"</span>
+</section>
+
+<style>
+  .testimonios {
+    position: relative;
+    z-index: 15;
+    background: var(--color-bg-hero);
+    overflow: hidden;
+  }
+
+  .testimonios__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .section-num-light {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    color: var(--color-accent-pink);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  .testimonios__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--color-text-hero);
+  }
+
+  .testimonios__title em {
+    font-style: italic;
+    color: var(--color-accent-lime);
+  }
+
+  /* ── Track (carousel) ── */
+  .testimonios__track-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .testimonios__track {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 0.5rem;
+  }
+
+  .testimonios__track::-webkit-scrollbar { display: none; }
+
+  /* ── Tarjeta ── */
+  .testimonio-card {
+    scroll-snap-align: start;
+    flex: 0 0 min(85vw, 400px);
+    background: rgba(245, 238, 230, 0.05);
+    border: 1px solid rgba(245, 238, 230, 0.1);
+    border-radius: 1.5rem;
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: relative;
+    transition: background 0.25s ease, border-color 0.25s ease;
+  }
+
+  .testimonio-card:hover {
+    background: rgba(200, 241, 53, 0.06);
+    border-color: rgba(200, 241, 53, 0.2);
+  }
+
+  .testimonio-card__num {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--color-accent-pink);
+    opacity: 0.7;
+  }
+
+  .testimonio-card__open {
+    font-family: var(--font-display);
+    font-size: 4rem;
+    line-height: 0.8;
+    color: var(--color-accent-lime);
+    opacity: 0.4;
+    display: block;
+    margin-bottom: -0.5rem;
+  }
+
+  .testimonio-card__cita p {
+    font-family: var(--font-script);
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--color-text-hero);
+  }
+
+  .testimonio-card__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: auto;
+  }
+
+  .testimonio-card__nombre {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-style: normal;
+    color: var(--color-text-hero);
+    opacity: 0.7;
+  }
+
+  .testimonio-card__proyecto {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent-pink);
+  }
+
+  /* ── Dots indicadores ── */
+  .testimonios__dots {
+    display: flex;
+    gap: 0.4rem;
+    justify-content: center;
+  }
+
+  .testimonios__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(245, 238, 230, 0.25);
+  }
+
+  .testimonios__dot:first-child {
+    background: var(--color-accent-lime);
+    width: 18px;
+    border-radius: 3px;
+  }
+
+  /* ── Ghost decorativo ── */
+  .testimonios__ghost {
+    position: absolute;
+    top: -2rem;
+    right: -1rem;
+    font-family: var(--font-display);
+    font-size: clamp(12rem, 35vw, 28rem);
+    font-weight: 900;
+    color: rgba(245, 238, 230, 0.025);
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+    z-index: 1;
+  }
+
+  /* ── Desktop ── */
+  @media (min-width: 768px) {
+    .testimonios__inner { padding: 7rem 4rem; }
+    .testimonio-card { flex: 0 0 min(40vw, 380px); }
+  }
+</style>

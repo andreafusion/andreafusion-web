@@ -1,0 +1,603 @@
+---
+// src/pages/sobre-mi.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Sobre mí — AndreaFusion"
+  description="Soy Andrea, diseñadora y desarrolladora web. Creo webs ligeras, claras y con intención para marcas personales y proyectos creativos."
+>
+  <main class="sobre-page">
+
+    <!-- ══════════════════════════════════════
+         HERO
+    ══════════════════════════════════════ -->
+    <header class="sobre-hero">
+      <div class="sobre-hero__inner">
+
+        <p class="section-num">Sobre mí</p>
+
+        <div class="sobre-hero__layout">
+
+          <!-- Titular + subtexto -->
+          <div class="sobre-hero__text">
+            <h1 class="sobre-hero__title">
+              Creo webs que se sienten
+              <em>tan bien como se ven.</em>
+            </h1>
+            <p class="sobre-hero__sub">
+              Soy Andrea, diseñadora y desarrolladora web enfocada en
+              crear páginas ligeras, claras y con intención.<br>
+              Trabajo especialmente con marcas personales y proyectos
+              creativos que quieren algo diferente a lo de siempre.
+            </p>
+            <a href="/contacto" class="sobre-hero__cta">
+              Trabajemos juntas
+            </a>
+          </div>
+
+          <!-- Foto / placeholder -->
+          <div class="sobre-hero__photo-wrap" aria-hidden="true">
+            <div class="sobre-hero__photo">
+              <!--
+                SUSTITUIR por:
+                <img src="/img/andrea.webp" alt="Andrea, diseñadora y desarrolladora web" />
+              -->
+              <div class="sobre-hero__photo-placeholder">
+                <span>AF</span>
+              </div>
+            </div>
+            <!-- Sticker decorativo flotante -->
+            <div class="sobre-hero__photo-badge">
+              <span>Diseño</span>
+              <span class="badge-sep" aria-hidden="true">+</span>
+              <span>Código</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Decoración de fondo -->
+      <div class="sobre-hero__deco" aria-hidden="true"></div>
+    </header>
+
+    <!-- ══════════════════════════════════════
+         BLOQUE EDITORIAL — MI HISTORIA
+    ══════════════════════════════════════ -->
+    <section class="sobre-editorial" aria-labelledby="sobre-historia">
+      <div class="sobre-editorial__inner">
+
+        <div class="sobre-editorial__col-left">
+          <h2 class="sobre-editorial__title" id="sobre-historia">
+            Mi forma de diseñar<br>
+            <em>empieza por escuchar.</em>
+          </h2>
+        </div>
+
+        <div class="sobre-editorial__col-right">
+          <p>
+            Siempre me ha interesado entender qué hay detrás de una marca
+            antes de empezar a diseñar. No creo en webs llenas de ruido o
+            efectos sin sentido. Prefiero crear experiencias que respiren,
+            que guíen y que hagan que quien entra entienda quién eres
+            sin esfuerzo.
+          </p>
+          <p>
+            Mi trabajo mezcla diseño editorial, desarrollo web y sensibilidad
+            estética. No separo lo visual de lo técnico, porque para mí una
+            buena web funciona desde dentro hacia fuera.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         FILOSOFÍA — fondo uva
+    ══════════════════════════════════════ -->
+    <section class="sobre-filosofia" aria-labelledby="sobre-filo">
+      <div class="sobre-filosofia__inner">
+
+        <p class="section-num-light">Filosofía</p>
+
+        <h2 class="sobre-filosofia__title" id="sobre-filo">
+          Diseño con intención,<br>
+          <em>desarrollo con calma.</em>
+        </h2>
+
+        <div class="sobre-filosofia__body">
+          <p>
+            Cada proyecto es diferente, pero todos comparten algo: busco
+            claridad antes que tendencia, estructura antes que exceso y
+            personalidad antes que plantillas genéricas.
+          </p>
+          <p>
+            Trabajo mucho desde el detalle. Desde cómo entra una sección al
+            hacer scroll hasta cómo se siente el ritmo de la página en móvil.
+            Porque hoy la primera impresión casi siempre empieza en una
+            pantalla pequeña.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Tipografía fantasma de fondo -->
+      <p class="sobre-filosofia__ghost" aria-hidden="true">WEB</p>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         QUÉ ME DIFERENCIA — bullets
+    ══════════════════════════════════════ -->
+    <section class="sobre-diffs" aria-labelledby="sobre-diferencia">
+      <div class="sobre-diffs__inner">
+
+        <p class="section-num">Cómo trabajo</p>
+
+        <h2 class="sobre-diffs__title" id="sobre-diferencia">
+          Por qué <em>encajamos</em> o no encajamos.
+        </h2>
+
+        <ul class="sobre-diffs__list" role="list">
+          {[
+            'Diseño y desarrollo yo misma cada web, sin delegar el código.',
+            'Pienso primero en la experiencia móvil.',
+            'Busco equilibrio entre estética y funcionalidad real.',
+            'Prefiero webs ligeras que duren años antes que modas pasajeras.',
+          ].map((item) => (
+            <li class="sobre-diffs__item">
+              <span class="sobre-diffs__dash" aria-hidden="true">—</span>
+              <p>{item}</p>
+            </li>
+          ))}
+        </ul>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         CIERRE — CTA
+    ══════════════════════════════════════ -->
+    <section class="sobre-cierre">
+      <div class="sobre-cierre__inner">
+        <blockquote class="sobre-cierre__quote">
+          Si buscas una web que represente quién eres de verdad y que
+          funcione sin complicarte la vida, probablemente encajemos bien.
+        </blockquote>
+        <a href="/contacto" class="sobre-cierre__btn">
+          Trabajemos juntas
+        </a>
+      </div>
+    </section>
+
+  </main>
+</BaseLayout>
+
+<style>
+  /* ── Página base ── */
+  .sobre-page {
+    padding-top: 80px; /* espacio para el nav fijo */
+  }
+
+  /* ══════════════════════════════════
+     HERO
+  ══════════════════════════════════ */
+  .sobre-hero {
+    position: relative;
+    background: var(--color-bg-hero);
+    overflow: hidden;
+    padding: 4rem 1.5rem 5rem;
+  }
+
+  .sobre-hero__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  /* Layout: texto + foto */
+  .sobre-hero__layout {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  /* Texto */
+  .sobre-hero__text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 60ch;
+  }
+
+  .sobre-hero__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2.4rem, 7vw, 5.5rem);
+    line-height: 1.0;
+    letter-spacing: -0.025em;
+    color: var(--color-text-hero);
+  }
+
+  .sobre-hero__title em {
+    display: block;
+    font-style: italic;
+    color: var(--color-accent-lime);
+  }
+
+  .sobre-hero__sub {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2.2vw, 1.1rem);
+    line-height: 1.75;
+    color: rgba(245, 238, 230, 0.72);
+    max-width: 50ch;
+  }
+
+  .sobre-hero__cta {
+    display: inline-flex;
+    align-self: flex-start;
+    padding: 0.85em 2.2em;
+    background: var(--color-accent-lime);
+    color: var(--color-text-dark);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: var(--radius-btn);
+    box-shadow: var(--shadow-btn);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .sobre-hero__cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(200, 241, 53, 0.45);
+  }
+
+  /* Foto */
+  .sobre-hero__photo-wrap {
+    position: relative;
+    align-self: flex-start;
+  }
+
+  .sobre-hero__photo {
+    width: clamp(200px, 55vw, 340px);
+    aspect-ratio: 3 / 4;
+    border-radius: 2rem;
+    overflow: hidden;
+    background: var(--color-bg-light);
+  }
+
+  .sobre-hero__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+  }
+
+  /* Placeholder cuando no hay foto */
+  .sobre-hero__photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+      135deg,
+      var(--color-bg-light) 0%,
+      rgba(200, 241, 53, 0.15) 100%
+    );
+  }
+
+  .sobre-hero__photo-placeholder span {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--color-text-mid);
+    opacity: 0.4;
+    letter-spacing: -0.05em;
+  }
+
+  /* Badge flotante sobre la foto */
+  .sobre-hero__photo-badge {
+    position: absolute;
+    bottom: -1rem;
+    right: -1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    background: var(--color-accent-lime);
+    color: var(--color-text-dark);
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 0.5em 1em;
+    border-radius: 9999px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    white-space: nowrap;
+  }
+
+  .badge-sep { opacity: 0.6; }
+
+  /* Decoración radial de fondo */
+  .sobre-hero__deco {
+    position: absolute;
+    top: -8rem;
+    right: -8rem;
+    width: clamp(300px, 60vw, 550px);
+    height: clamp(300px, 60vw, 550px);
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(245, 184, 208, 0.1) 0%,
+      rgba(200, 241, 53, 0.06) 50%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Desktop: layout en 2 columnas */
+  @media (min-width: 768px) {
+    .sobre-hero { padding: 5rem 4rem 7rem; }
+    .sobre-hero__layout {
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 4rem;
+    }
+    .sobre-hero__text { max-width: none; flex: 1; }
+    .sobre-hero__photo-wrap { flex-shrink: 0; }
+    .sobre-hero__photo { width: clamp(260px, 30vw, 380px); }
+  }
+
+  /* ══════════════════════════════════
+     EDITORIAL
+  ══════════════════════════════════ */
+  .sobre-editorial {
+    background: var(--color-bg-light);
+    border-radius: var(--radius-card) var(--radius-card) 0 0;
+    box-shadow: var(--shadow-card);
+  }
+
+  .sobre-editorial__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .sobre-editorial__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2rem, 5.5vw, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--color-text-dark);
+  }
+
+  .sobre-editorial__title em {
+    font-style: italic;
+    color: var(--color-text-mid);
+  }
+
+  .sobre-editorial__col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 58ch;
+  }
+
+  .sobre-editorial__col-right p {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2.2vw, 1.12rem);
+    line-height: 1.8;
+    color: var(--color-text-mid);
+  }
+
+  @media (min-width: 768px) {
+    .sobre-editorial__inner {
+      padding: 7rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 5rem;
+      align-items: start;
+    }
+  }
+
+  /* ══════════════════════════════════
+     FILOSOFÍA
+  ══════════════════════════════════ */
+  .sobre-filosofia {
+    position: relative;
+    background: var(--color-bg-hero);
+    overflow: hidden;
+  }
+
+  .sobre-filosofia__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .sobre-filosofia__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--color-text-hero);
+    max-width: 20ch;
+  }
+
+  .sobre-filosofia__title em {
+    font-style: italic;
+    color: var(--color-accent-lime);
+  }
+
+  .sobre-filosofia__body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 56ch;
+  }
+
+  .sobre-filosofia__body p {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2.2vw, 1.1rem);
+    line-height: 1.8;
+    color: rgba(245, 238, 230, 0.72);
+  }
+
+  .sobre-filosofia__ghost {
+    position: absolute;
+    bottom: -2rem;
+    right: -1rem;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(8rem, 28vw, 22rem);
+    line-height: 0.85;
+    color: rgba(245, 238, 230, 0.03);
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.05em;
+    z-index: 1;
+  }
+
+  @media (min-width: 768px) {
+    .sobre-filosofia__inner { padding: 7rem 4rem; }
+  }
+
+  /* ══════════════════════════════════
+     DIFERENCIADORES
+  ══════════════════════════════════ */
+  .sobre-diffs {
+    background: #fff;
+  }
+
+  .sobre-diffs__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .sobre-diffs__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--color-text-dark);
+    max-width: 20ch;
+  }
+
+  .sobre-diffs__title em {
+    font-style: italic;
+    color: var(--color-text-mid);
+  }
+
+  .sobre-diffs__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sobre-diffs__item {
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(90, 58, 122, 0.1);
+    transition: padding-left 0.25s ease;
+  }
+
+  .sobre-diffs__item:first-child {
+    border-top: 1px solid rgba(90, 58, 122, 0.1);
+  }
+
+  .sobre-diffs__item:hover {
+    padding-left: 0.5rem;
+  }
+
+  .sobre-diffs__dash {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--color-accent-lime);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .sobre-diffs__item p {
+    font-family: var(--font-body);
+    font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+    line-height: 1.45;
+    color: var(--color-text-dark);
+  }
+
+  @media (min-width: 768px) {
+    .sobre-diffs__inner { padding: 7rem 4rem; }
+    .sobre-diffs__list { max-width: 70ch; }
+  }
+
+  /* ══════════════════════════════════
+     CIERRE
+  ══════════════════════════════════ */
+  .sobre-cierre {
+    background: var(--color-bg-light);
+  }
+
+  .sobre-cierre__inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 6rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2.5rem;
+  }
+
+  .sobre-cierre__quote {
+    font-family: var(--font-script);
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--color-text-dark);
+    max-width: 38ch;
+  }
+
+  .sobre-cierre__btn {
+    display: inline-flex;
+    padding: 1em 2.6em;
+    background: var(--color-bg-hero);
+    color: var(--color-accent-lime);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: var(--radius-btn);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .sobre-cierre__btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(61, 26, 92, 0.25);
+  }
+
+  @media (min-width: 768px) {
+    .sobre-cierre__inner { padding: 8rem 4rem; }
+  }
+</style>

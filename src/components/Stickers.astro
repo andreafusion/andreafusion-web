@@ -1,0 +1,158 @@
+---
+// src/components/Stickers.astro
+//
+// ESTADOS:
+//   scrollY = 0         → opacity 0, translateY(60px)   — invisible
+//   scrollY 0 → 160px   → reveal progresivo opacity+translateY con stagger
+//   scrollY > 160px     → estáticos en posición final
+//   sección 2 entra     → z-index de sección 2 los tapa naturalmente
+
+interface Sticker {
+  src: string;
+  alt: string;
+  cls: string;
+  rot: number;
+}
+
+const stickers: Sticker[] = [
+  { src: '/stickers/pc-2000.svg',     alt: '', cls: 'sticker--pc',      rot:  8  },
+  { src: '/stickers/ui-window.svg',   alt: '', cls: 'sticker--ui',      rot: -10 },
+  { src: '/stickers/phone-retro.svg', alt: '', cls: 'sticker--phone',   rot: -6  },
+  { src: '/stickers/sparkle.svg',     alt: '', cls: 'sticker--sparkle', rot:  15 },
+  { src: '/stickers/cursor.svg',      alt: '', cls: 'sticker--cursor',  rot:  -5 },
+];
+---
+
+<div class="stickers-layer" aria-hidden="true">
+  {stickers.map((s, i) => (
+    <img
+      src={s.src}
+      alt={s.alt}
+      class={`sticker ${s.cls}`}
+      data-rot={s.rot}
+      data-index={i}
+      loading="eager"
+      decoding="async"
+      draggable="false"
+    />
+  ))}
+</div>
+
+<script>
+  // Rango de scroll donde ocurre el reveal
+  const REVEAL_END = 160;   // px — todos visibles en este punto
+  const STAGGER    = 18;    // px de scroll adicionales por índice
+
+  const layer = document.querySelector('.stickers-layer');
+  if (!layer) throw new Error('[Stickers] capa no encontrada');
+
+  const items = Array.from(document.querySelectorAll<HTMLElement>(".sticker"));
+
+  // ── Estado inicial: completamente ocultos ──
+  // Se hace vía JS (no solo CSS) para garantizar que no hay flash
+  // en ningún caso (SSR, caché, etc.)
+  for (const el of items) {
+    el.style.opacity   = '0';
+    el.style.transform = `rotate(${el.dataset.rot ?? 0}deg) translateY(60px)`;
+  }
+
+  const update = () => {
+    const y = window.scrollY;
+
+    for (const el of items) {
+      const idx      = Number(el.dataset.index ?? 0);
+      const rot      = Number(el.dataset.rot   ?? 0);
+      // Cada sticker empieza su reveal un poco después del anterior
+      const end      = REVEAL_END + idx * STAGGER;
+      // progress: 0 (oculto) → 1 (visible)
+      const progress = Math.min(Math.max(y / end, 0), 1);
+      // Easing suave con cubic-bezier via JS: aplicamos pow para curva
+      const eased    = progress < 0.5
+        ? 2 * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+      el.style.opacity   = String(eased);
+      el.style.transform = `rotate(${rot}deg) translateY(${(1 - eased) * 60}px)`;
+    }
+  };
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Sin animación: mostramos todos directamente en posición
+    for (const el of items) {
+      const rot = Number(el.dataset.rot ?? 0);
+      el.style.transition = 'none';
+      el.style.opacity    = '1';
+      el.style.transform  = `rotate(${rot}deg) translateY(0px)`;
+    }
+  } else {
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { update(); ticking = false; });
+    }, { passive: true });
+    // Llamada inicial por si hay scroll al recargar
+    update();
+  }
+</script>
+
+<style>
+  .stickers-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    /* z-index 5: sobre el texto del hero (z-index 3).
+       La sección 2 tiene z-index 10 y los tapa al entrar. */
+    z-index: 5;
+    /* SIN overflow:hidden — para que los stickers en los bordes no se corten */
+    overflow: visible;
+  }
+
+  .sticker {
+    position: absolute;
+    /* Oculto por defecto; JS aplica el estado real */
+    opacity: 0;
+    will-change: transform, opacity;
+    /* Transición mínima para suavizar el scroll sin lag perceptible */
+    transition: transform 0.04s linear, opacity 0.04s linear;
+  }
+
+  /* ─────────────────────────────────────────
+     POSICIONES — mobile-first (360px base)
+     Las coordenadas son en % para escalar bien.
+     ───────────────────────────────────────── */
+  .sticker--pc {
+    width: clamp(70px, 17vw, 125px);
+    top: 8%;
+    left: 6%;
+  }
+  .sticker--ui {
+    width: clamp(65px, 15vw, 110px);
+    top: 10%;
+    right: 10%;
+  }
+  .sticker--phone {
+    width: clamp(46px, 11vw, 82px);
+    top: 54%;
+    right: 12%;
+  }
+  .sticker--sparkle {
+    width: clamp(32px, 8vw, 56px);
+    top: 44%;
+    left: 22%;
+  }
+  .sticker--cursor {
+    width: clamp(28px, 7vw, 46px);
+    bottom: 16%;
+    left: 18%;
+  }
+
+  /* ── Tablet 768px+: un poco más de separación ── */
+  @media (min-width: 768px) {
+    .sticker--pc      { top: 8%;  left: 8%; }
+    .sticker--ui      { top: 10%; right: 12%; }
+    .sticker--phone   { top: 54%; right: 14%; }
+    .sticker--sparkle { top: 44%; left: 24%; }
+    .sticker--cursor  { bottom: 16%; left: 20%; }
+  }
+</style>

@@ -1,0 +1,577 @@
+---
+// src/pages/contacto.astro
+// Formulario con Formspree (estático, sin backend).
+// Sustituye YOUR_FORM_ID por tu ID real de formspree.io
+import BaseLayout from '../layouts/BaseLayout.astro';
+const FORMSPREE_ID = 'YOUR_FORM_ID';
+---
+
+<BaseLayout
+  title="Contacto — AndreaFusion"
+  description="Cuéntame tu proyecto y vemos si tiene sentido trabajar juntas."
+>
+  <main class="contacto-page">
+
+    <!-- ══════════════════════════════════════
+         HERO
+    ══════════════════════════════════════ -->
+    <header class="contacto-hero">
+      <div class="contacto-hero__inner">
+
+        <p class="section-num">Contacto</p>
+
+        <h1 class="contacto-hero__title">
+          Cuéntame qué<br>
+          <em>estás creando.</em>
+        </h1>
+
+        <p class="contacto-hero__sub">
+          Si tienes una idea, una web que ya no te representa o simplemente
+          quieres algo nuevo, escríbeme y vemos si tiene sentido trabajar juntas.
+        </p>
+
+      </div>
+      <div class="contacto-hero__deco" aria-hidden="true"></div>
+    </header>
+
+    <!-- ══════════════════════════════════════
+         CUERPO: intro + formulario + alternativa
+    ══════════════════════════════════════ -->
+    <div class="contacto-body">
+      <div class="contacto-body__inner">
+
+        <!-- Columna izquierda: intro + alternativa -->
+        <aside class="contacto-aside">
+
+          <div class="contacto-aside__intro">
+            <h2 class="contacto-aside__title">
+              Sin presión ni <em>guiones.</em>
+            </h2>
+            <p>
+              Me gusta empezar con una conversación tranquila para entender
+              bien qué necesitas. No tienes que tenerlo todo claro ni preparado.
+              Solo cuéntame en qué punto estás y hacia dónde quieres ir.
+            </p>
+          </div>
+
+          <!-- Separador decorativo -->
+          <div class="contacto-aside__sep" aria-hidden="true"></div>
+
+          <!-- Alternativa directa -->
+          <div class="contacto-aside__direct">
+            <p class="contacto-aside__direct-label">¿Prefieres algo rápido?</p>
+            <p>Puedes escribirme directamente a:</p>
+            <a
+              href="mailto:andreafusiondigital@gmail.com"
+              class="contacto-aside__email"
+              aria-label="Enviar email a Andrea"
+            >
+              andreafusiondigital@gmail.com
+            </a>
+          </div>
+
+          <!-- Disponibilidad -->
+          <div class="contacto-aside__avail">
+            <span class="contacto-aside__dot" aria-hidden="true"></span>
+            <p>Available worldwide. Based in Spain.</p>
+          </div>
+
+        </aside>
+
+        <!-- Columna derecha: formulario -->
+        <section class="contacto-form-wrap" aria-labelledby="form-heading">
+
+          <h2 class="contacto-form-wrap__heading" id="form-heading">
+            Envíame un mensaje
+          </h2>
+
+          <form
+            class="contacto-form"
+            action={`https://formspree.io/f/${FORMSPREE_ID}`}
+            method="POST"
+            novalidate
+            id="contact-form"
+          >
+            <!-- Nombre -->
+            <div class="form-field">
+              <label class="form-label" for="nombre">Nombre</label>
+              <input
+                class="form-input"
+                type="text"
+                id="nombre"
+                name="nombre"
+                autocomplete="given-name"
+                required
+                placeholder="Tu nombre"
+              />
+            </div>
+
+            <!-- Email -->
+            <div class="form-field">
+              <label class="form-label" for="email">Email</label>
+              <input
+                class="form-input"
+                type="email"
+                id="email"
+                name="email"
+                autocomplete="email"
+                required
+                placeholder="tu@email.com"
+              />
+            </div>
+
+            <!-- Proyecto en pocas palabras -->
+            <div class="form-field">
+              <label class="form-label" for="proyecto">
+                Tu proyecto en pocas palabras
+              </label>
+              <input
+                class="form-input"
+                type="text"
+                id="proyecto"
+                name="proyecto"
+                required
+                placeholder="Ej: Landing para mi servicio de coaching"
+              />
+            </div>
+
+            <!-- Mensaje principal -->
+            <div class="form-field">
+              <label class="form-label" for="mensaje">
+                ¿Qué te gustaría crear ahora?
+              </label>
+              <textarea
+                class="form-input form-input--textarea"
+                id="mensaje"
+                name="mensaje"
+                rows="5"
+                required
+                placeholder="Cuéntame en qué punto estás y hacia dónde quieres ir. Sin presión."
+              ></textarea>
+            </div>
+
+            <!-- Anti-spam honeypot (oculto) -->
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+            <!-- Redirect tras envío (Formspree) -->
+            <input type="hidden" name="_next" value="/contacto?enviado=true" />
+
+            <!-- Submit -->
+            <div class="form-footer">
+              <button class="form-submit" type="submit" id="form-submit">
+                <span class="form-submit__text">Enviar mensaje</span>
+                <span class="form-submit__icon" aria-hidden="true">↗</span>
+              </button>
+              <p class="form-note">Respondo normalmente en 24–48h.</p>
+            </div>
+
+          </form>
+
+          <!-- Estado: enviado correctamente -->
+          <div class="form-success" id="form-success" aria-live="polite" hidden>
+            <span class="form-success__icon" aria-hidden="true">✓</span>
+            <h3>¡Mensaje enviado!</h3>
+            <p>Gracias por escribirme. Te respondo en 24–48h.</p>
+          </div>
+
+        </section>
+
+      </div>
+    </div>
+
+  </main>
+</BaseLayout>
+
+<script>
+// Mostrar estado enviado si viene de Formspree redirect
+if (window.location.search.includes('enviado=true')) {
+  const form    = document.getElementById('contact-form');
+  const success = document.getElementById('form-success');
+  if (form)    form.setAttribute('hidden', '');
+  if (success) success.removeAttribute('hidden');
+}
+
+// Feedback visual en el botón mientras se envía
+const form = document.getElementById('contact-form') as HTMLFormElement | null;
+const btn  = document.getElementById('form-submit') as HTMLButtonElement | null;
+
+form?.addEventListener('submit', () => {
+  if (!btn) return;
+  btn.disabled = true;
+  const txt = btn.querySelector('.form-submit__text');
+  if (txt) txt.textContent = 'Enviando…';
+});
+</script>
+
+<style>
+  /* ── Página base ── */
+  .contacto-page {
+    padding-top: 80px;
+    background: #fff;
+  }
+
+  /* ══════════════════════════════════
+     HERO
+  ══════════════════════════════════ */
+  .contacto-hero {
+    position: relative;
+    background: var(--color-bg-hero);
+    overflow: hidden;
+    padding: 4rem 1.5rem 5rem;
+  }
+
+  .contacto-hero__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .contacto-hero__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(3rem, 10vw, 8rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--color-text-hero);
+  }
+
+  .contacto-hero__title em {
+    display: block;
+    font-style: italic;
+    color: var(--color-accent-lime);
+  }
+
+  .contacto-hero__sub {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2.2vw, 1.1rem);
+    line-height: 1.75;
+    color: rgba(245, 238, 230, 0.68);
+    max-width: 48ch;
+  }
+
+  .contacto-hero__deco {
+    position: absolute;
+    bottom: -6rem;
+    right: -6rem;
+    width: clamp(280px, 55vw, 500px);
+    height: clamp(280px, 55vw, 500px);
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(200, 241, 53, 0.09) 0%,
+      rgba(245, 184, 208, 0.07) 50%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  @media (min-width: 768px) {
+    .contacto-hero { padding: 6rem 4rem 7rem; }
+  }
+
+  /* ══════════════════════════════════
+     CUERPO
+  ══════════════════════════════════ */
+  .contacto-body {
+    background: #fff;
+    border-radius: var(--radius-card) var(--radius-card) 0 0;
+    box-shadow: var(--shadow-card);
+    margin-top: -2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .contacto-body__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  @media (min-width: 768px) {
+    .contacto-body__inner {
+      padding: 6rem 4rem 8rem;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 5rem;
+      align-items: start;
+    }
+  }
+
+  /* ══════════════════════════════════
+     ASIDE IZQUIERDO
+  ══════════════════════════════════ */
+  .contacto-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .contacto-aside__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--color-text-dark);
+    margin-bottom: 0.75rem;
+  }
+
+  .contacto-aside__title em {
+    font-style: italic;
+    color: var(--color-text-mid);
+  }
+
+  .contacto-aside__intro p {
+    font-family: var(--font-body);
+    font-size: clamp(0.95rem, 2vw, 1.05rem);
+    line-height: 1.75;
+    color: var(--color-text-mid);
+  }
+
+  /* Separador */
+  .contacto-aside__sep {
+    width: 3rem;
+    height: 2px;
+    background: var(--color-accent-lime);
+    border-radius: 9999px;
+  }
+
+  /* Directa */
+  .contacto-aside__direct {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .contacto-aside__direct-label {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent-pink);
+  }
+
+  .contacto-aside__direct p {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--color-text-mid);
+  }
+
+  .contacto-aside__email {
+    font-family: var(--font-body);
+    font-size: clamp(0.85rem, 2vw, 1rem);
+    font-weight: 700;
+    color: var(--color-text-dark);
+    text-decoration: none;
+    border-bottom: 2px solid var(--color-accent-lime);
+    padding-bottom: 2px;
+    word-break: break-all;
+    transition: color 0.2s ease;
+  }
+
+  .contacto-aside__email:hover {
+    color: var(--color-text-mid);
+  }
+
+  /* Disponibilidad */
+  .contacto-aside__avail {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .contacto-aside__dot {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-accent-lime);
+    flex-shrink: 0;
+    /* Pulso */
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(200, 241, 53, 0.5); }
+    50%       { box-shadow: 0 0 0 6px rgba(200, 241, 53, 0); }
+  }
+
+  .contacto-aside__avail p {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--color-text-mid);
+    letter-spacing: 0.03em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contacto-aside__dot { animation: none; }
+  }
+
+  /* ══════════════════════════════════
+     FORMULARIO
+  ══════════════════════════════════ */
+  .contacto-form-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .contacto-form-wrap__heading {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+    color: var(--color-text-dark);
+    letter-spacing: -0.01em;
+  }
+
+  /* ── Campos ── */
+  .contacto-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-label {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-mid);
+  }
+
+  .form-input {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-text-dark);
+    background: var(--color-bg-light);
+    border: 1.5px solid transparent;
+    border-radius: 0.875rem;
+    padding: 0.9em 1.2em;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .form-input::placeholder {
+    color: rgba(90, 58, 122, 0.4);
+  }
+
+  .form-input:focus {
+    border-color: var(--color-text-mid);
+    box-shadow: 0 0 0 3px rgba(200, 241, 53, 0.2);
+  }
+
+  .form-input:user-invalid {
+    border-color: rgba(245, 184, 208, 0.8);
+  }
+
+  .form-input--textarea {
+    resize: vertical;
+    min-height: 140px;
+    line-height: 1.65;
+  }
+
+  /* ── Footer del form ── */
+  .form-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .form-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.95em 2.4em;
+    background: var(--color-bg-hero);
+    color: var(--color-accent-lime);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border-radius: var(--radius-btn);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+  }
+
+  .form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(61, 26, 92, 0.25);
+  }
+
+  .form-submit:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .form-submit__icon {
+    font-size: 1.1em;
+    transition: transform 0.2s ease;
+  }
+
+  .form-submit:hover .form-submit__icon {
+    transform: translate(2px, -2px);
+  }
+
+  .form-note {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-style: italic;
+    color: var(--color-text-mid);
+    letter-spacing: 0.03em;
+    opacity: 0.7;
+  }
+
+  /* ── Estado enviado ── */
+  .form-success {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 2rem;
+    background: var(--color-bg-light);
+    border-radius: 1.5rem;
+    border-left: 4px solid var(--color-accent-lime);
+  }
+
+  .form-success__icon {
+    font-size: 2rem;
+    color: var(--color-accent-lime);
+    line-height: 1;
+  }
+
+  .form-success h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--color-text-dark);
+  }
+
+  .form-success p {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-text-mid);
+    line-height: 1.65;
+  }
+</style>

@@ -1,17 +1,64 @@
 ---
-
+// src/pages/index.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection            from '../sections/HeroSection.astro';
+import ManifiestoSection      from '../sections/ManifiestoSection.astro';
+import LogosSection           from '../sections/LogosSection.astro';
+import ResultadosSection      from '../sections/ResultadosSection.astro';
+import ServiciosSection       from '../sections/ServiciosSection.astro';
+import TestimoniosSection     from '../sections/TestimoniosSection.astro';
+import PortfolioSection       from '../sections/PortfolioSection.astro';
+import CTAFinalSection        from '../sections/CTAFinalSection.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="AndreaFusion — Diseño y Desarrollo Web"
+  description="Webs con personalidad que convierten. Diseño editorial, desarrollo frontend y estrategia digital para marcas con ambición."
+>
+  <main>
+    <!--
+      LAYERED SCROLL:
+      01 Hero sticky (z-index 1) → se queda pegado
+      02+ Secciones con z-index creciente entran encima
+      margin-top: 60vh en Manifiesto → el hero es visible
+      con el collage antes de que la siguiente sección suba
+    -->
+
+    <!-- 01 · Hero (sticky) -->
+    <HeroSection />
+
+    <!--
+      Las secciones desde aquí tienen z-index creciente.
+      Cada una entra encima de la anterior como tarjetas apiladas.
+      El margin-top: 60vh del Manifiesto da tiempo al collage de stickers.
+    -->
+
+    <!-- 02 · Manifiesto -->
+    <ManifiestoSection />
+
+    <!-- 03 · Logos / Prueba social -->
+    <LogosSection />
+
+    <!-- 04 · Resultados -->
+    <ResultadosSection />
+
+    <!-- 05 · Servicios -->
+    <ServiciosSection />
+
+    <!-- 06 · Testimonios -->
+    <TestimoniosSection />
+
+    <!-- 07 · Portfolio highlights -->
+    <PortfolioSection />
+
+    <!-- 08 · CTA Final + Footer -->
+    <CTAFinalSection />
+  </main>
+</BaseLayout>
+
+<style>
+  main {
+    position: relative;
+    isolation: isolate;
+  }
+</style>

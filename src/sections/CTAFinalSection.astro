@@ -1,0 +1,237 @@
+---
+// src/sections/CTAFinalSection.astro
+// Bloque de cierre. Fondo uva con gran titular y botón principal.
+---
+
+<section class="cta-final" id="contacto">
+  <div class="cta-final__inner">
+
+    <!-- Número de sección -->
+    <p class="section-num-light" aria-hidden="true">08</p>
+
+    <!-- Gran titular de cierre -->
+    <h2 class="cta-final__title">
+      <span>Tu web puede</span>
+      <em>sentirse diferente.</em>
+    </h2>
+
+    <!-- Texto -->
+    <p class="cta-final__text">
+      Si quieres una página que conecte contigo y con tu audiencia
+      desde el primer segundo, hablemos y vemos si encajamos.
+    </p>
+
+    <!-- CTA -->
+    <div class="cta-final__actions">
+      <a href="/contacto" class="cta-final__btn">
+        Trabajemos juntas
+      </a>
+      <p class="cta-final__micro">Available worldwide. Based in Spain.</p>
+    </div>
+
+  </div>
+
+  <!-- Decoración: círculos concéntricos -->
+  <div class="cta-final__rings" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
+</section>
+
+<!-- Footer mínimo -->
+<footer class="footer">
+  <div class="footer__inner">
+    <p class="footer__brand">AndreaFusion</p>
+    <nav class="footer__nav" aria-label="Navegación footer">
+      <a href="/portfolio">Portfolio</a>
+      <a href="/sobre-mi">Sobre mí</a>
+      <a href="/contacto">Contacto</a>
+    </nav>
+    <p class="footer__copy">© 2025 AndreaFusion. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<style>
+  /* ── CTA Final ── */
+  .cta-final {
+    position: relative;
+    z-index: 17;
+    background: var(--color-bg-hero);
+    overflow: hidden;
+    padding-bottom: 0;
+  }
+
+  .cta-final__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 7rem 1.5rem 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .section-num-light {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    color: var(--color-accent-pink);
+    text-transform: uppercase;
+  }
+
+  /* ── Titular ── */
+  .cta-final__title {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(3rem, 10vw, 8rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--color-text-hero);
+    gap: 0.05em;
+  }
+
+  .cta-final__title em {
+    font-style: italic;
+    color: var(--color-accent-lime);
+  }
+
+  /* ── Texto ── */
+  .cta-final__text {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    line-height: 1.7;
+    color: rgba(245, 238, 230, 0.7);
+    max-width: 44ch;
+  }
+
+  /* ── Acciones ── */
+  .cta-final__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .cta-final__btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 1.1em 2.8em;
+    background: var(--color-accent-lime);
+    color: var(--color-text-dark);
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    font-weight: 700;
+    border-radius: 9999px;
+    box-shadow: 0 6px 28px rgba(200, 241, 53, 0.4);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .cta-final__btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 36px rgba(200, 241, 53, 0.5);
+  }
+
+  .cta-final__micro {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-style: italic;
+    letter-spacing: 0.05em;
+    color: rgba(245, 238, 230, 0.4);
+  }
+
+  /* ── Anillos decorativos ── */
+  .cta-final__rings {
+    position: absolute;
+    bottom: -8rem;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .cta-final__rings span {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(200, 241, 53, 0.08);
+    transform: translate(-50%, -50%);
+  }
+
+  .cta-final__rings span:nth-child(1) {
+    width: 300px; height: 300px;
+  }
+  .cta-final__rings span:nth-child(2) {
+    width: 500px; height: 500px;
+  }
+  .cta-final__rings span:nth-child(3) {
+    width: 700px; height: 700px;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    background: var(--color-text-dark);
+    color: rgba(245, 238, 230, 0.5);
+    position: relative;
+    z-index: 17;
+  }
+
+  .footer__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer__brand {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: var(--color-text-hero);
+    letter-spacing: -0.01em;
+  }
+
+  .footer__nav {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .footer__nav a {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(245, 238, 230, 0.5);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer__nav a:hover { color: var(--color-accent-lime); }
+
+  .footer__copy {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── Desktop ── */
+  @media (min-width: 768px) {
+    .footer__inner {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+    }
+    .cta-final__inner { padding: 9rem 4rem 8rem; }
+  }
+</style>

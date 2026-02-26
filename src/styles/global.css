@@ -1,0 +1,170 @@
+/* =============================================
+   ANDREAFUSION — GLOBAL STYLES
+   Mobile-first. Editorial. Femenino. Colorido.
+   ============================================= */
+
+/* --- Google Fonts --- */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&family=Caveat:wght@600&display=swap");
+
+/* --- Design Tokens --- */
+:root {
+  /* Colores */
+  --color-bg-hero: #3d1a5c; /* Uva profundo */
+  --color-bg-light: #ede4f5; /* Lila suave */
+  --color-accent-lime: #c8f135; /* Verde lima */
+  --color-accent-pink: #f5b8d0; /* Rosa suave */
+  --color-text-hero: #f5eee6; /* Crema */
+  --color-text-dark: #1a0a2e; /* Morado muy oscuro */
+  --color-text-mid: #5a3a7a; /* Morado medio */
+
+  /* Tipografía */
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --font-script: "Caveat", cursive;
+
+  /* Espaciado */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+
+  /* Radios */
+  --radius-card: 2.5rem;
+  --radius-btn: 9999px;
+
+  /* Sombras */
+  --shadow-card: 0 -12px 60px rgba(61, 26, 92, 0.22);
+  --shadow-btn: 0 4px 20px rgba(200, 241, 53, 0.4);
+}
+
+/* --- Reset --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  hanging-punctuation: first last;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg-hero);
+  color: var(--color-text-hero);
+  line-height: 1.6;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font: inherit;
+}
+
+/* --- Tipografía base --- */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: 1.05;
+  font-weight: 900;
+}
+
+/* =============================================
+   UTILIDADES GLOBALES
+   ============================================= */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/*
+  Etiqueta de número de sección.
+  Usada en todas las secciones del home.
+  Dos variantes: sobre fondo claro y sobre fondo oscuro.
+*/
+.section-num,
+.section-num-light {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+/* Sobre fondo claro (lila, blanco) */
+.section-num {
+  color: var(--color-accent-pink);
+}
+
+/* Sobre fondo oscuro (uva) */
+.section-num-light {
+  color: var(--color-accent-pink);
+  opacity: 0.9;
+}
+
+/*
+  Tarjeta de sección con efecto layered scroll.
+  Todas las secciones que "entran" sobre el hero
+  comparten este patrón visual.
+*/
+.section-card-base {
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  box-shadow: var(--shadow-card);
+}
+
+/* --- Scrollbar webkit --- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-hero);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-text-mid);
+  border-radius: 99px;
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}

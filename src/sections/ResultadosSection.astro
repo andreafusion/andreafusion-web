@@ -1,0 +1,198 @@
+---
+// src/sections/ResultadosSection.astro
+// Fondo uva profundo (oscuro). Bullets con iconos y texto en crema/lima.
+---
+
+<section class="resultados" id="resultados">
+  <div class="resultados__inner">
+
+    <div class="resultados__header">
+      <p class="section-num-light" aria-hidden="true">04</p>
+      <h2 class="resultados__title">
+        Qué cambia cuando tu web<br>
+        <em>está bien pensada.</em>
+      </h2>
+    </div>
+
+    <ul class="resultados__list" role="list">
+      <li class="resultados__item">
+        <span class="resultados__dash" aria-hidden="true">—</span>
+        <p>Más claridad en lo que ofreces y cómo lo comunicas</p>
+      </li>
+      <li class="resultados__item">
+        <span class="resultados__dash" aria-hidden="true">—</span>
+        <p>Experiencia móvil fluida que invita a quedarse</p>
+      </li>
+      <li class="resultados__item">
+        <span class="resultados__dash" aria-hidden="true">—</span>
+        <p>Diseño coherente con tu marca y tu energía</p>
+      </li>
+      <li class="resultados__item">
+        <span class="resultados__dash" aria-hidden="true">—</span>
+        <p>Estructura pensada para que te escriban sin fricción</p>
+      </li>
+    </ul>
+
+    <a href="/contacto" class="resultados__cta">
+      Hablemos de tu web
+    </a>
+
+  </div>
+
+  <!-- Fondo decorativo: gran tipografía fantasma -->
+  <p class="resultados__ghost" aria-hidden="true">WEB</p>
+</section>
+
+<style>
+  .resultados {
+    position: relative;
+    z-index: 13;
+    background: var(--color-bg-hero);
+    overflow: hidden;
+  }
+
+  .resultados__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .section-num-light {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    color: var(--color-accent-pink);
+    text-transform: uppercase;
+  }
+
+  .resultados__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--color-text-hero);
+  }
+
+  .resultados__title em {
+    font-style: italic;
+    color: var(--color-accent-lime);
+  }
+
+  /* ── Lista ── */
+  .resultados__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .resultados__item {
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(245, 238, 230, 0.1);
+    transition: background 0.2s ease;
+  }
+
+  .resultados__item:first-child {
+    border-top: 1px solid rgba(245, 238, 230, 0.1);
+  }
+
+  .resultados__item:hover {
+    background: rgba(200, 241, 53, 0.04);
+  }
+
+  .resultados__dash {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--color-accent-lime);
+    line-height: 1;
+    flex-shrink: 0;
+    transform: translateY(2px);
+  }
+
+  .resultados__item p {
+    font-family: var(--font-body);
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    line-height: 1.4;
+    color: var(--color-text-hero);
+    font-weight: 400;
+  }
+
+  /* ── CTA ── */
+  .resultados__cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.9em 2.2em;
+    background: transparent;
+    border: 2px solid var(--color-accent-lime);
+    color: var(--color-accent-lime);
+    font-family: var(--font-body);
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border-radius: 9999px;
+    align-self: flex-start;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.18s ease;
+  }
+
+  .resultados__cta:hover {
+    background: var(--color-accent-lime);
+    color: var(--color-text-dark);
+    transform: translateY(-2px);
+  }
+
+  /* ── Tipografía fantasma de fondo ── */
+  .resultados__ghost {
+    position: absolute;
+    bottom: -2rem;
+    right: -1rem;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(8rem, 25vw, 22rem);
+    line-height: 0.85;
+    color: rgba(245, 238, 230, 0.03);
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.05em;
+    z-index: 1;
+  }
+
+  /* ── Desktop ── */
+  @media (min-width: 768px) {
+    .resultados__inner {
+      padding: 7rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto 1fr auto;
+      column-gap: 5rem;
+      align-items: start;
+    }
+
+    .resultados__header {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .resultados__list {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .resultados__cta {
+      grid-column: 1;
+      grid-row: 3;
+      margin-top: 1rem;
+    }
+
+    /* Espacio derecho libre para la decoración ghost */
+  }
+</style>
