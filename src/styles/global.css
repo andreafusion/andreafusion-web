@@ -202,6 +202,21 @@ h3 {
 }
 
 /* =============================================
+   SCROLL PERFORMANCE EN MÓVIL
+   ============================================= */
+/*
+  Promociona las secciones apiladas al compositor GPU.
+  Elimina el jank causado por los z-index crecientes en móvil.
+*/
+.resultados,
+.servicios,
+.testimonios,
+.portfolio,
+.section-card-base {
+  transform: translateZ(0);
+}
+
+/* =============================================
    REDUCED MOTION
    ============================================= */
 @media (prefers-reduced-motion: reduce) {

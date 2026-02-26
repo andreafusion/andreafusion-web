@@ -179,11 +179,11 @@
 
 <style>
   .servicios {
-    position: relative;
-    z-index: 14; /* FIX: era 13, colisión con ResultadosSection (z-index 13) */
-    background: var(--color-bg-hero);
-    overflow: hidden;
-  }
+  position: relative;
+  z-index: 14;
+  background: #fff; /* #1a0a2e — diferencia clara con las vecinas */
+  overflow: clip;                      /* clip no crea scroll container, hidden sí */
+}
 
   .servicios__inner {
     position: relative;
@@ -209,19 +209,19 @@
     font-size: clamp(2rem, 5.5vw, 4rem);
     line-height: 1.05;
     letter-spacing: -0.02em;
-    color: var(--color-text-hero);
+    color: var(--color-text-mid);
   }
 
   .servicios__title em {
     font-style: italic;
-    color: var(--color-accent-lime);
+    color: var(--color-accent-pink);
     display: block;
   }
 
   .servicios__sub {
     font-family: var(--font-body);
     font-size: clamp(0.95rem, 2vw, 1.05rem);
-    color: rgba(245, 238, 230, 0.6);
+    color: var(--color-text-mid);
   }
 
   /* ── Grid de servicios ── */
@@ -235,7 +235,7 @@
   @media (min-width: 768px) {
     .servicios__list {
       flex-direction: row;
-      border: 1.5px solid rgba(245, 238, 230, 0.1);
+      border: 1.5px solid rgba(26, 10, 46, 0.12);
       border-radius: 1.5rem;
       overflow: hidden;
     }
@@ -246,7 +246,7 @@
     position: relative;
     flex: 1;
     cursor: pointer;
-    border-bottom: 1.5px solid rgba(245, 238, 230, 0.08);
+    border-bottom: 1.5px solid rgba(26, 10, 46, 0.1);
     transition:
       opacity 0.35s ease,
       filter 0.35s ease,
@@ -258,7 +258,7 @@
 
   @media (min-width: 768px) {
     .servicio-card {
-      border-bottom: none;
+      border-bottom: 1.5px solid rgba(26, 10, 46, 0.1);
       border-right: 1.5px solid rgba(245, 238, 230, 0.08);
     }
     .servicio-card:last-child { border-right: none; }
@@ -267,7 +267,7 @@
   /* Focus Mode */
   .servicio-card.is-focused {
     flex: 1.4;
-    background: rgba(245, 238, 230, 0.04);
+    background: rgba(26, 10, 46, 0.05);
   }
 
   .servicio-card.is-blurred {
@@ -330,7 +330,7 @@
 
   .servicio-card__arrow {
     font-size: 1.2rem;
-    color: rgba(245, 238, 230, 0.3);
+    color: rgba(26, 10, 46, 0.25);
     transition: color 0.2s ease, transform 0.2s ease;
   }
 
@@ -347,7 +347,7 @@
     font-size: clamp(1.4rem, 2.5vw, 1.9rem);
     line-height: 1.1;
     letter-spacing: -0.02em;
-    color: var(--color-text-hero);
+    color: var(--color-text-dark);
   }
 
   /* Descripción */
@@ -355,7 +355,7 @@
     font-family: var(--font-body);
     font-size: clamp(0.9rem, 1.8vw, 0.98rem);
     line-height: 1.7;
-    color: rgba(245, 238, 230, 0.6);
+    color: var(--color-text-mid);
     flex: 1;
   }
 
@@ -367,12 +367,12 @@
     align-self: flex-start;
     padding: 0.65em 1.5em;
     background: transparent;
-    color: var(--color-accent-lime);
+    color: var(--color-accent-pink);
     font-family: var(--font-body);
     font-size: 0.85rem;
     font-weight: 700;
     letter-spacing: 0.04em;
-    border: 1.5px solid var(--color-accent-lime);
+    border: 1.5px solid var(--color-accent-pink);
     border-radius: var(--radius-btn);
     text-decoration: none;
     overflow: hidden;
@@ -397,7 +397,7 @@
     font-weight: 900;
     font-size: clamp(8rem, 28vw, 22rem);
     line-height: 0.85;
-    color: rgba(245, 238, 230, 0.02);
+    color: rgba(26, 10, 46, 0.05);
     pointer-events: none;
     user-select: none;
     letter-spacing: -0.05em;

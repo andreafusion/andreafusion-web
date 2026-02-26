@@ -72,11 +72,11 @@ const testimonios: Testimonio[] = [
 
 <style>
   .testimonios {
-    position: relative;
-    z-index: 15;
-    background: var(--color-bg-hero);
-    overflow: hidden;
-  }
+  position: relative;
+  z-index: 15;
+  background: var(--color-bg-hero);
+  overflow: clip;
+}
 
   .testimonios__inner {
     position: relative;
@@ -111,16 +111,17 @@ const testimonios: Testimonio[] = [
   }
 
   .testimonios__track {
-    display: flex;
-    gap: 1.5rem;
-    list-style: none;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding-bottom: 0.5rem;
-  }
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;   /* ← AÑADIR: dice al navegador que este elemento sólo hace scroll horizontal */
+  scrollbar-width: none;
+  padding-bottom: 0.5rem;
+}
 
   .testimonios__track::-webkit-scrollbar { display: none; }
 
