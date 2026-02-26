@@ -1,24 +1,19 @@
 ---
 // src/sections/ManifiestoSection.astro
-// Fondo lila suave. Texto editorial largo + quote reactiva al scroll.
-// INTERACCIÓN: palabras de la quote se iluminan en lima al hacer scroll.
-// CONECTOR: línea fina lima que une el final de esta sección con la siguiente.
+// Fondo lila suave. Texto editorial + quote reactiva al scroll.
 ---
 
 <section class="manifiesto" id="manifiesto">
   <div class="manifiesto__inner">
 
-    <!-- Número de sección -->
     <p class="section-num" aria-hidden="true">02</p>
 
-    <!-- Titular -->
     <h2 class="manifiesto__title">
       <span>No diseño webs</span>
       <span>para llenar espacio.</span>
       <em>Las diseño para que<br>se sientan vivas.</em>
     </h2>
 
-    <!-- Texto editorial -->
     <div class="manifiesto__body">
       <p>
         Creo páginas que combinan diseño, estructura y código para que
@@ -40,9 +35,12 @@
     <!--
       QUOTE REACTIVA AL SCROLL
       Cada palabra se ilumina en lima según el progreso de scroll.
-      JS divide el texto en spans y los activa en secuencia.
     -->
-    <blockquote class="manifiesto__quote" id="manifiesto-quote" aria-label="Diseño primero para móvil, porque hoy ahí empieza todo.">
+    <blockquote
+      class="manifiesto__quote"
+      id="manifiesto-quote"
+      aria-label="Diseño primero para móvil, porque hoy ahí empieza todo."
+    >
       <span class="manifiesto__quote-bar" aria-hidden="true"></span>
       <span class="manifiesto__quote-text" aria-hidden="true">
         Diseño primero para móvil, porque hoy ahí empieza todo.
@@ -51,68 +49,51 @@
 
   </div>
 
-  <!-- Decoración: círculo de acento lima -->
   <div class="manifiesto__circle" aria-hidden="true"></div>
-
 </section>
 
 <script>
-  // ── QUOTE REACTIVA: split por palabras ──
   const quoteEl = document.querySelector<HTMLElement>('.manifiesto__quote-text');
   if (quoteEl) {
-    const text = quoteEl.textContent?.trim() ?? '';
+    const text  = quoteEl.textContent?.trim() ?? '';
     const words = text.split(' ');
 
-    // Construir HTML con cada palabra en un span
     quoteEl.innerHTML = words
       .map(w => `<span class="q-word">${w}</span>`)
       .join(' ');
 
     const wordEls = quoteEl.querySelectorAll<HTMLElement>('.q-word');
-    const total = wordEls.length;
+    const total   = wordEls.length;
 
     const update = () => {
       const section = document.getElementById('manifiesto');
       if (!section) return;
 
-      const rect = section.getBoundingClientRect();
-      const vh = window.innerHeight;
-
-      // Progreso: 0 cuando el top del manifiesto llega al 70% del viewport
-      //           1 cuando la quote queda justo en el centro
-      const start = vh * 0.7;
-      const end   = vh * 0.2;
-      const raw   = (start - rect.top) / (start - end);
+      const rect     = section.getBoundingClientRect();
+      const vh       = window.innerHeight;
+      const start    = vh * 0.7;
+      const end      = vh * 0.2;
+      const raw      = (start - rect.top) / (start - end);
       const progress = Math.min(Math.max(raw, 0), 1);
 
-      // Activar palabras en secuencia
       const activeCount = Math.round(progress * total);
       wordEls.forEach((w, i) => {
-        if (i < activeCount) {
-          w.classList.add('is-lit');
-        } else {
-          w.classList.remove('is-lit');
-        }
+        w.classList.toggle('is-lit', i < activeCount);
       });
     };
 
-    // Scroll listener throttled con rAF
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => { update(); ticking = false; });
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    update(); // estado inicial
-
-    // Sin animación si prefers-reduced-motion
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       wordEls.forEach(w => w.classList.add('is-lit'));
+    } else {
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => { update(); ticking = false; });
+      }, { passive: true });
+      update();
     }
   }
-
 </script>
 
 <style>
@@ -123,14 +104,13 @@
     border-radius: var(--radius-card) var(--radius-card) 0 0;
     box-shadow: var(--shadow-card);
     overflow: hidden;
-    will-change: transform;
     margin-top: 75vh;
   }
 
   .manifiesto__inner {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 5rem 1.5rem 5rem;
+    padding: 5rem 1.5rem;
     display: grid;
     gap: 3rem;
   }
@@ -195,17 +175,15 @@
     font-size: clamp(1.3rem, 3.5vw, 2rem);
     font-style: italic;
     color: var(--color-text-dark);
-    /* Palabras sin iluminar: color base tenue */
   }
 
-  /* Cada palabra: estado base (apagado) */
+  /* Palabras de la quote — JS inyecta estos spans */
   :global(.q-word) {
     display: inline-block;
-    color: rgba(26, 10, 46, 0.25); /* text-dark muy tenue */
+    color: rgba(26, 10, 46, 0.25);
     transition: color 0.3s ease;
   }
 
-  /* Palabra activa: lima */
   :global(.q-word.is-lit) {
     color: var(--color-text-dark);
   }

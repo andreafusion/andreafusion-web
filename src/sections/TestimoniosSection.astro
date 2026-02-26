@@ -3,25 +3,25 @@
 // Fondo uva oscuro. Carousel CSS puro con scroll snap. Sin JS de librerías.
 
 interface Testimonio {
-  cita: string;
-  nombre: string;
+  cita:     string;
+  nombre:   string;
   proyecto?: string;
 }
 
 const testimonios: Testimonio[] = [
   {
-    cita: 'Sentí que por fin mi web hablaba como yo.',
-    nombre: 'Cliente',
+    cita:     'Sentí que por fin mi web hablaba como yo.',
+    nombre:   'Cliente',
     proyecto: 'Marca personal',
   },
   {
-    cita: 'Ahora todo tiene coherencia y se entiende muchísimo mejor.',
-    nombre: 'Cliente',
+    cita:     'Ahora todo tiene coherencia y se entiende muchísimo mejor.',
+    nombre:   'Cliente',
     proyecto: 'Proyecto creativo',
   },
   {
-    cita: 'El proceso fue claro y el resultado superó lo que imaginaba.',
-    nombre: 'Cliente',
+    cita:     'El proceso fue claro y el resultado superó lo que imaginaba.',
+    nombre:   'Cliente',
     proyecto: 'Landing estratégica',
   },
 ];
@@ -43,9 +43,7 @@ const testimonios: Testimonio[] = [
       <ul class="testimonios__track" role="list" aria-label="Testimonios de clientes">
         {testimonios.map((t, i) => (
           <li class="testimonio-card">
-            <!-- Número decorativo -->
             <span class="testimonio-card__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-            <!-- Comillas decorativas -->
             <span class="testimonio-card__open" aria-hidden="true">"</span>
             <blockquote class="testimonio-card__cita">
               <p>{t.cita}</p>
@@ -60,7 +58,6 @@ const testimonios: Testimonio[] = [
         ))}
       </ul>
 
-      <!-- Indicadores de posición -->
       <div class="testimonios__dots" aria-hidden="true">
         {testimonios.map((_) => (
           <span class="testimonios__dot"></span>
@@ -70,7 +67,6 @@ const testimonios: Testimonio[] = [
 
   </div>
 
-  <!-- Decoración: gran comilla fantasma -->
   <span class="testimonios__ghost" aria-hidden="true">"</span>
 </section>
 
@@ -80,7 +76,6 @@ const testimonios: Testimonio[] = [
     z-index: 15;
     background: var(--color-bg-hero);
     overflow: hidden;
-    will-change: transform;
   }
 
   .testimonios__inner {
@@ -92,17 +87,6 @@ const testimonios: Testimonio[] = [
     display: flex;
     flex-direction: column;
     gap: 3rem;
-  }
-
-  .section-num-light {
-    font-family: var(--font-body);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    color: var(--color-accent-pink);
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 0.75rem;
   }
 
   .testimonios__title {
@@ -249,6 +233,6 @@ const testimonios: Testimonio[] = [
   /* ── Desktop ── */
   @media (min-width: 768px) {
     .testimonios__inner { padding: 7rem 4rem; }
-    .testimonio-card { flex: 0 0 min(40vw, 380px); }
+    .testimonio-card    { flex: 0 0 min(40vw, 380px); }
   }
 </style>

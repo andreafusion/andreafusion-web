@@ -1,18 +1,14 @@
 ---
 // src/sections/ServiciosSection.astro
-// Tres servicios con Focus Mode: al tocar/hover uno,
-// el resto se difumina y el activo se expande levemente.
-// UNEXPECTED INTERACTION: el botón "Quiero saber más" cambia
-// de copy al hover → "Hablemos →"
+// Tres servicios con Focus Mode al hover/tap.
+// Botones con copy cambiante: "Quiero saber más" → "Hablemos →"
 ---
 
 <section class="servicios" id="servicios">
   <div class="servicios__inner">
 
-    <!-- Número de sección -->
     <p class="section-num">05</p>
 
-    <!-- Cabecera -->
     <div class="servicios__header">
       <h2 class="servicios__title">
         Trabajo contigo desde una mirada
@@ -23,7 +19,6 @@
       </p>
     </div>
 
-    <!-- Grid de servicios -->
     <ul class="servicios__list" role="list" id="servicios-list">
 
       <!-- 01 · Auditoría -->
@@ -103,123 +98,90 @@
 
     </ul>
 
-    <!-- Etiqueta flotante decorativa -->
     <p class="servicios__ghost" aria-hidden="true">WEB</p>
 
   </div>
 </section>
 
 <script>
-  // ────────────────────────────────────────────
-  // FOCUS MODE
-  // Al hacer hover/focus/tap en una card:
-  //   - las demás se difuminan y encogen ligeramente
-  //   - la activa se expande un poco
-  // Al salir: todo vuelve al estado normal.
-  // ────────────────────────────────────────────
-
+  // ── FOCUS MODE ──
   const list  = document.getElementById('servicios-list');
   const cards = list?.querySelectorAll<HTMLElement>('.servicio-card');
 
   if (list && cards) {
     const activate = (active: HTMLElement) => {
       cards.forEach(card => {
-        if (card === active) {
-          card.classList.add('is-focused');
-          card.classList.remove('is-blurred');
-        } else {
-          card.classList.remove('is-focused');
-          card.classList.add('is-blurred');
-        }
+        card.classList.toggle('is-focused', card === active);
+        card.classList.toggle('is-blurred', card !== active);
       });
     };
 
     const reset = () => {
-      cards.forEach(card => {
-        card.classList.remove('is-focused', 'is-blurred');
-      });
+      cards.forEach(card => card.classList.remove('is-focused', 'is-blurred'));
     };
 
-    // Desktop: mouseenter/mouseleave
     cards.forEach(card => {
       card.addEventListener('mouseenter', () => activate(card));
-      card.addEventListener('focusin',   () => activate(card));
+      card.addEventListener('focusin',    () => activate(card));
     });
 
     list.addEventListener('mouseleave', reset);
     list.addEventListener('focusout', (e: FocusEvent) => {
-      const relatedTarget = e.relatedTarget as Node | null;
-      if (!list.contains(relatedTarget)) reset();
+      if (!list.contains(e.relatedTarget as Node | null)) reset();
     });
 
-        // Móvil: tap toggle
+    // Móvil: tap toggle
     cards.forEach(card => {
       card.addEventListener('click', () => {
-        // Solo en pointer:coarse (táctil)
         if (!window.matchMedia('(pointer: coarse)').matches) return;
-
-        const isFocused = card.classList.contains('is-focused');
-        if (isFocused) {
+        if (card.classList.contains('is-focused')) {
           reset();
         } else {
           activate(card);
-          // Scroll suave para que la card quede visible
           card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
       });
     });
   }
 
-  // ────────────────────────────────────────────
-  // UNEXPECTED INTERACTION: copy cambiante en botones
-  // "Quiero saber más" → hover → "Hablemos →"
-  // Con micro-animación de slide vertical.
-  // ────────────────────────────────────────────
+  // ── COPY CAMBIANTE EN BOTONES ──
   const smartBtns = document.querySelectorAll<HTMLElement>('.smart-btn');
 
   smartBtns.forEach(btn => {
-    const textEl   = btn.querySelector<HTMLElement>('.smart-btn__text');
-    const defText  = btn.dataset.default  ?? '';
-    const hoverText= btn.dataset.hover    ?? '';
-
+    const textEl    = btn.querySelector<HTMLElement>('.smart-btn__text');
+    const defText   = btn.dataset.default ?? '';
+    const hoverText = btn.dataset.hover   ?? '';
     if (!textEl) return;
 
-    const swap = (to: string, dir: 'up' | 'down') => {
-      const outDir = dir === 'up' ? '-100%' : '100%';
-      const inDir  = dir === 'up' ?  '100%' : '-100%';
-
+    const swap = (to: string, dirOut: string, dirIn: string) => {
       textEl.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
       textEl.style.opacity    = '0';
-      textEl.style.transform  = `translateY(${outDir})`;
+      textEl.style.transform  = `translateY(${dirOut})`;
 
       setTimeout(() => {
-        textEl.textContent = to;
+        textEl.textContent      = to;
         textEl.style.transition = 'none';
-        textEl.style.transform  = `translateY(${inDir})`;
+        textEl.style.transform  = `translateY(${dirIn})`;
         textEl.style.opacity    = '0';
-
         textEl.getBoundingClientRect(); // reflow
-
         textEl.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
         textEl.style.opacity    = '1';
         textEl.style.transform  = 'translateY(0)';
       }, 180);
     };
 
-    btn.addEventListener('mouseenter', () => swap(hoverText, 'up'));
-    btn.addEventListener('mouseleave', () => swap(defText,   'down'));
-    btn.addEventListener('focus',      () => swap(hoverText, 'up'));
-    btn.addEventListener('blur',       () => swap(defText,   'down'));
+    btn.addEventListener('mouseenter', () => swap(hoverText, '-100%', '100%'));
+    btn.addEventListener('mouseleave', () => swap(defText,    '100%', '-100%'));
+    btn.addEventListener('focus',      () => swap(hoverText, '-100%', '100%'));
+    btn.addEventListener('blur',       () => swap(defText,    '100%', '-100%'));
   });
 </script>
 
 <style>
-  /* ── Sección base ── */
   .servicios {
     position: relative;
-    z-index: 13;
+    z-index: 14; /* FIX: era 13, colisión con ResultadosSection (z-index 13) */
     background: var(--color-bg-hero);
-    will-change: transform;
     overflow: hidden;
   }
 
@@ -273,7 +235,6 @@
   @media (min-width: 768px) {
     .servicios__list {
       flex-direction: row;
-      gap: 0;
       border: 1.5px solid rgba(245, 238, 230, 0.1);
       border-radius: 1.5rem;
       overflow: hidden;
@@ -293,35 +254,29 @@
       background 0.3s ease;
   }
 
-  .servicio-card:last-child {
-    border-bottom: none;
-  }
+  .servicio-card:last-child { border-bottom: none; }
 
   @media (min-width: 768px) {
     .servicio-card {
       border-bottom: none;
       border-right: 1.5px solid rgba(245, 238, 230, 0.08);
     }
-    .servicio-card:last-child {
-      border-right: none;
-    }
+    .servicio-card:last-child { border-right: none; }
   }
 
-  /* ── FOCUS MODE ── */
+  /* Focus Mode */
   .servicio-card.is-focused {
-    flex: 1.4; /* se expande */
+    flex: 1.4;
     background: rgba(245, 238, 230, 0.04);
-    opacity: 1;
-    filter: none;
   }
 
   .servicio-card.is-blurred {
     opacity: 0.45;
     filter: blur(0.5px);
-    flex: 0.8; /* se encoge ligeramente */
+    flex: 0.8;
   }
 
-  /* ── Card destacada (Web personalizada) ── */
+  /* Card destacada */
   .servicio-card--featured .servicio-card__inner {
     position: relative;
   }
@@ -342,7 +297,7 @@
     border-radius: 9999px;
   }
 
-  /* ── Inner de la card ── */
+  /* Inner */
   .servicio-card__inner {
     padding: 2.5rem 2rem;
     display: flex;
@@ -353,12 +308,12 @@
 
   @media (min-width: 768px) {
     .servicio-card__inner {
-      padding: 3rem 2.5rem 3rem;
+      padding: 3rem 2.5rem;
       min-height: 380px;
     }
   }
 
-  /* ── Número + flecha ── */
+  /* Número + flecha */
   .servicio-card__top {
     display: flex;
     justify-content: space-between;
@@ -385,7 +340,7 @@
     transform: translate(2px, -2px);
   }
 
-  /* ── Título ── */
+  /* Título */
   .servicio-card__title {
     font-family: var(--font-display);
     font-weight: 900;
@@ -395,16 +350,16 @@
     color: var(--color-text-hero);
   }
 
-  /* ── Descripción ── */
+  /* Descripción */
   .servicio-card__desc {
     font-family: var(--font-body);
     font-size: clamp(0.9rem, 1.8vw, 0.98rem);
     line-height: 1.7;
     color: rgba(245, 238, 230, 0.6);
-    flex: 1; /* empuja el CTA al fondo */
+    flex: 1;
   }
 
-  /* ── Botón con copy cambiante ── */
+  /* Botón con copy cambiante */
   .servicio-card__cta.smart-btn {
     display: inline-flex;
     align-items: center;
@@ -420,10 +375,8 @@
     border: 1.5px solid var(--color-accent-lime);
     border-radius: var(--radius-btn);
     text-decoration: none;
-    overflow: hidden; /* para el clip del texto animado */
-    transition:
-      background 0.2s ease,
-      color 0.2s ease;
+    overflow: hidden;
+    transition: background 0.2s ease, color 0.2s ease;
     margin-top: auto;
   }
 
@@ -433,13 +386,9 @@
     color: var(--color-text-dark);
   }
 
-  /* El texto del botón tiene overflow:hidden para el swap animation */
-  .smart-btn__text {
-    display: inline-block;
-    /* JS controla opacity/transform */
-  }
+  .smart-btn__text { display: inline-block; }
 
-  /* ── Texto fantasma de fondo ── */
+  /* Texto fantasma de fondo */
   .servicios__ghost {
     position: absolute;
     bottom: -1rem;

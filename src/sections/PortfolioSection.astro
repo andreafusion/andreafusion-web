@@ -1,7 +1,6 @@
 ---
 // src/sections/PortfolioSection.astro
 // Home — 4 proyectos destacados en grid.
-// Datos importados desde src/data/projects.ts
 
 import { featuredProjects } from '../data/projects';
 import BugSquasher from '../components/BugSquasher.astro';
@@ -36,22 +35,18 @@ import BugSquasher from '../components/BugSquasher.astro';
           target="_blank"
           rel="noopener noreferrer"
           class="proyecto-card"
-          aria-label={`Ver proyecto: ${p.titulo}`}
+          aria-label={`Ver proyecto: ${p.titulo} (abre en nueva pestaña)`}
         >
-          <!-- Placeholder visual con color de marca -->
           <div
             class="proyecto-card__img"
             style={`background-color: ${p.color};`}
           >
-            <!-- Número de año decorativo -->
             <span class="proyecto-card__year">{p.año}</span>
-            <!-- Acento de color de marca -->
             <span
               class="proyecto-card__dot"
               style={`background: ${p.colorAccent};`}
               aria-hidden="true"
             ></span>
-            <!-- Overlay de hover -->
             <div class="proyecto-card__overlay">
               <span class="proyecto-card__ver">Ver proyecto ↗</span>
             </div>
@@ -72,11 +67,6 @@ import BugSquasher from '../components/BugSquasher.astro';
       ))}
     </div>
 
-    <!--
-      BUG SQUASHER — interacción inesperada.
-      Aparece discreto en la esquina inferior derecha de la sección,
-      3 segundos después de cargar. Solo visible una vez por sesión.
-    -->
     <BugSquasher />
 
   </div>
@@ -84,10 +74,9 @@ import BugSquasher from '../components/BugSquasher.astro';
 
 <style>
   .portfolio {
-    position: relative;   /* ← necesario para que BugSquasher se posicione aquí */
+    position: relative;
     z-index: 16;
     background: #fff;
-    will-change: transform;
   }
 
   .portfolio__inner {
@@ -139,7 +128,6 @@ import BugSquasher from '../components/BugSquasher.astro';
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--color-text-dark);
-    text-decoration: none;
     padding-bottom: 2px;
     border-bottom: 2px solid var(--color-accent-lime);
     align-self: flex-start;
@@ -164,7 +152,6 @@ import BugSquasher from '../components/BugSquasher.astro';
     text-decoration: none;
   }
 
-  /* Imagen placeholder */
   .proyecto-card__img {
     position: relative;
     width: 100%;
@@ -200,7 +187,6 @@ import BugSquasher from '../components/BugSquasher.astro';
     z-index: 1;
   }
 
-  /* Overlay hover */
   .proyecto-card__overlay {
     position: absolute;
     inset: 0;
@@ -226,7 +212,6 @@ import BugSquasher from '../components/BugSquasher.astro';
     letter-spacing: 0.04em;
   }
 
-  /* Info debajo de la imagen */
   .proyecto-card__info {
     display: flex;
     flex-direction: column;
@@ -261,7 +246,6 @@ import BugSquasher from '../components/BugSquasher.astro';
     font-weight: 500;
   }
 
-  /* Tags */
   .proyecto-card__tags {
     display: flex;
     flex-wrap: wrap;

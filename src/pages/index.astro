@@ -1,62 +1,46 @@
 ---
 // src/pages/index.astro
-import BaseLayout          from '../layouts/BaseLayout.astro';
-import HeroSection         from '../sections/HeroSection.astro';
-import ManifiestoSection   from '../sections/ManifiestoSection.astro';
-import LogosSection        from '../sections/LogosSection.astro';
-import ResultadosSection   from '../sections/ResultadosSection.astro';
-import ServiciosSection    from '../sections/ServiciosSection.astro';
-import TestimoniosSection  from '../sections/TestimoniosSection.astro';
-import PortfolioSection    from '../sections/PortfolioSection.astro';
-import CTAFinalSection     from '../sections/CTAFinalSection.astro';
-
+import BaseLayout         from '../layouts/BaseLayout.astro';
+import HeroSection        from '../sections/HeroSection.astro';
+import ManifiestoSection  from '../sections/ManifiestoSection.astro';
+import LogosSection       from '../sections/LogosSection.astro';
+import ResultadosSection  from '../sections/ResultadosSection.astro';
+import ServiciosSection   from '../sections/ServiciosSection.astro';
+import TestimoniosSection from '../sections/TestimoniosSection.astro';
+import PortfolioSection   from '../sections/PortfolioSection.astro';
+import CTAFinalSection    from '../sections/CTAFinalSection.astro';
 ---
 
 <BaseLayout
   title="AndreaFusion — Diseño y Desarrollo Web"
   description="Webs con personalidad que convierten. Diseño editorial, desarrollo frontend y estrategia digital para marcas con ambición."
 >
+  <!--
+    LAYERED SCROLL: el hero es sticky (capa base, z-index: auto).
+    Las secciones entran encima con z-index creciente (11 → 17),
+    formando un efecto de tarjetas apiladas al hacer scroll.
+  -->
   <main>
-    <!--
-      LAYERED SCROLL:
-      01 Hero sticky (z-index auto) → capa base
-      02+ Secciones con z-index creciente entran encima como tarjetas apiladas.
-
-      
-    -->
-
     <!-- 01 · Hero (sticky, capa base) -->
     <HeroSection />
 
-    
     <!-- 02 · Manifiesto -->
     <ManifiestoSection />
 
-   
     <!-- 03 · Logos / Prueba social -->
     <LogosSection />
-
-    
 
     <!-- 04 · Resultados -->
     <ResultadosSection />
 
-   
-
     <!-- 05 · Servicios -->
     <ServiciosSection />
-
-  
 
     <!-- 06 · Testimonios -->
     <TestimoniosSection />
 
-   
-
     <!-- 07 · Portfolio highlights -->
     <PortfolioSection />
-
-    
 
     <!-- 08 · CTA Final + Footer -->
     <CTAFinalSection />

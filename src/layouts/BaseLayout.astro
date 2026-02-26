@@ -5,16 +5,20 @@ import NavBar from '../components/NavBar.astro';
 import CursorEffect from '../components/CursorEffect.astro';
 
 interface Props {
-  title?: string;
+  title?:       string;
   description?: string;
 }
 
 const {
-  title = 'AndreaFusion — Diseño y Desarrollo Web',
+  title       = 'AndreaFusion — Diseño y Desarrollo Web',
   description = 'Webs con personalidad que convierten. Diseño editorial, desarrollo frontend y estrategia digital para marcas con ambición.',
 } = Astro.props;
 
 const siteUrl = 'https://andreafusion.com';
+
+// URL de Google Fonts: misma cadena que antes, sin el @import de CSS
+const FONTS_URL =
+  'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&family=Caveat:wght@600&display=swap';
 ---
 
 <!doctype html>
@@ -25,17 +29,43 @@ const siteUrl = 'https://andreafusion.com';
     <meta name="description" content={description} />
     <meta name="theme-color" content="#3D1A5C" />
 
+    <!-- Open Graph -->
     <meta property="og:title"       content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type"        content="website" />
     <meta property="og:url"         content={siteUrl} />
 
+    <!-- Twitter Card -->
     <meta name="twitter:card"        content="summary_large_image" />
     <meta name="twitter:title"       content={title} />
     <meta name="twitter:description" content={description} />
 
+    <!--
+      FUENTES — carga no bloqueante:
+      1. preconnect para los dos dominios de Google Fonts
+      2. preload del CSS de fuentes (as="style")
+      3. stylesheet cargado con onload trick para no bloquear render
+      4. <noscript> fallback para navegadores sin JS
+
+      IMPORTANTE: NO usar @import en global.css — es síncrono y bloquea el render.
+    -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href={FONTS_URL}
+    />
+    <link
+      rel="stylesheet"
+      href={FONTS_URL}
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link rel="stylesheet" href={FONTS_URL} />
+    </noscript>
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <title>{title}</title>

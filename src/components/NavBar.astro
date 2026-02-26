@@ -47,6 +47,21 @@
   const burger = nav.querySelector<HTMLButtonElement>('.nav__burger')!;
   const mobile = document.getElementById('nav-mobile')!;
 
+  // ── Helpers ──
+  const openMenu = () => {
+    burger.setAttribute('aria-expanded', 'true');
+    mobile.setAttribute('aria-hidden', 'false');
+    mobile.classList.add('is-open');
+    document.body.classList.add('nav-open');
+  };
+
+  const closeMenu = () => {
+    burger.setAttribute('aria-expanded', 'false');
+    mobile.setAttribute('aria-hidden', 'true');
+    mobile.classList.remove('is-open');
+    document.body.classList.remove('nav-open');
+  };
+
   // ── Scroll: clase is-scrolled a partir de 60px ──
   const onScroll = () => {
     nav.classList.toggle('is-scrolled', window.scrollY > 60);
@@ -56,30 +71,28 @@
 
   // ── Hamburguesa ──
   burger.addEventListener('click', () => {
-    const open = burger.getAttribute('aria-expanded') === 'true';
-    burger.setAttribute('aria-expanded', String(!open));
-    mobile.setAttribute('aria-hidden',   String(open));
-    mobile.classList.toggle('is-open', !open);
-    document.body.classList.toggle('nav-open', !open);
+    const isOpen = burger.getAttribute('aria-expanded') === 'true';
+    isOpen ? closeMenu() : openMenu();
   });
 
   // ── Cerrar al hacer click en enlace ──
   mobile.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      burger.setAttribute('aria-expanded', 'false');
-      mobile.setAttribute('aria-hidden',   'true');
-      mobile.classList.remove('is-open');
-      document.body.classList.remove('nav-open');
-    });
+    a.addEventListener('click', closeMenu);
+  });
+
+  // ── Cerrar con tecla Escape (accesibilidad) ──
+  document.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (e.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') {
+      closeMenu();
+      burger.focus();
+    }
   });
 
   // ── Lima como lenguaje activo:
   //    Marca el link que corresponde a la página actual ──
   const currentPath = window.location.pathname;
 
-  // Links del nav desktop
   nav.querySelectorAll<HTMLAnchorElement>('.nav__link:not(.nav__link--cta)').forEach(a => {
-    // Coincidencia exacta o prefijo (para subrutas /portfolio/proyecto)
     const href = new URL(a.href).pathname;
     if (currentPath === href || (href !== '/' && currentPath.startsWith(href))) {
       a.classList.add('is-active');
@@ -87,7 +100,6 @@
     }
   });
 
-  // Links del menú móvil
   mobile.querySelectorAll<HTMLAnchorElement>('a').forEach(a => {
     const href = new URL(a.href).pathname;
     if (currentPath === href || (href !== '/' && currentPath.startsWith(href))) {
@@ -177,7 +189,6 @@
     position: relative;
   }
 
-  /* Línea lima bajo el link: lenguaje de interacción */
   .nav__link::after {
     content: '';
     position: absolute;
@@ -197,7 +208,6 @@
     width: 100%;
   }
 
-  /* Link activo de la página actual */
   .nav__link.is-active {
     color: var(--color-text-hero);
   }
@@ -294,14 +304,9 @@
     color: var(--color-text-hero);
     text-decoration: none;
     transition: color 0.2s ease;
-    position: relative;
   }
 
-  /* Link activo en menú móvil */
-  .nav-mobile a.is-active {
-    color: var(--color-accent-lime);
-  }
-
+  .nav-mobile a.is-active,
   .nav-mobile a:hover {
     color: var(--color-accent-lime);
   }

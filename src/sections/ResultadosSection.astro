@@ -1,6 +1,6 @@
 ---
 // src/sections/ResultadosSection.astro
-// Fondo uva profundo (oscuro). Bullets con iconos y texto en crema/lima.
+// Fondo uva profundo. Bullets con iconos y texto en crema/lima.
 ---
 
 <section class="resultados" id="resultados">
@@ -39,7 +39,6 @@
 
   </div>
 
-  <!-- Fondo decorativo: gran tipografía fantasma -->
   <p class="resultados__ghost" aria-hidden="true">WEB</p>
 </section>
 
@@ -49,7 +48,6 @@
     z-index: 13;
     background: var(--color-bg-hero);
     overflow: hidden;
-    will-change: transform;
   }
 
   .resultados__inner {
@@ -61,15 +59,6 @@
     display: flex;
     flex-direction: column;
     gap: 3rem;
-  }
-
-  .section-num-light {
-    font-family: var(--font-body);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    color: var(--color-accent-pink);
-    text-transform: uppercase;
   }
 
   .resultados__title {
@@ -151,7 +140,7 @@
     transform: translateY(-2px);
   }
 
-  /* ── Tipografía fantasma de fondo ── */
+  /* ── Tipografía fantasma ── */
   .resultados__ghost {
     position: absolute;
     bottom: -2rem;
@@ -178,22 +167,8 @@
       align-items: start;
     }
 
-    .resultados__header {
-      grid-column: 1;
-      grid-row: 1;
-    }
-
-    .resultados__list {
-      grid-column: 1;
-      grid-row: 2;
-    }
-
-    .resultados__cta {
-      grid-column: 1;
-      grid-row: 3;
-      margin-top: 1rem;
-    }
-
-    /* Espacio derecho libre para la decoración ghost */
+    .resultados__header { grid-column: 1; grid-row: 1; }
+    .resultados__list   { grid-column: 1; grid-row: 2; }
+    .resultados__cta    { grid-column: 1; grid-row: 3; margin-top: 1rem; }
   }
 </style>

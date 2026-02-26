@@ -1,71 +1,68 @@
 ---
 // src/pages/tienda.astro
-// Shop de plantillas, recursos y herramientas digitales.
-// Cards con tilt 3D sutil al hover/touch (unexpected interaction).
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-// Tipos de producto
 interface Producto {
-  id: string;
-  titulo: string;
-  tipo: 'Plantilla' | 'Recurso' | 'Kit' | 'Guía';
+  id:          string;
+  titulo:      string;
+  tipo:        'Plantilla' | 'Recurso' | 'Kit' | 'Guía';
   descripcion: string;
-  precio: number | null;        // null = próximamente
-  precioAntes?: number;         // precio tachado si hay descuento
-  tags: string[];
-  color: string;
+  precio:      number | null;
+  precioAntes?: number;
+  tags:        string[];
+  color:       string;
   colorAccent: string;
-  url?: string;                 // link de compra real (Gumroad, etc.)
-  nuevo?: boolean;
-  disponible: boolean;
+  url?:        string;
+  nuevo?:      boolean;
+  disponible:  boolean;
 }
 
 const productos: Producto[] = [
   {
-    id: 'kit-landing-astro',
-    titulo: 'Kit Landing Astro',
-    tipo: 'Kit',
+    id:          'kit-landing-astro',
+    titulo:      'Kit Landing Astro',
+    tipo:        'Kit',
     descripcion: 'Todo lo que necesitas para lanzar una landing profesional con Astro en menos de un día. Componentes, estilos y estructura lista.',
-    precio: 29,
-    tags: ['Astro', 'HTML/CSS', 'Mobile-first'],
-    color: '#EDE4F5',
+    precio:      29,
+    tags:        ['Astro', 'HTML/CSS', 'Mobile-first'],
+    color:       '#EDE4F5',
     colorAccent: '#7A3A9A',
-    disponible: false,
-    nuevo: true,
+    disponible:  false,
+    nuevo:       true,
   },
   {
-    id: 'plantilla-portfolio',
-    titulo: 'Portfolio Creativo',
-    tipo: 'Plantilla',
+    id:          'plantilla-portfolio',
+    titulo:      'Portfolio Creativo',
+    tipo:        'Plantilla',
     descripcion: 'Plantilla de portfolio para diseñadores y creativos. Editorial, oscura, animada. Astro + CSS puro, sin dependencias pesadas.',
-    precio: 19,
-    tags: ['Astro', 'Portfolio', 'Dark mode'],
-    color: '#1a0a2e',
+    precio:      19,
+    tags:        ['Astro', 'Portfolio', 'Dark mode'],
+    color:       '#1a0a2e',
     colorAccent: '#c8f135',
-    disponible: false,
+    disponible:  false,
   },
   {
-    id: 'guia-mobile-first',
-    titulo: 'Guía Mobile-First',
-    tipo: 'Guía',
+    id:          'guia-mobile-first',
+    titulo:      'Guía Mobile-First',
+    tipo:        'Guía',
     descripcion: 'Todo lo que aprendí diseñando y desarrollando webs que funcionan primero en móvil. PDF + checklist + ejemplos reales.',
-    precio: 9,
-    tags: ['PDF', 'Checklist', 'CSS'],
-    color: '#f5eee6',
+    precio:      9,
+    tags:        ['PDF', 'Checklist', 'CSS'],
+    color:       '#f5eee6',
     colorAccent: '#3d1a5c',
-    disponible: false,
-    nuevo: true,
+    disponible:  false,
+    nuevo:       true,
   },
   {
-    id: 'kit-branding-css',
-    titulo: 'Kit Tokens de Diseño',
-    tipo: 'Kit',
+    id:          'kit-branding-css',
+    titulo:      'Kit Tokens de Diseño',
+    tipo:        'Kit',
     descripcion: 'Sistema de design tokens en CSS para empezar proyectos con coherencia desde el minuto 0. Colores, tipografía, espaciado y más.',
-    precio: null,
-    tags: ['CSS Variables', 'Design System'],
-    color: '#D4EAE0',
+    precio:      null,
+    tags:        ['CSS Variables', 'Design System'],
+    color:       '#D4EAE0',
     colorAccent: '#2D7A5F',
-    disponible: false,
+    disponible:  false,
   },
 ];
 
@@ -83,7 +80,6 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
     ══════════════════════════════════════ -->
     <header class="tienda-hero">
       <div class="tienda-hero__inner">
-
         <p class="section-num">Shop</p>
 
         <h1 class="tienda-hero__title">
@@ -96,15 +92,12 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
           y guías para construir webs mejores, más rápido.
         </p>
 
-        <!-- Badge de estado -->
         <div class="tienda-hero__badge">
           <span class="tienda-hero__dot" aria-hidden="true"></span>
           <span>Primeros productos llegando pronto</span>
         </div>
-
       </div>
 
-      <!-- Decoración -->
       <div class="tienda-hero__deco" aria-hidden="true"></div>
     </header>
 
@@ -114,13 +107,11 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
     <div class="tienda-body">
       <div class="tienda-body__inner">
 
-        <!-- Barra: contador + filtros -->
         <div class="tienda-topbar">
           <p class="tienda-topbar__count">
             <span id="product-count">{productos.length}</span> recursos
           </p>
-
-          <nav class="tienda-filters" aria-label="Filtrar por categoría" role="navigation">
+          <nav class="tienda-filters" aria-label="Filtrar por categoría">
             {categorias.map((cat, i) => (
               <button
                 class={`tienda-filter${i === 0 ? ' is-active' : ''}`}
@@ -133,40 +124,25 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
           </nav>
         </div>
 
-        <!-- Grid de productos -->
         <ul class="tienda-grid" role="list" id="tienda-grid">
-
           {productos.map((p) => (
             <li
               class="producto-wrap"
               data-tipo={p.tipo}
               data-disponible={p.disponible}
             >
-              <!--
-                UNEXPECTED INTERACTION: card 3D tilt
-                Se aplica al hacer hover/touch.
-                JS gestiona el efecto perspectiva.
-              -->
               <article
                 class={`producto-card${!p.disponible ? ' producto-card--soon' : ''}`}
                 data-tilt
                 style={`--c: ${p.color}; --a: ${p.colorAccent};`}
                 aria-label={p.titulo + (p.disponible ? '' : ' — Próximamente')}
               >
-                <!-- Visual superior -->
                 <div class="producto-card__visual">
-                  <!-- Blob de color -->
                   <div class="producto-card__blob" aria-hidden="true"></div>
-
-                  <!-- Etiqueta tipo -->
                   <span class="producto-card__tipo">{p.tipo}</span>
-
-                  <!-- Badge nuevo -->
                   {p.nuevo && (
                     <span class="producto-card__nuevo" aria-label="Producto nuevo">Nuevo</span>
                   )}
-
-                  <!-- Badge próximamente -->
                   {!p.disponible && (
                     <div class="producto-card__overlay" aria-hidden="true">
                       <span>Próximamente</span>
@@ -174,19 +150,16 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
                   )}
                 </div>
 
-                <!-- Info -->
                 <div class="producto-card__body">
                   <h2 class="producto-card__titulo">{p.titulo}</h2>
                   <p class="producto-card__desc">{p.descripcion}</p>
 
-                  <!-- Tags -->
                   <ul class="producto-card__tags" aria-label="Tecnologías">
                     {p.tags.map(tag => (
                       <li class="producto-card__tag">{tag}</li>
                     ))}
                   </ul>
 
-                  <!-- Precio + CTA -->
                   <div class="producto-card__footer">
                     <div class="producto-card__precio-wrap">
                       {p.precio !== null ? (
@@ -226,18 +199,13 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
                     )}
                   </div>
                 </div>
-
               </article>
             </li>
           ))}
-
         </ul>
 
-        <!-- CTA bottom -->
         <div class="tienda-cta">
-          <p class="tienda-cta__text">
-            ¿Buscas algo que no está aquí?
-          </p>
+          <p class="tienda-cta__text">¿Buscas algo que no está aquí?</p>
           <p class="tienda-cta__sub">
             Puedo crear recursos personalizados para tu equipo o proyecto.
           </p>
@@ -251,16 +219,13 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
 </BaseLayout>
 
 <script>
-  // ────────────────────────────────────────────
-  // FILTROS POR CATEGORÍA
-  // ────────────────────────────────────────────
-  const filterBtns  = document.querySelectorAll<HTMLButtonElement>('.tienda-filter');
-  const productos   = document.querySelectorAll<HTMLElement>('.producto-wrap');
-  const countEl     = document.getElementById('product-count');
+  // ── FILTROS ──
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.tienda-filter');
+  const productos  = document.querySelectorAll<HTMLElement>('.producto-wrap');
+  const countEl    = document.getElementById('product-count');
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      // Actualizar estado visual
       filterBtns.forEach(b => {
         b.classList.remove('is-active');
         b.setAttribute('aria-pressed', 'false');
@@ -272,8 +237,7 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
       let visible = 0;
 
       productos.forEach(p => {
-        const tipo = p.dataset.tipo ?? '';
-        const show = filter === 'Todos' || tipo === filter;
+        const show = filter === 'Todos' || p.dataset.tipo === filter;
         p.style.display = show ? '' : 'none';
         if (show) visible++;
       });
@@ -282,58 +246,40 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
     });
   });
 
-  // ────────────────────────────────────────────
-  // CARD 3D TILT (unexpected interaction)
-  // Solo en dispositivos pointer:fine (mouse)
-  // Perspectiva sutil, no agresiva. Max ±8deg.
-  // ────────────────────────────────────────────
-  const isCoarse = window.matchMedia('(pointer: coarse)').matches;
+  // ── CARD 3D TILT — solo en pointer:fine, sin reduced-motion ──
+  const isCoarse       = window.matchMedia('(pointer: coarse)').matches;
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (!isCoarse && !prefersReduced) {
-    const tiltCards = document.querySelectorAll<HTMLElement>('[data-tilt]');
-
-    tiltCards.forEach(card => {
+    document.querySelectorAll<HTMLElement>('[data-tilt]').forEach(card => {
       card.addEventListener('mousemove', (e: MouseEvent) => {
-        const rect   = card.getBoundingClientRect();
-        const cx     = rect.left + rect.width  / 2;
-        const cy     = rect.top  + rect.height / 2;
-        const dx     = (e.clientX - cx) / (rect.width  / 2); // -1 a 1
-        const dy     = (e.clientY - cy) / (rect.height / 2);
-
-        const rotX = -dy * 6; // max 6deg
-        const rotY =  dx * 6;
-
-        card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.02)`;
+        const rect = card.getBoundingClientRect();
+        const dx   = (e.clientX - rect.left  - rect.width  / 2) / (rect.width  / 2);
+        const dy   = (e.clientY - rect.top   - rect.height / 2) / (rect.height / 2);
+        card.style.transform = `perspective(800px) rotateX(${-dy * 6}deg) rotateY(${dx * 6}deg) scale(1.02)`;
       });
 
       card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
         card.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        card.style.transform  = '';
         setTimeout(() => { card.style.transition = ''; }, 500);
       });
     });
   }
 
-  // ────────────────────────────────────────────
-  // SMART BUTTONS: copy cambiante al hover
-  // ────────────────────────────────────────────
-  const smartBtns = document.querySelectorAll<HTMLElement>('.smart-btn');
-
-  smartBtns.forEach(btn => {
+  // ── SMART BUTTONS ──
+  document.querySelectorAll<HTMLElement>('.smart-btn').forEach(btn => {
     const textEl    = btn.querySelector<HTMLElement>('.smart-btn__text');
-    const defText   = btn.dataset.default  ?? '';
-    const hoverText = btn.dataset.hover    ?? '';
-
+    const defText   = btn.dataset.default ?? '';
+    const hoverText = btn.dataset.hover   ?? '';
     if (!textEl) return;
 
     const swap = (to: string) => {
       textEl.style.transition = 'opacity 0.15s ease, transform 0.15s ease';
       textEl.style.opacity    = '0';
       textEl.style.transform  = 'translateY(-4px)';
-
       setTimeout(() => {
-        textEl.textContent = to;
+        textEl.textContent      = to;
         textEl.style.transition = 'none';
         textEl.style.transform  = 'translateY(4px)';
         textEl.getBoundingClientRect();
@@ -349,23 +295,20 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
     btn.addEventListener('blur',       () => swap(defText));
   });
 
-  // ────────────────────────────────────────────
-  // BOTÓN NOTIFÍCAME: feedback visual
-  // ────────────────────────────────────────────
+  // ── BOTÓN NOTIFÍCAME ──
   document.querySelectorAll<HTMLButtonElement>('.producto-card__btn--notify').forEach(btn => {
     btn.addEventListener('click', () => {
       const textEl = btn.querySelector<HTMLElement>('.smart-btn__text');
       if (textEl) {
         textEl.textContent = '✓ Te avisamos';
-        btn.disabled = true;
-        btn.style.opacity = '0.7';
+        btn.disabled       = true;
+        btn.style.opacity  = '0.7';
       }
     });
   });
 </script>
 
 <style>
-  /* ── Página base ── */
   .tienda-page {
     padding-top: 80px;
     background: #fff;
@@ -436,13 +379,13 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
     height: 7px;
     background: var(--color-accent-lime);
     border-radius: 50%;
-    animation: pulse 2.4s ease-in-out infinite;
     flex-shrink: 0;
+    animation: pulse 2.4s ease-in-out infinite;
   }
 
   @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(200, 241, 53, 0.5); }
-    50%       { box-shadow: 0 0 0 6px rgba(200, 241, 53, 0); }
+    0%, 100% { box-shadow: 0 0 0 0   rgba(200, 241, 53, 0.5); }
+    50%       { box-shadow: 0 0 0 6px rgba(200, 241, 53, 0);   }
   }
 
   .tienda-hero__deco {
@@ -492,7 +435,7 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
   }
 
   /* ══════════════════════════════════
-     TOPBAR: contador + filtros
+     TOPBAR
   ══════════════════════════════════ */
   .tienda-topbar {
     display: flex;
@@ -527,10 +470,7 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
     padding: 0.35em 1em;
     cursor: pointer;
     background: transparent;
-    transition:
-      border-color 0.2s ease,
-      color 0.2s ease,
-      background 0.2s ease;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
   }
 
   .tienda-filter:hover {
@@ -573,22 +513,17 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
     background: var(--color-bg-light);
     border-radius: 1.5rem;
     overflow: hidden;
-    text-decoration: none;
-    /* La transición del tilt la gestiona JS */
     transition: box-shadow 0.3s ease;
-    will-change: transform;
+    will-change: transform; /* solo en cards que usan tilt JS */
   }
 
   .producto-card:hover {
     box-shadow: 0 12px 40px rgba(61, 26, 92, 0.15);
   }
 
-  /* Estado "próximamente" */
-  .producto-card--soon {
-    opacity: 0.85;
-  }
+  .producto-card--soon { opacity: 0.85; }
 
-  /* ── Visual ── */
+  /* Visual */
   .producto-card__visual {
     position: relative;
     aspect-ratio: 16 / 9;
@@ -666,7 +601,7 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
     padding: 0.4em 1.1em;
   }
 
-  /* ── Body ── */
+  /* Body */
   .producto-card__body {
     padding: 1.5rem;
     display: flex;
@@ -709,7 +644,7 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
     letter-spacing: 0.04em;
   }
 
-  /* ── Footer: precio + CTA ── */
+  /* Footer: precio + CTA */
   .producto-card__footer {
     display: flex;
     align-items: center;
@@ -751,7 +686,6 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
     letter-spacing: 0.03em;
   }
 
-  /* ── Botón CTA de producto ── */
   .producto-card__btn.smart-btn {
     display: inline-flex;
     align-items: center;
@@ -783,6 +717,8 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
     cursor: default;
     transform: none;
   }
+
+  .smart-btn__text { display: inline-block; }
 
   /* ══════════════════════════════════
      CTA FINAL

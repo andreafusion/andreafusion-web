@@ -1,11 +1,8 @@
 ---
 // src/pages/contacto.astro
 // Formulario con Formspree (estático, sin backend).
-// Sustituye YOUR_FORM_ID por tu ID real de formspree.io
 import BaseLayout from '../layouts/BaseLayout.astro';
-// Bug fix: era 'https://formspree.io/f/xykdondo' (URL completa),
-// lo que generaba action="https://formspree.io/f/https://..." (rota).
-// Ahora solo guardamos el ID y construimos la URL en el action.
+
 const FORMSPREE_ID = 'xykdondo';
 ---
 
@@ -20,19 +17,15 @@ const FORMSPREE_ID = 'xykdondo';
     ══════════════════════════════════════ -->
     <header class="contacto-hero">
       <div class="contacto-hero__inner">
-
         <p class="section-num">Contacto</p>
-
         <h1 class="contacto-hero__title">
           Cuéntame qué<br>
           <em>estás creando.</em>
         </h1>
-
         <p class="contacto-hero__sub">
           Si tienes una idea, una web que ya no te representa o simplemente
           quieres algo nuevo, escríbeme y vemos si tiene sentido trabajar juntas.
         </p>
-
       </div>
       <div class="contacto-hero__deco" aria-hidden="true"></div>
     </header>
@@ -43,9 +36,8 @@ const FORMSPREE_ID = 'xykdondo';
     <div class="contacto-body">
       <div class="contacto-body__inner">
 
-        <!-- Columna izquierda: intro + alternativa -->
+        <!-- Columna izquierda -->
         <aside class="contacto-aside">
-
           <div class="contacto-aside__intro">
             <h2 class="contacto-aside__title">
               Sin presión ni <em>guiones.</em>
@@ -57,10 +49,8 @@ const FORMSPREE_ID = 'xykdondo';
             </p>
           </div>
 
-          <!-- Separador decorativo -->
           <div class="contacto-aside__sep" aria-hidden="true"></div>
 
-          <!-- Alternativa directa -->
           <div class="contacto-aside__direct">
             <p class="contacto-aside__direct-label">¿Prefieres algo rápido?</p>
             <p>Puedes escribirme directamente a:</p>
@@ -73,17 +63,14 @@ const FORMSPREE_ID = 'xykdondo';
             </a>
           </div>
 
-          <!-- Disponibilidad -->
           <div class="contacto-aside__avail">
             <span class="contacto-aside__dot" aria-hidden="true"></span>
             <p>Available worldwide. Based in Spain.</p>
           </div>
-
         </aside>
 
         <!-- Columna derecha: formulario -->
         <section class="contacto-form-wrap" aria-labelledby="form-heading">
-
           <h2 class="contacto-form-wrap__heading" id="form-heading">
             Envíame un mensaje
           </h2>
@@ -95,7 +82,6 @@ const FORMSPREE_ID = 'xykdondo';
             novalidate
             id="contact-form"
           >
-            <!-- Nombre -->
             <div class="form-field">
               <label class="form-label" for="nombre">Nombre</label>
               <input
@@ -109,7 +95,6 @@ const FORMSPREE_ID = 'xykdondo';
               />
             </div>
 
-            <!-- Email -->
             <div class="form-field">
               <label class="form-label" for="email">Email</label>
               <input
@@ -123,7 +108,6 @@ const FORMSPREE_ID = 'xykdondo';
               />
             </div>
 
-            <!-- Proyecto en pocas palabras -->
             <div class="form-field">
               <label class="form-label" for="proyecto">
                 Tu proyecto en pocas palabras
@@ -138,7 +122,6 @@ const FORMSPREE_ID = 'xykdondo';
               />
             </div>
 
-            <!-- Mensaje principal -->
             <div class="form-field">
               <label class="form-label" for="mensaje">
                 ¿Qué te gustaría crear ahora?
@@ -153,12 +136,11 @@ const FORMSPREE_ID = 'xykdondo';
               ></textarea>
             </div>
 
-            <!-- Anti-spam honeypot (oculto) -->
+            <!-- Anti-spam honeypot -->
             <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-            <!-- Redirect tras envío (Formspree) -->
+            <!-- Redirect tras envío -->
             <input type="hidden" name="_next" value="/contacto?enviado=true" />
 
-            <!-- Submit -->
             <div class="form-footer">
               <button class="form-submit" type="submit" id="form-submit">
                 <span class="form-submit__text">Enviar mensaje</span>
@@ -166,7 +148,6 @@ const FORMSPREE_ID = 'xykdondo';
               </button>
               <p class="form-note">Respondo normalmente en 24–48h.</p>
             </div>
-
           </form>
 
           <!-- Estado: enviado correctamente -->
@@ -175,7 +156,6 @@ const FORMSPREE_ID = 'xykdondo';
             <h3>¡Mensaje enviado!</h3>
             <p>Gracias por escribirme. Te respondo en 24–48h.</p>
           </div>
-
         </section>
 
       </div>
@@ -185,28 +165,27 @@ const FORMSPREE_ID = 'xykdondo';
 </BaseLayout>
 
 <script>
-// Mostrar estado enviado si viene de Formspree redirect
-if (window.location.search.includes('enviado=true')) {
-  const form    = document.getElementById('contact-form');
-  const success = document.getElementById('form-success');
-  if (form)    form.setAttribute('hidden', '');
-  if (success) success.removeAttribute('hidden');
-}
+  // Mostrar estado "enviado" si viene de redirect de Formspree
+  if (window.location.search.includes('enviado=true')) {
+    const form    = document.getElementById('contact-form');
+    const success = document.getElementById('form-success');
+    if (form)    form.setAttribute('hidden', '');
+    if (success) success.removeAttribute('hidden');
+  }
 
-// Feedback visual en el botón mientras se envía
-const form = document.getElementById('contact-form') as HTMLFormElement | null;
-const btn  = document.getElementById('form-submit') as HTMLButtonElement | null;
+  // Feedback visual en el botón al enviar
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const btn  = document.getElementById('form-submit')  as HTMLButtonElement | null;
 
-form?.addEventListener('submit', () => {
-  if (!btn) return;
-  btn.disabled = true;
-  const txt = btn.querySelector('.form-submit__text');
-  if (txt) txt.textContent = 'Enviando…';
-});
+  form?.addEventListener('submit', () => {
+    if (!btn) return;
+    btn.disabled = true;
+    const txt = btn.querySelector('.form-submit__text');
+    if (txt) txt.textContent = 'Enviando…';
+  });
 </script>
 
 <style>
-  /* ── Página base ── */
   .contacto-page {
     padding-top: 80px;
     background: #fff;
@@ -338,7 +317,6 @@ form?.addEventListener('submit', () => {
     color: var(--color-text-mid);
   }
 
-  /* Separador */
   .contacto-aside__sep {
     width: 3rem;
     height: 2px;
@@ -346,7 +324,6 @@ form?.addEventListener('submit', () => {
     border-radius: 9999px;
   }
 
-  /* Directa */
   .contacto-aside__direct {
     display: flex;
     flex-direction: column;
@@ -373,7 +350,6 @@ form?.addEventListener('submit', () => {
     font-size: clamp(0.85rem, 2vw, 1rem);
     font-weight: 700;
     color: var(--color-text-dark);
-    text-decoration: none;
     border-bottom: 2px solid var(--color-accent-lime);
     padding-bottom: 2px;
     word-break: break-all;
@@ -384,7 +360,6 @@ form?.addEventListener('submit', () => {
     color: var(--color-text-mid);
   }
 
-  /* Disponibilidad */
   .contacto-aside__avail {
     display: flex;
     align-items: center;
@@ -398,13 +373,12 @@ form?.addEventListener('submit', () => {
     border-radius: 50%;
     background: var(--color-accent-lime);
     flex-shrink: 0;
-    /* Pulso */
     animation: pulse 2.4s ease-in-out infinite;
   }
 
   @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(200, 241, 53, 0.5); }
-    50%       { box-shadow: 0 0 0 6px rgba(200, 241, 53, 0); }
+    0%, 100% { box-shadow: 0 0 0 0   rgba(200, 241, 53, 0.5); }
+    50%       { box-shadow: 0 0 0 6px rgba(200, 241, 53, 0);   }
   }
 
   .contacto-aside__avail p {
@@ -436,7 +410,6 @@ form?.addEventListener('submit', () => {
     letter-spacing: -0.01em;
   }
 
-  /* ── Campos ── */
   .contacto-form {
     display: flex;
     flex-direction: column;
@@ -492,7 +465,6 @@ form?.addEventListener('submit', () => {
     line-height: 1.65;
   }
 
-  /* ── Footer del form ── */
   .form-footer {
     display: flex;
     flex-direction: column;
@@ -546,12 +518,9 @@ form?.addEventListener('submit', () => {
     opacity: 0.7;
   }
 
-  /* ── Estado enviado ── */
   /*
-    FIX: El atributo HTML `hidden` añade display:none a nivel de user-agent,
-    pero el CSS scoped de Astro tiene mayor especificidad y lo sobreescribía
-    con display:flex, haciendo que la card fuera visible siempre.
-    Esta regla lo corrige explícitamente.
+    FIX: El atributo HTML `hidden` puede quedar sobreescrito por CSS scoped
+    de Astro. Esta regla lo garantiza explícitamente.
   */
   .form-success[hidden] { display: none !important; }
 
