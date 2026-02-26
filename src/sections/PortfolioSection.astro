@@ -4,6 +4,7 @@
 // Datos importados desde src/data/projects.ts
 
 import { featuredProjects } from '../data/projects';
+import BugSquasher from '../components/BugSquasher.astro';
 ---
 
 <section class="portfolio" id="portfolio">
@@ -71,12 +72,19 @@ import { featuredProjects } from '../data/projects';
       ))}
     </div>
 
+    <!--
+      BUG SQUASHER — interacción inesperada.
+      Aparece discreto en la esquina inferior derecha de la sección,
+      3 segundos después de cargar. Solo visible una vez por sesión.
+    -->
+    <BugSquasher />
+
   </div>
 </section>
 
 <style>
   .portfolio {
-    position: relative;
+    position: relative;   /* ← necesario para que BugSquasher se posicione aquí */
     z-index: 16;
     background: #fff;
     will-change: transform;

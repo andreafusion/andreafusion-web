@@ -54,14 +54,6 @@
   <!-- Decoración: círculo de acento lima -->
   <div class="manifiesto__circle" aria-hidden="true"></div>
 
-  <!--
-    CONECTOR LIME
-    Línea fina vertical que aparece al terminar la sección
-    y conecta visualmente con la siguiente. Muy editorial.
-  -->
-  <div class="manifiesto__connector" aria-hidden="true">
-    <div class="manifiesto__connector-line"></div>
-  </div>
 </section>
 
 <script>
@@ -121,27 +113,6 @@
     }
   }
 
-  // ── CONECTOR LIME: aparece cuando la sección sale del viewport ──
-  const connector = document.querySelector<HTMLElement>('.manifiesto__connector');
-  const section   = document.getElementById('manifiesto');
-
-    if (connector && section) {
-    const obs = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (!entry) return;
-
-        // Cuando menos del 20% de la sección es visible (scroll pasando)
-        if (entry.intersectionRatio < 0.2) {
-          connector.classList.add('is-visible');
-        } else {
-          connector.classList.remove('is-visible');
-        }
-      },
-      { threshold: [0, 0.2] }
-    );
-    obs.observe(section);
-  }
 </script>
 
 <style>
@@ -253,38 +224,6 @@
       transparent 70%
     );
     pointer-events: none;
-  }
-
-  /* ── Conector lime ── */
-  .manifiesto__connector {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    /* Sobresale fuera del section para conectar con la siguiente */
-    height: 3rem;
-    display: flex;
-    justify-content: center;
-    pointer-events: none;
-    z-index: 20;
-    /* Se mueve al z-index correcto para verse sobre la siguiente sección */
-  }
-
-  .manifiesto__connector-line {
-    width: 1.5px;
-    height: 100%;
-    background: linear-gradient(
-      to bottom,
-      var(--color-accent-lime),
-      transparent
-    );
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .manifiesto__connector.is-visible .manifiesto__connector-line {
-    transform: scaleY(1);
   }
 
   /* ── Desktop ── */
