@@ -122,15 +122,18 @@ h3 {
   margin-bottom: 1rem;
 }
 
-/* Sobre fondo claro (lila, blanco) */
+/* Sobre fondo claro (lila, blanco) — rosa suave */
 .section-num {
   color: var(--color-accent-pink);
 }
 
-/* Sobre fondo oscuro (uva) */
+/*
+  FIX: antes era idéntica a .section-num (mismo color, solo opacity 0.9).
+  Sobre fondo oscuro (uva) el rosa era ilegible. Ahora usa crema con opacidad
+  para que destaque correctamente sobre --color-bg-hero.
+*/
 .section-num-light {
-  color: var(--color-accent-pink);
-  opacity: 0.9;
+  color: rgba(245, 238, 230, 0.55); /* crema tenue — visible sobre uva */
 }
 
 /*

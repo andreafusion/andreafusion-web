@@ -3,7 +3,10 @@
 // Formulario con Formspree (estático, sin backend).
 // Sustituye YOUR_FORM_ID por tu ID real de formspree.io
 import BaseLayout from '../layouts/BaseLayout.astro';
-const FORMSPREE_ID = 'YOUR_FORM_ID';
+// Bug fix: era 'https://formspree.io/f/xykdondo' (URL completa),
+// lo que generaba action="https://formspree.io/f/https://..." (rota).
+// Ahora solo guardamos el ID y construimos la URL en el action.
+const FORMSPREE_ID = 'xykdondo';
 ---
 
 <BaseLayout
@@ -544,6 +547,14 @@ form?.addEventListener('submit', () => {
   }
 
   /* ── Estado enviado ── */
+  /*
+    FIX: El atributo HTML `hidden` añade display:none a nivel de user-agent,
+    pero el CSS scoped de Astro tiene mayor especificidad y lo sobreescribía
+    con display:flex, haciendo que la card fuera visible siempre.
+    Esta regla lo corrige explícitamente.
+  */
+  .form-success[hidden] { display: none !important; }
+
   .form-success {
     display: flex;
     flex-direction: column;

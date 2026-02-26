@@ -104,8 +104,15 @@ const stickers: Sticker[] = [
     /* z-index 5: sobre el texto del hero (z-index 3).
        La sección 2 tiene z-index 10 y los tapa al entrar. */
     z-index: 5;
-    /* SIN overflow:hidden — para que los stickers en los bordes no se corten */
-    overflow: visible;
+    /*
+      FIX: overflow era 'visible', lo que permitía que los stickers
+      se salieran del hero y solaparan secciones inferiores en móvil.
+      El hero padre DEBE tener position:relative + overflow:hidden.
+      Esta capa hereda ese contenedor; si el padre no lo tiene, añadir
+      overflow:hidden al hero en HeroSection.astro:
+        .hero { position: relative; overflow: hidden; }
+    */
+    overflow: hidden;
   }
 
   .sticker {
