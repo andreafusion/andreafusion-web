@@ -2,6 +2,7 @@
 // src/layouts/BaseLayout.astro
 import '../styles/global.css';
 import NavBar from '../components/NavBar.astro';
+import CursorEffect from '../components/CursorEffect.astro';
 
 interface Props {
   title?: string;
@@ -24,23 +25,25 @@ const siteUrl = 'https://andreafusion.com';
     <meta name="description" content={description} />
     <meta name="theme-color" content="#3D1A5C" />
 
-    <meta property="og:title" content={title} />
+    <meta property="og:title"       content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={siteUrl} />
+    <meta property="og:type"        content="website" />
+    <meta property="og:url"         content={siteUrl} />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content={title} />
     <meta name="twitter:description" content={description} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
     <title>{title}</title>
   </head>
   <body>
     <NavBar />
+    <!-- Cursor retro: solo activo en desktop con pointer:fine -->
+    <CursorEffect />
     <slot />
   </body>
 </html>

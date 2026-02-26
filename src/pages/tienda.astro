@@ -1,0 +1,841 @@
+---
+// src/pages/tienda.astro
+// Shop de plantillas, recursos y herramientas digitales.
+// Cards con tilt 3D sutil al hover/touch (unexpected interaction).
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Tipos de producto
+interface Producto {
+  id: string;
+  titulo: string;
+  tipo: 'Plantilla' | 'Recurso' | 'Kit' | 'Guía';
+  descripcion: string;
+  precio: number | null;        // null = próximamente
+  precioAntes?: number;         // precio tachado si hay descuento
+  tags: string[];
+  color: string;
+  colorAccent: string;
+  url?: string;                 // link de compra real (Gumroad, etc.)
+  nuevo?: boolean;
+  disponible: boolean;
+}
+
+const productos: Producto[] = [
+  {
+    id: 'kit-landing-astro',
+    titulo: 'Kit Landing Astro',
+    tipo: 'Kit',
+    descripcion: 'Todo lo que necesitas para lanzar una landing profesional con Astro en menos de un día. Componentes, estilos y estructura lista.',
+    precio: 29,
+    tags: ['Astro', 'HTML/CSS', 'Mobile-first'],
+    color: '#EDE4F5',
+    colorAccent: '#7A3A9A',
+    disponible: false,
+    nuevo: true,
+  },
+  {
+    id: 'plantilla-portfolio',
+    titulo: 'Portfolio Creativo',
+    tipo: 'Plantilla',
+    descripcion: 'Plantilla de portfolio para diseñadores y creativos. Editorial, oscura, animada. Astro + CSS puro, sin dependencias pesadas.',
+    precio: 19,
+    tags: ['Astro', 'Portfolio', 'Dark mode'],
+    color: '#1a0a2e',
+    colorAccent: '#c8f135',
+    disponible: false,
+  },
+  {
+    id: 'guia-mobile-first',
+    titulo: 'Guía Mobile-First',
+    tipo: 'Guía',
+    descripcion: 'Todo lo que aprendí diseñando y desarrollando webs que funcionan primero en móvil. PDF + checklist + ejemplos reales.',
+    precio: 9,
+    tags: ['PDF', 'Checklist', 'CSS'],
+    color: '#f5eee6',
+    colorAccent: '#3d1a5c',
+    disponible: false,
+    nuevo: true,
+  },
+  {
+    id: 'kit-branding-css',
+    titulo: 'Kit Tokens de Diseño',
+    tipo: 'Kit',
+    descripcion: 'Sistema de design tokens en CSS para empezar proyectos con coherencia desde el minuto 0. Colores, tipografía, espaciado y más.',
+    precio: null,
+    tags: ['CSS Variables', 'Design System'],
+    color: '#D4EAE0',
+    colorAccent: '#2D7A5F',
+    disponible: false,
+  },
+];
+
+const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
+---
+
+<BaseLayout
+  title="Tienda — AndreaFusion"
+  description="Plantillas, kits y recursos para diseñar y desarrollar webs mejores. Herramientas que uso yo misma en cada proyecto."
+>
+  <main class="tienda-page">
+
+    <!-- ══════════════════════════════════════
+         HERO
+    ══════════════════════════════════════ -->
+    <header class="tienda-hero">
+      <div class="tienda-hero__inner">
+
+        <p class="section-num">Shop</p>
+
+        <h1 class="tienda-hero__title">
+          Herramientas para webs
+          <em>que no parecen de plantilla.</em>
+        </h1>
+
+        <p class="tienda-hero__sub">
+          Recursos que uso yo misma en cada proyecto: plantillas, kits de diseño
+          y guías para construir webs mejores, más rápido.
+        </p>
+
+        <!-- Badge de estado -->
+        <div class="tienda-hero__badge">
+          <span class="tienda-hero__dot" aria-hidden="true"></span>
+          <span>Primeros productos llegando pronto</span>
+        </div>
+
+      </div>
+
+      <!-- Decoración -->
+      <div class="tienda-hero__deco" aria-hidden="true"></div>
+    </header>
+
+    <!-- ══════════════════════════════════════
+         CUERPO: filtros + grid
+    ══════════════════════════════════════ -->
+    <div class="tienda-body">
+      <div class="tienda-body__inner">
+
+        <!-- Barra: contador + filtros -->
+        <div class="tienda-topbar">
+          <p class="tienda-topbar__count">
+            <span id="product-count">{productos.length}</span> recursos
+          </p>
+
+          <nav class="tienda-filters" aria-label="Filtrar por categoría" role="navigation">
+            {categorias.map((cat, i) => (
+              <button
+                class={`tienda-filter${i === 0 ? ' is-active' : ''}`}
+                data-filter={cat}
+                aria-pressed={i === 0 ? 'true' : 'false'}
+              >
+                {cat}
+              </button>
+            ))}
+          </nav>
+        </div>
+
+        <!-- Grid de productos -->
+        <ul class="tienda-grid" role="list" id="tienda-grid">
+
+          {productos.map((p) => (
+            <li
+              class="producto-wrap"
+              data-tipo={p.tipo}
+              data-disponible={p.disponible}
+            >
+              <!--
+                UNEXPECTED INTERACTION: card 3D tilt
+                Se aplica al hacer hover/touch.
+                JS gestiona el efecto perspectiva.
+              -->
+              <article
+                class={`producto-card${!p.disponible ? ' producto-card--soon' : ''}`}
+                data-tilt
+                style={`--c: ${p.color}; --a: ${p.colorAccent};`}
+                aria-label={p.titulo + (p.disponible ? '' : ' — Próximamente')}
+              >
+                <!-- Visual superior -->
+                <div class="producto-card__visual">
+                  <!-- Blob de color -->
+                  <div class="producto-card__blob" aria-hidden="true"></div>
+
+                  <!-- Etiqueta tipo -->
+                  <span class="producto-card__tipo">{p.tipo}</span>
+
+                  <!-- Badge nuevo -->
+                  {p.nuevo && (
+                    <span class="producto-card__nuevo" aria-label="Producto nuevo">Nuevo</span>
+                  )}
+
+                  <!-- Badge próximamente -->
+                  {!p.disponible && (
+                    <div class="producto-card__overlay" aria-hidden="true">
+                      <span>Próximamente</span>
+                    </div>
+                  )}
+                </div>
+
+                <!-- Info -->
+                <div class="producto-card__body">
+                  <h2 class="producto-card__titulo">{p.titulo}</h2>
+                  <p class="producto-card__desc">{p.descripcion}</p>
+
+                  <!-- Tags -->
+                  <ul class="producto-card__tags" aria-label="Tecnologías">
+                    {p.tags.map(tag => (
+                      <li class="producto-card__tag">{tag}</li>
+                    ))}
+                  </ul>
+
+                  <!-- Precio + CTA -->
+                  <div class="producto-card__footer">
+                    <div class="producto-card__precio-wrap">
+                      {p.precio !== null ? (
+                        <>
+                          {p.precioAntes && (
+                            <span class="producto-card__precio-antes" aria-label={`Antes ${p.precioAntes}€`}>
+                              {p.precioAntes}€
+                            </span>
+                          )}
+                          <span class="producto-card__precio">{p.precio}€</span>
+                        </>
+                      ) : (
+                        <span class="producto-card__precio-soon">Gratis · Próximamente</span>
+                      )}
+                    </div>
+
+                    {p.disponible && p.url ? (
+                      <a
+                        href={p.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="producto-card__btn smart-btn"
+                        data-default="Conseguir"
+                        data-hover="Ir →"
+                      >
+                        <span class="smart-btn__text">Conseguir</span>
+                      </a>
+                    ) : (
+                      <button
+                        class="producto-card__btn producto-card__btn--notify smart-btn"
+                        data-default="Notifícame"
+                        data-hover="✓ Te aviso"
+                        aria-label={`Notificarme cuando ${p.titulo} esté disponible`}
+                      >
+                        <span class="smart-btn__text">Notifícame</span>
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+              </article>
+            </li>
+          ))}
+
+        </ul>
+
+        <!-- CTA bottom -->
+        <div class="tienda-cta">
+          <p class="tienda-cta__text">
+            ¿Buscas algo que no está aquí?
+          </p>
+          <p class="tienda-cta__sub">
+            Puedo crear recursos personalizados para tu equipo o proyecto.
+          </p>
+          <a href="/contacto" class="tienda-cta__btn">Cuéntame qué necesitas</a>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</BaseLayout>
+
+<script>
+  // ────────────────────────────────────────────
+  // FILTROS POR CATEGORÍA
+  // ────────────────────────────────────────────
+  const filterBtns  = document.querySelectorAll<HTMLButtonElement>('.tienda-filter');
+  const productos   = document.querySelectorAll<HTMLElement>('.producto-wrap');
+  const countEl     = document.getElementById('product-count');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Actualizar estado visual
+      filterBtns.forEach(b => {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-pressed', 'true');
+
+      const filter = btn.dataset.filter ?? 'Todos';
+      let visible = 0;
+
+      productos.forEach(p => {
+        const tipo = p.dataset.tipo ?? '';
+        const show = filter === 'Todos' || tipo === filter;
+        p.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+
+      if (countEl) countEl.textContent = String(visible);
+    });
+  });
+
+  // ────────────────────────────────────────────
+  // CARD 3D TILT (unexpected interaction)
+  // Solo en dispositivos pointer:fine (mouse)
+  // Perspectiva sutil, no agresiva. Max ±8deg.
+  // ────────────────────────────────────────────
+  const isCoarse = window.matchMedia('(pointer: coarse)').matches;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!isCoarse && !prefersReduced) {
+    const tiltCards = document.querySelectorAll<HTMLElement>('[data-tilt]');
+
+    tiltCards.forEach(card => {
+      card.addEventListener('mousemove', (e: MouseEvent) => {
+        const rect   = card.getBoundingClientRect();
+        const cx     = rect.left + rect.width  / 2;
+        const cy     = rect.top  + rect.height / 2;
+        const dx     = (e.clientX - cx) / (rect.width  / 2); // -1 a 1
+        const dy     = (e.clientY - cy) / (rect.height / 2);
+
+        const rotX = -dy * 6; // max 6deg
+        const rotY =  dx * 6;
+
+        card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.02)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        setTimeout(() => { card.style.transition = ''; }, 500);
+      });
+    });
+  }
+
+  // ────────────────────────────────────────────
+  // SMART BUTTONS: copy cambiante al hover
+  // ────────────────────────────────────────────
+  const smartBtns = document.querySelectorAll<HTMLElement>('.smart-btn');
+
+  smartBtns.forEach(btn => {
+    const textEl    = btn.querySelector<HTMLElement>('.smart-btn__text');
+    const defText   = btn.dataset.default  ?? '';
+    const hoverText = btn.dataset.hover    ?? '';
+
+    if (!textEl) return;
+
+    const swap = (to: string) => {
+      textEl.style.transition = 'opacity 0.15s ease, transform 0.15s ease';
+      textEl.style.opacity    = '0';
+      textEl.style.transform  = 'translateY(-4px)';
+
+      setTimeout(() => {
+        textEl.textContent = to;
+        textEl.style.transition = 'none';
+        textEl.style.transform  = 'translateY(4px)';
+        textEl.getBoundingClientRect();
+        textEl.style.transition = 'opacity 0.15s ease, transform 0.15s ease';
+        textEl.style.opacity    = '1';
+        textEl.style.transform  = 'translateY(0)';
+      }, 150);
+    };
+
+    btn.addEventListener('mouseenter', () => swap(hoverText));
+    btn.addEventListener('mouseleave', () => swap(defText));
+    btn.addEventListener('focus',      () => swap(hoverText));
+    btn.addEventListener('blur',       () => swap(defText));
+  });
+
+  // ────────────────────────────────────────────
+  // BOTÓN NOTIFÍCAME: feedback visual
+  // ────────────────────────────────────────────
+  document.querySelectorAll<HTMLButtonElement>('.producto-card__btn--notify').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const textEl = btn.querySelector<HTMLElement>('.smart-btn__text');
+      if (textEl) {
+        textEl.textContent = '✓ Te avisamos';
+        btn.disabled = true;
+        btn.style.opacity = '0.7';
+      }
+    });
+  });
+</script>
+
+<style>
+  /* ── Página base ── */
+  .tienda-page {
+    padding-top: 80px;
+    background: #fff;
+  }
+
+  /* ══════════════════════════════════
+     HERO
+  ══════════════════════════════════ */
+  .tienda-hero {
+    position: relative;
+    background: var(--color-bg-hero);
+    overflow: hidden;
+    padding: 4rem 1.5rem 5rem;
+  }
+
+  .tienda-hero__inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .tienda-hero__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2.8rem, 9vw, 7rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--color-text-hero);
+  }
+
+  .tienda-hero__title em {
+    display: block;
+    font-style: italic;
+    color: var(--color-accent-lime);
+  }
+
+  .tienda-hero__sub {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2.2vw, 1.1rem);
+    line-height: 1.75;
+    color: rgba(245, 238, 230, 0.65);
+    max-width: 50ch;
+  }
+
+  .tienda-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5em 1.2em;
+    background: rgba(200, 241, 53, 0.12);
+    border: 1px solid rgba(200, 241, 53, 0.25);
+    border-radius: 9999px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-accent-lime);
+    letter-spacing: 0.03em;
+    width: fit-content;
+  }
+
+  .tienda-hero__dot {
+    display: block;
+    width: 7px;
+    height: 7px;
+    background: var(--color-accent-lime);
+    border-radius: 50%;
+    animation: pulse 2.4s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(200, 241, 53, 0.5); }
+    50%       { box-shadow: 0 0 0 6px rgba(200, 241, 53, 0); }
+  }
+
+  .tienda-hero__deco {
+    position: absolute;
+    bottom: -6rem;
+    right: -6rem;
+    width: clamp(280px, 55vw, 500px);
+    height: clamp(280px, 55vw, 500px);
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(200, 241, 53, 0.1) 0%,
+      rgba(245, 184, 208, 0.07) 50%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  @media (min-width: 768px) {
+    .tienda-hero { padding: 6rem 4rem 7rem; }
+  }
+
+  /* ══════════════════════════════════
+     CUERPO
+  ══════════════════════════════════ */
+  .tienda-body {
+    background: #fff;
+    border-radius: var(--radius-card) var(--radius-card) 0 0;
+    box-shadow: var(--shadow-card);
+    margin-top: -2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .tienda-body__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .tienda-body__inner { padding: 4rem 4rem 7rem; }
+  }
+
+  /* ══════════════════════════════════
+     TOPBAR: contador + filtros
+  ══════════════════════════════════ */
+  .tienda-topbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .tienda-topbar__count {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--color-text-mid);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .tienda-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tienda-filter {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--color-text-mid);
+    border: 1.5px solid rgba(90, 58, 122, 0.18);
+    border-radius: 9999px;
+    padding: 0.35em 1em;
+    cursor: pointer;
+    background: transparent;
+    transition:
+      border-color 0.2s ease,
+      color 0.2s ease,
+      background 0.2s ease;
+  }
+
+  .tienda-filter:hover {
+    border-color: var(--color-accent-lime);
+    color: var(--color-text-dark);
+  }
+
+  .tienda-filter.is-active {
+    background: var(--color-bg-light);
+    border-color: var(--color-text-mid);
+    color: var(--color-text-dark);
+  }
+
+  /* ══════════════════════════════════
+     GRID DE PRODUCTOS
+  ══════════════════════════════════ */
+  .tienda-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 560px) {
+    .tienda-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  }
+
+  @media (min-width: 1024px) {
+    .tienda-grid { grid-template-columns: repeat(4, 1fr); gap: 1.75rem; }
+  }
+
+  /* ══════════════════════════════════
+     TARJETA DE PRODUCTO
+  ══════════════════════════════════ */
+  .producto-wrap { display: contents; }
+
+  .producto-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg-light);
+    border-radius: 1.5rem;
+    overflow: hidden;
+    text-decoration: none;
+    /* La transición del tilt la gestiona JS */
+    transition: box-shadow 0.3s ease;
+    will-change: transform;
+  }
+
+  .producto-card:hover {
+    box-shadow: 0 12px 40px rgba(61, 26, 92, 0.15);
+  }
+
+  /* Estado "próximamente" */
+  .producto-card--soon {
+    opacity: 0.85;
+  }
+
+  /* ── Visual ── */
+  .producto-card__visual {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background-color: var(--c, #EDE4F5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .producto-card__blob {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 70% 60% at 55% 45%,
+      color-mix(in srgb, var(--a, #7A3A9A) 25%, transparent),
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  .producto-card__tipo {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--a, #7A3A9A);
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 9999px;
+    padding: 0.3em 0.8em;
+    z-index: 2;
+  }
+
+  .producto-card__nuevo {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-family: var(--font-body);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-dark);
+    background: var(--color-accent-lime);
+    border-radius: 9999px;
+    padding: 0.3em 0.8em;
+    z-index: 2;
+  }
+
+  .producto-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(26, 10, 46, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+  }
+
+  .producto-card__overlay span {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245, 238, 230, 0.7);
+    border: 1px solid rgba(245, 238, 230, 0.25);
+    border-radius: 9999px;
+    padding: 0.4em 1.1em;
+  }
+
+  /* ── Body ── */
+  .producto-card__body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex: 1;
+  }
+
+  .producto-card__titulo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    color: var(--color-text-dark);
+    line-height: 1.15;
+  }
+
+  .producto-card__desc {
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--color-text-mid);
+    flex: 1;
+  }
+
+  .producto-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    list-style: none;
+  }
+
+  .producto-card__tag {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--color-text-mid);
+    background: rgba(90, 58, 122, 0.1);
+    border-radius: 9999px;
+    padding: 0.25em 0.65em;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Footer: precio + CTA ── */
+  .producto-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(90, 58, 122, 0.1);
+    margin-top: auto;
+  }
+
+  .producto-card__precio-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+
+  .producto-card__precio {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--color-text-dark);
+    letter-spacing: -0.02em;
+  }
+
+  .producto-card__precio-antes {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-text-mid);
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+
+  .producto-card__precio-soon {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-accent-lime);
+    letter-spacing: 0.03em;
+  }
+
+  /* ── Botón CTA de producto ── */
+  .producto-card__btn.smart-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.55em 1.2em;
+    background: var(--color-bg-hero);
+    color: var(--color-accent-lime);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    border-radius: 9999px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .producto-card__btn.smart-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(61, 26, 92, 0.2);
+  }
+
+  .producto-card__btn.smart-btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+    transform: none;
+  }
+
+  /* ══════════════════════════════════
+     CTA FINAL
+  ══════════════════════════════════ */
+  .tienda-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 3.5rem 1.5rem;
+    text-align: center;
+    background: var(--color-bg-light);
+    border-radius: 2rem;
+  }
+
+  .tienda-cta__text {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 900;
+    font-style: italic;
+    color: var(--color-text-dark);
+    letter-spacing: -0.02em;
+  }
+
+  .tienda-cta__sub {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--color-text-mid);
+    max-width: 40ch;
+    line-height: 1.6;
+  }
+
+  .tienda-cta__btn {
+    display: inline-flex;
+    margin-top: 0.5rem;
+    padding: 0.85em 2.2em;
+    background: var(--color-bg-hero);
+    color: var(--color-accent-lime);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    border-radius: 9999px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .tienda-cta__btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(61, 26, 92, 0.25);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tienda-hero__dot { animation: none; }
+    .producto-card    { will-change: auto; }
+  }
+</style>

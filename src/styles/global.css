@@ -11,7 +11,7 @@
   /* Colores */
   --color-bg-hero: #3d1a5c; /* Uva profundo */
   --color-bg-light: #ede4f5; /* Lila suave */
-  --color-accent-lime: #c8f135; /* Verde lima */
+  --color-accent-lime: #c8f135; /* Verde lima — el color que "vive" */
   --color-accent-pink: #f5b8d0; /* Rosa suave */
   --color-text-hero: #f5eee6; /* Crema */
   --color-text-dark: #1a0a2e; /* Morado muy oscuro */
@@ -108,7 +108,6 @@ h3 {
 
 /*
   Etiqueta de número de sección.
-  Usada en todas las secciones del home.
   Dos variantes: sobre fondo claro y sobre fondo oscuro.
 */
 .section-num,
@@ -122,43 +121,110 @@ h3 {
   margin-bottom: 1rem;
 }
 
-/* Sobre fondo claro (lila, blanco) — rosa suave */
+/* Sobre fondo claro (lila, blanco) → rosa */
 .section-num {
   color: var(--color-accent-pink);
 }
 
-/*
-  FIX: antes era idéntica a .section-num (mismo color, solo opacity 0.9).
-  Sobre fondo oscuro (uva) el rosa era ilegible. Ahora usa crema con opacidad
-  para que destaque correctamente sobre --color-bg-hero.
-*/
+/* Sobre fondo oscuro (uva) → crema tenue */
 .section-num-light {
-  color: rgba(245, 238, 230, 0.55); /* crema tenue — visible sobre uva */
+  color: rgba(245, 238, 230, 0.55);
 }
 
 /*
   Tarjeta de sección con efecto layered scroll.
-  Todas las secciones que "entran" sobre el hero
-  comparten este patrón visual.
 */
 .section-card-base {
   border-radius: var(--radius-card) var(--radius-card) 0 0;
   box-shadow: var(--shadow-card);
 }
 
-/* --- Scrollbar webkit --- */
+/* =============================================
+   VERDE LIMA COMO LENGUAJE DE INTERACCIÓN
+   No decoración. Feedback activo.
+   ============================================= */
+
+/*
+  Links de contenido (párrafos, asides, etc.)
+  El underline lima crece al hover.
+*/
+.content-link {
+  position: relative;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  text-decoration: none;
+}
+
+.content-link::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--color-accent-lime);
+  transition: width 0.25s ease;
+}
+
+.content-link:hover::after,
+.content-link:focus-visible::after {
+  width: 100%;
+}
+
+/*
+  Focus visible global: siempre lima.
+  Reemplaza el outline azul del browser.
+*/
+:focus-visible {
+  outline: 2.5px solid var(--color-accent-lime);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/*
+  Highlight de palabras clave en texto.
+  Usar <mark class="lime-mark"> en el HTML.
+*/
+.lime-mark {
+  background: rgba(200, 241, 53, 0.18);
+  color: inherit;
+  border-radius: 3px;
+  padding: 0.05em 0.2em;
+}
+
+/* =============================================
+   SCROLLBAR WEBKIT
+   ============================================= */
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--color-bg-hero);
 }
+
 ::-webkit-scrollbar-thumb {
-  background: var(--color-text-mid);
+  background: var(--color-accent-lime); /* lima en el scrollbar */
   border-radius: 99px;
+  opacity: 0.6;
 }
 
-/* --- Reduced motion --- */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-lime);
+}
+
+/* =============================================
+   SELECCIÓN DE TEXTO
+   Lima como color de selección.
+   ============================================= */
+::selection {
+  background: rgba(200, 241, 53, 0.35);
+  color: var(--color-text-dark);
+}
+
+/* =============================================
+   REDUCED MOTION
+   ============================================= */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -167,6 +233,7 @@ h3 {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+
   html {
     scroll-behavior: auto;
   }

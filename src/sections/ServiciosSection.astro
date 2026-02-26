@@ -1,241 +1,461 @@
 ---
 // src/sections/ServiciosSection.astro
-// Fondo lila suave. Tres servicios numerados 01/02/03.
-// Cards que se abren al hover/tap con descripción.
-
-interface Servicio {
-  num: string;
-  titulo: string;
-  desc: string;
-  href: string;
-}
-
-const servicios: Servicio[] = [
-  {
-    num: '01',
-    titulo: 'Auditoría web',
-    desc: 'Reviso tu web actual y te entrego mejoras claras en diseño, estructura y experiencia móvil. Ideal si sientes que tu página no refleja lo que ya eres.',
-    href: '/contacto#auditoria',
-  },
-  {
-    num: '02',
-    titulo: 'Landing estratégica',
-    desc: 'Diseño y desarrollo una landing ligera, estética y optimizada para convertir visitas en conversaciones reales. Pensada para lanzamientos, servicios o marcas personales.',
-    href: '/contacto#landing',
-  },
-  {
-    num: '03',
-    titulo: 'Web personalizada',
-    desc: 'Creamos juntas una web completa, diseñada a medida y desarrollada con foco en rendimiento, claridad y personalidad. Nada genérico, todo alineado contigo.',
-    href: '/contacto#web',
-  },
-];
+// Tres servicios con Focus Mode: al tocar/hover uno,
+// el resto se difumina y el activo se expande levemente.
+// UNEXPECTED INTERACTION: el botón "Quiero saber más" cambia
+// de copy al hover → "Hablemos →"
 ---
 
 <section class="servicios" id="servicios">
   <div class="servicios__inner">
 
+    <!-- Número de sección -->
+    <p class="section-num">05</p>
+
+    <!-- Cabecera -->
     <div class="servicios__header">
-      <p class="section-num" aria-hidden="true">05</p>
       <h2 class="servicios__title">
-        Trabajo contigo desde una mirada<br>
+        Trabajo contigo desde una mirada
         <em>estratégica, creativa y técnica.</em>
       </h2>
-      <p class="servicios__intro">
+      <p class="servicios__sub">
         Elige el nivel que mejor encaje contigo ahora mismo.
       </p>
     </div>
 
-    <div class="servicios__list">
-      {servicios.map((s) => (
-        <article class="servicio-card">
+    <!-- Grid de servicios -->
+    <ul class="servicios__list" role="list" id="servicios-list">
+
+      <!-- 01 · Auditoría -->
+      <li class="servicio-card" data-service="01" id="servicio-01">
+        <div class="servicio-card__inner">
           <div class="servicio-card__top">
-            <span class="servicio-card__num" aria-hidden="true">{s.num}</span>
-            <h3 class="servicio-card__titulo">{s.titulo}</h3>
+            <span class="servicio-card__num" aria-hidden="true">01</span>
             <span class="servicio-card__arrow" aria-hidden="true">↗</span>
           </div>
-          <p class="servicio-card__desc">{s.desc}</p>
-          <a href={s.href} class="servicio-card__link">
-            <span>Quiero saber más</span>
+          <h3 class="servicio-card__title">Auditoría web</h3>
+          <p class="servicio-card__desc">
+            Reviso tu web actual y te entrego mejoras claras en diseño,
+            estructura y experiencia móvil. Ideal si sientes que tu
+            página no refleja lo que ya eres.
+          </p>
+          <a
+            href="/contacto#auditoria"
+            class="servicio-card__cta smart-btn"
+            data-default="Quiero saber más"
+            data-hover="Hablemos →"
+            aria-label="Contactar sobre Auditoría web"
+          >
+            <span class="smart-btn__text">Quiero saber más</span>
           </a>
-        </article>
-      ))}
-    </div>
+        </div>
+      </li>
+
+      <!-- 02 · Landing -->
+      <li class="servicio-card" data-service="02" id="servicio-02">
+        <div class="servicio-card__inner">
+          <div class="servicio-card__top">
+            <span class="servicio-card__num" aria-hidden="true">02</span>
+            <span class="servicio-card__arrow" aria-hidden="true">↗</span>
+          </div>
+          <h3 class="servicio-card__title">Landing estratégica</h3>
+          <p class="servicio-card__desc">
+            Diseño y desarrollo una landing ligera, estética y optimizada
+            para convertir visitas en conversaciones reales. Pensada para
+            lanzamientos, servicios o marcas personales.
+          </p>
+          <a
+            href="/contacto#landing"
+            class="servicio-card__cta smart-btn"
+            data-default="Quiero saber más"
+            data-hover="Hablemos →"
+            aria-label="Contactar sobre Landing estratégica"
+          >
+            <span class="smart-btn__text">Quiero saber más</span>
+          </a>
+        </div>
+      </li>
+
+      <!-- 03 · Web personalizada -->
+      <li class="servicio-card servicio-card--featured" data-service="03" id="servicio-03">
+        <div class="servicio-card__inner">
+          <div class="servicio-card__top">
+            <span class="servicio-card__num" aria-hidden="true">03</span>
+            <span class="servicio-card__arrow" aria-hidden="true">↗</span>
+          </div>
+          <h3 class="servicio-card__title">Web personalizada</h3>
+          <p class="servicio-card__desc">
+            Creamos juntas una web completa, diseñada a medida y
+            desarrollada con foco en rendimiento, claridad y personalidad.
+            Nada genérico, todo alineado contigo.
+          </p>
+          <a
+            href="/contacto#web"
+            class="servicio-card__cta smart-btn"
+            data-default="Quiero saber más"
+            data-hover="Hablemos →"
+            aria-label="Contactar sobre Web personalizada"
+          >
+            <span class="smart-btn__text">Quiero saber más</span>
+          </a>
+        </div>
+      </li>
+
+    </ul>
+
+    <!-- Etiqueta flotante decorativa -->
+    <p class="servicios__ghost" aria-hidden="true">WEB</p>
 
   </div>
 </section>
 
+<script>
+  // ────────────────────────────────────────────
+  // FOCUS MODE
+  // Al hacer hover/focus/tap en una card:
+  //   - las demás se difuminan y encogen ligeramente
+  //   - la activa se expande un poco
+  // Al salir: todo vuelve al estado normal.
+  // ────────────────────────────────────────────
+
+  const list  = document.getElementById('servicios-list');
+  const cards = list?.querySelectorAll<HTMLElement>('.servicio-card');
+
+  if (list && cards) {
+    const activate = (active: HTMLElement) => {
+      cards.forEach(card => {
+        if (card === active) {
+          card.classList.add('is-focused');
+          card.classList.remove('is-blurred');
+        } else {
+          card.classList.remove('is-focused');
+          card.classList.add('is-blurred');
+        }
+      });
+    };
+
+    const reset = () => {
+      cards.forEach(card => {
+        card.classList.remove('is-focused', 'is-blurred');
+      });
+    };
+
+    // Desktop: mouseenter/mouseleave
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', () => activate(card));
+      card.addEventListener('focusin',   () => activate(card));
+    });
+
+    list.addEventListener('mouseleave', reset);
+    list.addEventListener('focusout', (e: FocusEvent) => {
+      const relatedTarget = e.relatedTarget as Node | null;
+      if (!list.contains(relatedTarget)) reset();
+    });
+
+        // Móvil: tap toggle
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        // Solo en pointer:coarse (táctil)
+        if (!window.matchMedia('(pointer: coarse)').matches) return;
+
+        const isFocused = card.classList.contains('is-focused');
+        if (isFocused) {
+          reset();
+        } else {
+          activate(card);
+          // Scroll suave para que la card quede visible
+          card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+    });
+  }
+
+  // ────────────────────────────────────────────
+  // UNEXPECTED INTERACTION: copy cambiante en botones
+  // "Quiero saber más" → hover → "Hablemos →"
+  // Con micro-animación de slide vertical.
+  // ────────────────────────────────────────────
+  const smartBtns = document.querySelectorAll<HTMLElement>('.smart-btn');
+
+  smartBtns.forEach(btn => {
+    const textEl   = btn.querySelector<HTMLElement>('.smart-btn__text');
+    const defText  = btn.dataset.default  ?? '';
+    const hoverText= btn.dataset.hover    ?? '';
+
+    if (!textEl) return;
+
+    const swap = (to: string, dir: 'up' | 'down') => {
+      const outDir = dir === 'up' ? '-100%' : '100%';
+      const inDir  = dir === 'up' ?  '100%' : '-100%';
+
+      textEl.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
+      textEl.style.opacity    = '0';
+      textEl.style.transform  = `translateY(${outDir})`;
+
+      setTimeout(() => {
+        textEl.textContent = to;
+        textEl.style.transition = 'none';
+        textEl.style.transform  = `translateY(${inDir})`;
+        textEl.style.opacity    = '0';
+
+        textEl.getBoundingClientRect(); // reflow
+
+        textEl.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
+        textEl.style.opacity    = '1';
+        textEl.style.transform  = 'translateY(0)';
+      }, 180);
+    };
+
+    btn.addEventListener('mouseenter', () => swap(hoverText, 'up'));
+    btn.addEventListener('mouseleave', () => swap(defText,   'down'));
+    btn.addEventListener('focus',      () => swap(hoverText, 'up'));
+    btn.addEventListener('blur',       () => swap(defText,   'down'));
+  });
+</script>
+
 <style>
+  /* ── Sección base ── */
   .servicios {
     position: relative;
-    z-index: 14;
-    background: var(--color-bg-light);
+    z-index: 13;
+    background: var(--color-bg-hero);
     will-change: transform;
+    overflow: hidden;
   }
 
   .servicios__inner {
+    position: relative;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 5rem 1.5rem;
+    padding: 6rem 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 3.5rem;
   }
 
-  .section-num {
-    font-family: var(--font-body);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    color: var(--color-accent-pink);
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 1rem;
+  /* ── Cabecera ── */
+  .servicios__header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 52ch;
   }
 
   .servicios__title {
     font-family: var(--font-display);
     font-weight: 900;
-    font-size: clamp(2rem, 5vw, 4rem);
+    font-size: clamp(2rem, 5.5vw, 4rem);
     line-height: 1.05;
     letter-spacing: -0.02em;
-    color: var(--color-text-dark);
-    max-width: 24ch;
+    color: var(--color-text-hero);
   }
 
   .servicios__title em {
     font-style: italic;
-    color: var(--color-text-mid);
+    color: var(--color-accent-lime);
+    display: block;
   }
 
-  .servicios__intro {
+  .servicios__sub {
     font-family: var(--font-body);
     font-size: clamp(0.95rem, 2vw, 1.05rem);
-    color: var(--color-text-mid);
-    max-width: 46ch;
-    line-height: 1.65;
-    margin-top: 0.75rem;
+    color: rgba(245, 238, 230, 0.6);
   }
 
-  /* ── Lista de servicios ── */
+  /* ── Grid de servicios ── */
   .servicios__list {
+    list-style: none;
     display: flex;
     flex-direction: column;
     gap: 0;
   }
 
-  /* ── Tarjeta de servicio ── */
+  @media (min-width: 768px) {
+    .servicios__list {
+      flex-direction: row;
+      gap: 0;
+      border: 1.5px solid rgba(245, 238, 230, 0.1);
+      border-radius: 1.5rem;
+      overflow: hidden;
+    }
+  }
+
+  /* ── Tarjeta individual ── */
   .servicio-card {
-    padding: 2rem 0;
-    border-bottom: 1.5px solid rgba(90, 58, 122, 0.12);
+    position: relative;
+    flex: 1;
+    cursor: pointer;
+    border-bottom: 1.5px solid rgba(245, 238, 230, 0.08);
+    transition:
+      opacity 0.35s ease,
+      filter 0.35s ease,
+      flex 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+      background 0.3s ease;
+  }
+
+  .servicio-card:last-child {
+    border-bottom: none;
+  }
+
+  @media (min-width: 768px) {
+    .servicio-card {
+      border-bottom: none;
+      border-right: 1.5px solid rgba(245, 238, 230, 0.08);
+    }
+    .servicio-card:last-child {
+      border-right: none;
+    }
+  }
+
+  /* ── FOCUS MODE ── */
+  .servicio-card.is-focused {
+    flex: 1.4; /* se expande */
+    background: rgba(245, 238, 230, 0.04);
+    opacity: 1;
+    filter: none;
+  }
+
+  .servicio-card.is-blurred {
+    opacity: 0.45;
+    filter: blur(0.5px);
+    flex: 0.8; /* se encoge ligeramente */
+  }
+
+  /* ── Card destacada (Web personalizada) ── */
+  .servicio-card--featured .servicio-card__inner {
+    position: relative;
+  }
+
+  .servicio-card--featured .servicio-card__inner::before {
+    content: 'Popular';
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-dark);
+    background: var(--color-accent-lime);
+    padding: 0.3em 0.8em;
+    border-radius: 9999px;
+  }
+
+  /* ── Inner de la card ── */
+  .servicio-card__inner {
+    padding: 2.5rem 2rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    transition: background 0.2s ease;
-    cursor: default;
+    gap: 1.25rem;
+    height: 100%;
   }
 
-  .servicio-card:first-child {
-    border-top: 1.5px solid rgba(90, 58, 122, 0.12);
+  @media (min-width: 768px) {
+    .servicio-card__inner {
+      padding: 3rem 2.5rem 3rem;
+      min-height: 380px;
+    }
   }
 
-  .servicio-card:hover {
-    background: rgba(200, 241, 53, 0.06);
-    padding-left: 1rem;
-    padding-right: 1rem;
-    margin-left: -1rem;
-    margin-right: -1rem;
-    border-radius: 1rem;
-  }
-
-  /* ── Top row: num + título + flecha ── */
+  /* ── Número + flecha ── */
   .servicio-card__top {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 1.25rem;
   }
 
   .servicio-card__num {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 900;
-    color: var(--color-accent-pink);
-    line-height: 1;
-    flex-shrink: 0;
-    opacity: 0.7;
-    transition: opacity 0.2s ease;
-  }
-
-  .servicio-card:hover .servicio-card__num {
-    opacity: 1;
-    color: var(--color-accent-lime);
-    /* lime cuando está activo */
-  }
-
-  .servicio-card__titulo {
-    font-family: var(--font-display);
+    font-family: var(--font-body);
+    font-size: 0.7rem;
     font-weight: 700;
-    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
-    color: var(--color-text-dark);
-    line-height: 1.1;
-    flex: 1;
+    letter-spacing: 0.2em;
+    color: var(--color-accent-pink);
   }
 
   .servicio-card__arrow {
-    font-size: 1.5rem;
-    color: var(--color-text-mid);
-    opacity: 0;
-    transform: translate(-4px, 4px);
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    font-size: 1.2rem;
+    color: rgba(245, 238, 230, 0.3);
+    transition: color 0.2s ease, transform 0.2s ease;
   }
 
-  .servicio-card:hover .servicio-card__arrow {
-    opacity: 1;
-    transform: translate(0, 0);
+  .servicio-card:hover .servicio-card__arrow,
+  .servicio-card.is-focused .servicio-card__arrow {
+    color: var(--color-accent-lime);
+    transform: translate(2px, -2px);
+  }
+
+  /* ── Título ── */
+  .servicio-card__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--color-text-hero);
   }
 
   /* ── Descripción ── */
   .servicio-card__desc {
     font-family: var(--font-body);
-    font-size: clamp(0.95rem, 2vw, 1.05rem);
+    font-size: clamp(0.9rem, 1.8vw, 0.98rem);
     line-height: 1.7;
-    color: var(--color-text-mid);
-    max-width: 60ch;
-    /* En móvil siempre visible; en desktop también — simplificamos sin toggle */
+    color: rgba(245, 238, 230, 0.6);
+    flex: 1; /* empuja el CTA al fondo */
   }
 
-  /* ── Link ── */
-  .servicio-card__link {
+  /* ── Botón con copy cambiante ── */
+  .servicio-card__cta.smart-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    justify-content: center;
+    align-self: flex-start;
+    padding: 0.65em 1.5em;
+    background: transparent;
+    color: var(--color-accent-lime);
     font-family: var(--font-body);
     font-size: 0.85rem;
     font-weight: 700;
-    color: var(--color-text-dark);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border: 1.5px solid var(--color-accent-lime);
+    border-radius: var(--radius-btn);
     text-decoration: none;
-    align-self: flex-start;
-    padding-bottom: 2px;
-    border-bottom: 2px solid var(--color-accent-lime);
-    transition: gap 0.2s ease, color 0.2s ease;
+    overflow: hidden; /* para el clip del texto animado */
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
+    margin-top: auto;
   }
 
-  .servicio-card__link:hover {
-    gap: 0.7rem;
-    color: var(--color-text-mid);
+  .servicio-card__cta.smart-btn:hover,
+  .servicio-card__cta.smart-btn:focus-visible {
+    background: var(--color-accent-lime);
+    color: var(--color-text-dark);
   }
 
-  /* ── Desktop ── */
+  /* El texto del botón tiene overflow:hidden para el swap animation */
+  .smart-btn__text {
+    display: inline-block;
+    /* JS controla opacity/transform */
+  }
+
+  /* ── Texto fantasma de fondo ── */
+  .servicios__ghost {
+    position: absolute;
+    bottom: -1rem;
+    right: -1rem;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(8rem, 28vw, 22rem);
+    line-height: 0.85;
+    color: rgba(245, 238, 230, 0.02);
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.05em;
+    z-index: 0;
+  }
+
   @media (min-width: 768px) {
-    .servicios__inner { padding: 7rem 4rem; }
-  }
-
-  @media (min-width: 1024px) {
-    .servicios__list {
-      display: grid;
-      grid-template-columns: 1fr;
-    }
+    .servicios__inner { padding: 8rem 4rem; }
   }
 </style>
