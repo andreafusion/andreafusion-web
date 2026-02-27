@@ -22,7 +22,7 @@ const productos: Producto[] = [
     id:          'kit-landing-astro',
     titulo:      'Kit Landing Astro',
     tipo:        'Kit',
-    descripcion: 'Todo lo que necesitas para lanzar una landing profesional con Astro en menos de un día. Componentes, estilos y estructura lista.',
+    descripcion: 'Una landing pro en Astro sin comerte la cabeza: componentes listos, estilos finos y estructura que guía. Montas, adaptas y publicas.',
     precio:      29,
     tags:        ['Astro', 'HTML/CSS', 'Mobile-first'],
     color:       '#EDE4F5',
@@ -34,7 +34,7 @@ const productos: Producto[] = [
     id:          'plantilla-portfolio',
     titulo:      'Portfolio Creativo',
     tipo:        'Plantilla',
-    descripcion: 'Plantilla de portfolio para diseñadores y creativos. Editorial, oscura, animada. Astro + CSS puro, sin dependencias pesadas.',
+    descripcion: 'Plantilla de portfolio para diseñadores y creativos. Editorial, oscura, animada. Astro + CSS puro, sin dependencias pesadas. Para que tu trabajo se vea... y se sienta.',
     precio:      19,
     tags:        ['Astro', 'Portfolio', 'Dark mode'],
     color:       '#1a0a2e',
@@ -45,7 +45,7 @@ const productos: Producto[] = [
     id:          'guia-mobile-first',
     titulo:      'Guía Mobile-First',
     tipo:        'Guía',
-    descripcion: 'Todo lo que aprendí diseñando y desarrollando webs que funcionan primero en móvil. PDF + checklist + ejemplos reales.',
+    descripcion: 'La guía que te evita el clásico “en móvil ya lo miramos luego”. Checklist + ejemplos reales para diseñar primero donde importa: el pulgar.',
     precio:      9,
     tags:        ['PDF', 'Checklist', 'CSS'],
     color:       '#f5eee6',
@@ -57,7 +57,7 @@ const productos: Producto[] = [
     id:          'kit-branding-css',
     titulo:      'Kit Tokens de Diseño',
     tipo:        'Kit',
-    descripcion: 'Sistema de design tokens en CSS para empezar proyectos con coherencia desde el minuto 0. Colores, tipografía, espaciado y más.',
+    descripcion: 'Tokens en CSS para empezar cualquier proyecto con coherencia desde el minuto 0. Colores, tipografía, spacing… sin inventarte el sistema cada vez.',
     precio:      null,
     tags:        ['CSS Variables', 'Design System'],
     color:       '#D4EAE0',
@@ -83,18 +83,18 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
         <p class="section-num">Shop</p>
 
         <h1 class="tienda-hero__title">
-          Herramientas para webs
-          <em>que no parecen de plantilla.</em>
+          Plantillas web
+          <em>completas.</em>
         </h1>
 
         <p class="tienda-hero__sub">
-          Recursos que uso yo misma en cada proyecto: plantillas, kits de diseño
-          y guías para construir webs mejores, más rápido.
+          Elige una, cambia tu texto y en 1 tarde tienes web lista.<br>
+          Sin líos. Sin código. (Y si quierees, la hacemos a medida).
         </p>
 
         <div class="tienda-hero__badge">
           <span class="tienda-hero__dot" aria-hidden="true"></span>
-          <span>Primeros productos llegando pronto</span>
+          <span>Están en el horno. Y salen con descuento si llegas pronto.</span>
         </div>
       </div>
 
@@ -109,7 +109,7 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
 
         <div class="tienda-topbar">
           <p class="tienda-topbar__count">
-            <span id="product-count">{productos.length}</span> recursos
+            <span id="product-count">{productos.length}</span> recursos (y subiendo)
           </p>
           <nav class="tienda-filters" aria-label="Filtrar por categoría">
             {categorias.map((cat, i) => (
@@ -172,7 +172,7 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
                           <span class="producto-card__precio">{p.precio}€</span>
                         </>
                       ) : (
-                        <span class="producto-card__precio-soon">Gratis · Próximamente</span>
+                        <span class="producto-card__precio-soon">Gratis · Muy pronto</span>
                       )}
                     </div>
 
@@ -190,11 +190,11 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
                     ) : (
                       <button
                         class="producto-card__btn producto-card__btn--notify smart-btn"
-                        data-default="Notifícame"
+                        data-default="Quiero mi acceso early"
                         data-hover="✓ Te aviso"
                         aria-label={`Notificarme cuando ${p.titulo} esté disponible`}
                       >
-                        <span class="smart-btn__text">Notifícame</span>
+                        <span class="smart-btn__text">Quiero mi acceso early</span>
                       </button>
                     )}
                   </div>
@@ -205,7 +205,7 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
         </ul>
 
         <div class="tienda-cta">
-          <p class="tienda-cta__text">¿Buscas algo que no está aquí?</p>
+          <p class="tienda-cta__text">¿Quieres algo a medida?</p>
           <p class="tienda-cta__sub">
             Puedo crear recursos personalizados para tu equipo o proyecto.
           </p>
@@ -682,7 +682,7 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
     font-family: var(--font-body);
     font-size: 0.78rem;
     font-weight: 600;
-    color: var(--color-accent-lime);
+    color: var(--color-accent-pink);
     letter-spacing: 0.03em;
   }
 
