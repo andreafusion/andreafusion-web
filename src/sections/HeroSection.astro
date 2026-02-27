@@ -1,6 +1,5 @@
 ---
 // src/sections/HeroSection.astro
-// FOTO STICKER: visible en móvil/tablet junto al CTA. Oculta en desktop (aparece en ManifiestoSection).
 import RotatingWord from '../components/RotatingWord.astro';
 import Stickers from '../components/Stickers.astro';
 ---
@@ -23,44 +22,78 @@ import Stickers from '../components/Stickers.astro';
         </span>
       </h1>
 
-      <!--
-        CTA GROUP — en móvil: botón a la izquierda + foto a la derecha.
-        En desktop: solo botón (la foto pasa a ManifiestoSection).
-      -->
       <div class="hero__cta-group">
-
-        <div class="hero__cta-left">
-          <a href="#contacto" class="hero__btn">
-            Trabajemos juntos
-          </a>
-          <p class="hero__microcopy">Available worldwide. Based in Spain.</p>
-        </div>
-
-        <!--
-          FOTO STICKER — solo móvil/tablet.
-          Borde blanco estilo sticker: drop-shadows apilados que siguen
-          el contorno exacto del PNG con fondo transparente.
-          En desktop (≥1024px) se oculta — aparece en ManifiestoSection.
-        -->
-        <img
-          src="/andrea-fusion.png"
-          alt="Andrea, diseñadora y desarrolladora web"
-          class="hero__photo"
-          width="180"
-          height="240"
-          loading="eager"
-          decoding="async"
-        />
-
+        <a href="#contacto" class="hero__btn">
+          Trabajemos juntos
+        </a>
+        <p class="hero__microcopy">Available worldwide. Based in Spain.</p>
       </div>
 
     </div>
   </div>
 
+  <!--
+    FOTO STICKER — solo móvil/tablet (<1024px).
+    Posición absoluta abajo-derecha del hero, flota sobre el fondo.
+    Animación de scroll idéntica a la de Stickers.astro:
+    empieza oculta/abajo, sube y aparece con el primer scroll.
+    En desktop se oculta via CSS — la foto vive en ManifiestoSection.
+  -->
+  <img
+    src="/andrea-fusion.png"
+    alt=""
+    aria-hidden="true"
+    class="hero__photo"
+    loading="eager"
+    decoding="async"
+    draggable="false"
+  />
+
   <div class="hero__scroll-hint" aria-hidden="true">
     <span class="hero__scroll-dot"></span>
   </div>
 </section>
+
+<script>
+  // ── FOTO STICKER MÓVIL: reveal por scroll ──
+  // Misma lógica que Stickers.astro para total consistencia.
+  // Solo activo en móvil/tablet (<1024px).
+
+  const photo = document.querySelector<HTMLElement>('.hero__photo');
+  if (!photo) throw new Error('[HeroSection] hero__photo no encontrada');
+
+  const REVEAL_END = 260; // px de scroll → completamente visible
+
+  // Estado inicial: oculto desplazado hacia abajo
+  photo.style.opacity   = '0';
+  photo.style.transform = 'translateY(80px) rotate(4deg)';
+
+  const update = () => {
+    if (window.innerWidth >= 1024) return; // solo móvil/tablet
+
+    const raw   = Math.min(Math.max(window.scrollY / REVEAL_END, 0), 1);
+    // Easing ease-out quad (igual que Stickers.astro)
+    const eased = 1 - Math.pow(1 - raw, 2);
+
+    photo.style.opacity   = String(eased);
+    photo.style.transform = `translateY(${(1 - eased) * 80}px) rotate(4deg)`;
+  };
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (window.innerWidth < 1024) {
+      photo.style.opacity   = '1';
+      photo.style.transform = 'translateY(0) rotate(4deg)';
+    }
+  } else {
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { update(); ticking = false; });
+    }, { passive: true });
+    update(); // estado inicial
+  }
+</script>
 
 <style>
   /* ---- Hero base ---- */
@@ -77,20 +110,16 @@ import Stickers from '../components/Stickers.astro';
     overflow: visible;
   }
 
-  /* Ruido de textura — baseFrequency 0.65, perceptible en móvil */
   .hero::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 256px 256px;
-    opacity: 0.055;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height%3D'100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.5;
     pointer-events: none;
     z-index: 0;
   }
 
-  /* Gradiente radial atmosférico */
   .hero::after {
     content: '';
     position: absolute;
@@ -104,7 +133,7 @@ import Stickers from '../components/Stickers.astro';
     z-index: 0;
   }
 
-  /* ---- Inner ---- */
+  /* ---- Inner layout ---- */
   .hero__inner {
     position: relative;
     z-index: 3;
@@ -167,25 +196,12 @@ import Stickers from '../components/Stickers.astro';
   }
 
   /* ---- CTA group ---- */
-  /*
-    MÓVIL: fila con el bloque izquierdo (botón + microcopy)
-    y la foto a la derecha. align-items: flex-end para que
-    la foto "apoye" en la misma línea base que el botón.
-  */
   .hero__cta-group {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    gap: var(--space-md);
-    opacity: 0;
-    animation: lineIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards;
-  }
-
-  .hero__cta-left {
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
-    flex-shrink: 0;
+    opacity: 0;
+    animation: lineIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards;
   }
 
   .hero__btn {
@@ -231,56 +247,41 @@ import Stickers from '../components/Stickers.astro';
     padding-left: 0.5em;
   }
 
-  /* ---- FOTO STICKER (móvil/tablet) ---- */
+  /* ---- Foto sticker: posición absoluta abajo-derecha ---- */
   .hero__photo {
-    /*
-      Tamaño en móvil: contenida pero presente.
-      La foto tiene más altura que anchura por ser retrato,
-      usamos height fija para controlar el espacio.
-    */
-    width: auto;
-    height: clamp(140px, 30vw, 200px);
+    position: absolute;
+    bottom: 18%;              /* anclada al borde inferior del hero */
+    right: -2%;               /* pegada al borde derecho */
+    z-index: 20;             /* encima del contenido, por debajo del nav */
+
+    /* Tamaño: grande y llamativo en móvil */
+    width: clamp(220px, 62vw, 340px);
+    height: auto;
     object-fit: contain;
     object-position: bottom center;
-    flex-shrink: 0;
 
-    /*
-      EFECTO STICKER:
-      Drop-shadows apilados sin blur en 8 direcciones →
-      crean un borde blanco sólido que sigue el contorno del PNG.
-      La última sombra con blur añade profundidad sutil.
-    */
-    filter:
-      drop-shadow(-4px  0    0 #ffffff)
-      drop-shadow( 4px  0    0 #ffffff)
-      drop-shadow( 0   -4px  0 #ffffff)
-      drop-shadow( 0    4px  0 #ffffff)
-      drop-shadow(-3px -3px  0 #ffffff)
-      drop-shadow( 3px -3px  0 #ffffff)
-      drop-shadow(-3px  3px  0 #ffffff)
-      drop-shadow( 3px  3px  0 #ffffff)
-      drop-shadow( 0    6px 14px rgba(61, 26, 92, 0.35));
+   
 
-    /* Entrada suave igual que el resto del hero */
-    opacity: 0;
-    animation: photoIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.75s forwards;
+    pointer-events: none;
+    will-change: transform, opacity;
+    /* transform y opacity gestionados por JS */
+
+    /* Visible solo en móvil/tablet */
+    display: block;
   }
 
-  @keyframes photoIn {
-    from {
-      opacity: 0;
-      transform: translateY(16px) rotate(-2deg);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) rotate(-2deg); /* leve inclinación = personalidad */
-    }
-  }
-
-  /* En desktop (≥1024px) la foto se oculta aquí — aparece en ManifiestoSection */
+  /* Ocultar en desktop */
   @media (min-width: 1024px) {
     .hero__photo {
       display: none;
+    }
+  }
+
+  /* En tablet, un poco más alejada del borde */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .hero__photo {
+      width: clamp(260px, 42vw, 380px);
+      right: 4%;
     }
   }
 
@@ -306,43 +307,34 @@ import Stickers from '../components/Stickers.astro';
 
   @keyframes scrollBounce {
     0%, 100% { transform: translateY(0); opacity: 1; }
-    50%       { transform: translateY(8px); opacity: 0.4; }
+    50% { transform: translateY(8px); opacity: 0.4; }
   }
 
   /* ---- Reduced motion ---- */
   @media (prefers-reduced-motion: reduce) {
     .hero__line,
     .hero__cta-group,
-    .hero__scroll-hint,
-    .hero__photo {
+    .hero__scroll-hint {
       animation: none;
       opacity: 1;
       transform: none;
     }
-    .hero__photo { transform: rotate(-2deg); } /* mantiene la inclinación estática */
     .hero__scroll-dot { animation: none; }
   }
 
-  /* ---- Tablet ---- */
+  /* ---- Tablet+ ---- */
   @media (min-width: 768px) {
-    .hero__inner { padding: var(--space-xl) var(--space-xl); }
-    .hero__content { max-width: 80vw; }
-    .hero__before { opacity: 0.07; }
-
-    .hero__photo {
-      height: clamp(200px, 25vw, 260px);
+    .hero__inner {
+      padding: var(--space-xl) var(--space-xl);
+    }
+    .hero__content {
+      max-width: 80vw;
     }
   }
 
-  /* ---- Desktop ---- */
   @media (min-width: 1024px) {
-    .hero__content { max-width: 65vw; }
-
-    /* En desktop volvemos al layout columna para el CTA */
-    .hero__cta-group {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-xs);
+    .hero__content {
+      max-width: 65vw;
     }
   }
 </style>
