@@ -1,0 +1,651 @@
+---
+// src/sections/MethodSection.astro
+// Sección 02 — Mi método
+// Un único panel visible. Los datos viven en el frontmatter.
+// JS actualiza título, cuerpo, contador y aria según el paso activo.
+---
+
+<section class="method" id="metodo" aria-labelledby="method-heading">
+  <div class="method__inner">
+
+    <!-- Eyebrow -->
+    <p class="method__eyebrow" aria-hidden="true">02 · Mi método</p>
+
+    <!-- Titular editorial -->
+    <header class="method__header">
+      <h2 class="method__title" id="method-heading">
+        Primero te ordeno<br>
+        <em>la historia.</em><br>
+        Luego te programo la web.
+      </h2>
+      <p class="method__subtitle">
+        Porque "bonita" no sirve si confunde.<br>
+        Yo hago que se entienda y que pase algo.
+      </p>
+    </header>
+
+    <!-- Stepper -->
+    <div class="method__stepper">
+
+      <!-- Track: línea + dots -->
+      <div
+        class="method__track"
+        role="tablist"
+        aria-label="Pasos del método"
+        aria-orientation="horizontal"
+      >
+        <div class="method__line" aria-hidden="true">
+          <div class="method__line-fill" id="method-line-fill"></div>
+        </div>
+
+        <button class="method__dot is-active" role="tab" id="method-tab-0"
+          aria-selected="true" aria-controls="method-panel" data-index="0" tabindex="0">
+          <span class="method__dot-ring" aria-hidden="true"></span>
+          <span class="method__dot-num" aria-hidden="true">01</span>
+          <span class="sr-only">Paso 1 de 4</span>
+        </button>
+
+        <button class="method__dot" role="tab" id="method-tab-1"
+          aria-selected="false" aria-controls="method-panel" data-index="1" tabindex="-1">
+          <span class="method__dot-ring" aria-hidden="true"></span>
+          <span class="method__dot-num" aria-hidden="true">02</span>
+          <span class="sr-only">Paso 2 de 4</span>
+        </button>
+
+        <button class="method__dot" role="tab" id="method-tab-2"
+          aria-selected="false" aria-controls="method-panel" data-index="2" tabindex="-1">
+          <span class="method__dot-ring" aria-hidden="true"></span>
+          <span class="method__dot-num" aria-hidden="true">03</span>
+          <span class="sr-only">Paso 3 de 4</span>
+        </button>
+
+        <button class="method__dot" role="tab" id="method-tab-3"
+          aria-selected="false" aria-controls="method-panel" data-index="3" tabindex="-1">
+          <span class="method__dot-ring" aria-hidden="true"></span>
+          <span class="method__dot-num" aria-hidden="true">04</span>
+          <span class="sr-only">Paso 4 de 4</span>
+        </button>
+      </div>
+
+      <!-- Contador -->
+      <p class="method__counter" aria-live="polite" aria-atomic="true">
+        <span id="method-counter">PASO 1 DE 4</span>
+      </p>
+
+      <!-- Panel único: JS actualiza su contenido -->
+      <div
+        class="method__panel"
+        id="method-panel"
+        role="tabpanel"
+        aria-labelledby="method-tab-0"
+      >
+        <span class="method__step-num" id="method-step-num" aria-hidden="true">01</span>
+        <h3 class="method__step-title" id="method-step-title">
+          Diagnóstico sin piedad <em>(pero con cariño)</em>
+        </h3>
+        <p class="method__step-text" id="method-step-text">
+          Encuentro dónde se cae la confianza y por qué la gente se va.
+        </p>
+        <p class="method__teaser" id="method-teaser" aria-hidden="true">
+          Siguiente: <em>Guión de scroll</em> →
+        </p>
+      </div>
+
+      <!-- Prev / Next — solo móvil -->
+      <div class="method__nav" role="group" aria-label="Navegación de pasos">
+        <button class="method__nav-btn" id="method-prev" aria-label="Paso anterior" disabled>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Anterior</span>
+        </button>
+        <button class="method__nav-btn" id="method-next" aria-label="Paso siguiente">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Siguiente</span>
+        </button>
+      </div>
+
+    </div><!-- /.method__stepper -->
+
+    <!-- Nota final -->
+    <footer class="method__footer">
+      <p class="method__note">
+        Si no hay guión, el usuario improvisa.<br>
+        Y cuando improvisa… <em>se va.</em>
+      </p>
+    </footer>
+
+  </div>
+</section>
+
+<script>
+  // ── Datos de los pasos ──────────────────────────────────────────
+  interface Step {
+    num:   string;
+    title: string; // HTML permitido: <em>
+    text:  string;
+  }
+
+  const STEPS: Step[] = [
+    {
+      num:   '01',
+      title: 'Diagnóstico sin piedad <em>(pero con cariño)</em>',
+      text:  'Encuentro dónde se cae la confianza y por qué la gente se va.',
+    },
+    {
+      num:   '02',
+      title: 'Guión de <em>scroll</em>',
+      text:  'Te marco el camino: qué ves primero, qué entiendes y cuándo haces clic.',
+    },
+    {
+      num:   '03',
+      title: 'Frontend <em>fino</em>',
+      text:  'Lo convierto en una web rápida, móvil perfecta y cero fricción.',
+    },
+    {
+      num:   '04',
+      title: 'Pulido <em>quirúrgico</em>',
+      text:  'Recorto lo que sobra, afino lo que importa y dejo solo lo que funciona.',
+    },
+  ];
+
+  const TOTAL = STEPS.length;
+
+  // ── Referencias ─────────────────────────────────────────────────
+  const tabs      = Array.from(document.querySelectorAll<HTMLButtonElement>('.method__dot'));
+  const panel     = document.getElementById('method-panel')     as HTMLElement;
+  const stepNum   = document.getElementById('method-step-num')  as HTMLElement;
+  const stepTitle = document.getElementById('method-step-title')as HTMLElement;
+  const stepText  = document.getElementById('method-step-text') as HTMLElement;
+  const teaser    = document.getElementById('method-teaser')    as HTMLElement;
+  const lineFill  = document.getElementById('method-line-fill') as HTMLElement;
+  const counter   = document.getElementById('method-counter')   as HTMLElement;
+  const prevBtn   = document.getElementById('method-prev')      as HTMLButtonElement;
+  const nextBtn   = document.getElementById('method-next')      as HTMLButtonElement;
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let current     = 0;
+  let isAnimating = false;
+
+  // ── Actualizar panel ─────────────────────────────────────────────
+  function updatePanel(index: number) {
+    const step = STEPS[index]!;
+    stepNum.textContent    = step.num;
+    stepTitle.innerHTML    = step.title;
+    stepText.textContent   = step.text;
+
+    // Teaser: "Siguiente: X →" o vacío en el último paso
+    const next = STEPS[index + 1];
+    if (next) {
+      teaser.innerHTML    = `Siguiente: <em>${next.title.replace(/<[^>]*>/g, '')}</em> →`;
+      teaser.style.visibility = 'visible';
+    } else {
+      teaser.style.visibility = 'hidden';
+    }
+
+    // Línea de progreso
+    lineFill.style.width = `${(index / (TOTAL - 1)) * 100}%`;
+
+    // Contador
+    counter.textContent = `PASO ${index + 1} DE ${TOTAL}`;
+
+    // aria-labelledby del panel apunta al tab activo
+    panel.setAttribute('aria-labelledby', `method-tab-${index}`);
+
+    // Tabs: aria-selected + tabindex
+    tabs.forEach((tab, i) => {
+      const active = i === index;
+      tab.setAttribute('aria-selected', String(active));
+      tab.setAttribute('tabindex', active ? '0' : '-1');
+      tab.classList.toggle('is-active', active);
+    });
+
+    // Prev / Next
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === TOTAL - 1;
+  }
+
+  // ── Transición ──────────────────────────────────────────────────
+  function goTo(index: number, direction: 'next' | 'prev' = 'next') {
+    if (index === current || isAnimating) return;
+    if (index < 0 || index >= TOTAL) return;
+
+    if (reducedMotion) {
+      current = index;
+      updatePanel(index);
+      return;
+    }
+
+    isAnimating = true;
+
+    const outX = direction === 'next' ? '-32px' : '32px';
+    const inX  = direction === 'next' ?  '32px' : '-32px';
+
+    // Salida
+    panel.style.transition = 'opacity 0.22s ease, transform 0.22s ease';
+    panel.style.opacity    = '0';
+    panel.style.transform  = `translateX(${outX})`;
+
+    setTimeout(() => {
+      current = index;
+      updatePanel(index);
+
+      // Entrada: desde el lado opuesto, sin transición primero
+      panel.style.transition = 'none';
+      panel.style.transform  = `translateX(${inX})`;
+      panel.style.opacity    = '0';
+
+      // Forzar reflow
+      panel.getBoundingClientRect();
+
+      panel.style.transition = 'opacity 0.26s ease, transform 0.26s ease';
+      panel.style.transform  = 'translateX(0)';
+      panel.style.opacity    = '1';
+
+      setTimeout(() => {
+        panel.style.transition = '';
+        panel.style.transform  = '';
+        panel.style.opacity    = '';
+        isAnimating = false;
+      }, 280);
+
+    }, 230);
+  }
+
+  // ── Click en dots ───────────────────────────────────────────────
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => {
+      goTo(i, i > current ? 'next' : 'prev');
+    });
+  });
+
+  // ── Teclado: ←/→/Home/End en tablist ────────────────────────────
+  tabs.forEach(tab => {
+    tab.addEventListener('keydown', (e: KeyboardEvent) => {
+      let target = -1;
+      if (e.key === 'ArrowRight') target = Math.min(current + 1, TOTAL - 1);
+      if (e.key === 'ArrowLeft')  target = Math.max(current - 1, 0);
+      if (e.key === 'Home')       target = 0;
+      if (e.key === 'End')        target = TOTAL - 1;
+      if (target < 0) return;
+      e.preventDefault();
+      goTo(target, target > current ? 'next' : 'prev');
+      tabs[target]?.focus();
+    });
+  });
+
+  // ── Prev / Next buttons ──────────────────────────────────────────
+  prevBtn.addEventListener('click', () => goTo(current - 1, 'prev'));
+  nextBtn.addEventListener('click', () => goTo(current + 1, 'next'));
+
+  // ── Swipe móvil ─────────────────────────────────────────────────
+  let touchStartX = 0;
+  let touchStartY = 0;
+  const stepper = document.querySelector('.method__stepper') as HTMLElement;
+
+  stepper.addEventListener('touchstart', (e: TouchEvent) => {
+    touchStartX = e.touches[0]!.clientX;
+    touchStartY = e.touches[0]!.clientY;
+  }, { passive: true });
+
+  stepper.addEventListener('touchend', (e: TouchEvent) => {
+    const dx = e.changedTouches[0]!.clientX - touchStartX;
+    const dy = e.changedTouches[0]!.clientY - touchStartY;
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+    if (dx < 0) goTo(current + 1, 'next');
+    else        goTo(current - 1, 'prev');
+  }, { passive: true });
+
+  // ── Estado inicial ───────────────────────────────────────────────
+  lineFill.style.transition = reducedMotion
+    ? 'none'
+    : 'width 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
+  updatePanel(0);
+</script>
+
+<style>
+  /* ── Accesibilidad ── */
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ── Layout base ── */
+  .method {
+    position: relative;
+    z-index: 11;
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .method__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 1.5rem 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  /* ── Eyebrow ── */
+  .method__eyebrow {
+    font-family: var(--font-body);
+    font-size: clamp(0.65rem, 1.8vw, 0.8rem);
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-text-mid);
+    opacity: 0.6;
+  }
+
+  /* ── Header ── */
+  .method__header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .method__title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--color-text-dark);
+  }
+
+  .method__title em {
+    font-style: italic;
+    font-family: var(--font-script);
+    color: var(--color-accent-lime);
+    font-weight: 600;
+  }
+
+  .method__subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2.2vw, 1.1rem);
+    line-height: 1.7;
+    color: var(--color-text-mid);
+    max-width: 44ch;
+  }
+
+  /* ── Stepper ── */
+  .method__stepper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  /* ── Track ── */
+  .method__track {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+  }
+
+  .method__line {
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    height: 1px;
+    background: rgba(26, 10, 46, 0.1);
+    transform: translateY(-50%);
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .method__line-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--color-accent-lime);
+  }
+
+  /* ── Dot ── */
+  .method__dot {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+  }
+
+  .method__dot-ring {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(26, 10, 46, 0.15);
+    border: 1.5px solid rgba(26, 10, 46, 0.15);
+    transition:
+      background 0.25s ease,
+      border-color 0.25s ease,
+      transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .method__dot.is-active .method__dot-ring,
+  .method__dot[aria-selected="true"] .method__dot-ring {
+    background: var(--color-accent-lime);
+    border-color: var(--color-accent-lime);
+    transform: scale(1.6);
+  }
+
+  .method__dot:hover:not(.is-active) .method__dot-ring {
+    background: rgba(200, 241, 53, 0.35);
+    border-color: var(--color-accent-lime);
+    transform: scale(1.3);
+  }
+
+  .method__dot:focus-visible {
+    outline: none;
+  }
+
+  .method__dot:focus-visible .method__dot-ring {
+    box-shadow: 0 0 0 3px var(--color-accent-lime),
+                0 0 0 5px rgba(200, 241, 53, 0.25);
+  }
+
+  .method__dot-num {
+    font-family: var(--font-body);
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-text-mid);
+    opacity: 0.4;
+    line-height: 1;
+    transition: opacity 0.2s ease, color 0.2s ease;
+  }
+
+  .method__dot.is-active .method__dot-num {
+    opacity: 1;
+    color: var(--color-text-dark);
+  }
+
+  /* ── Contador ── */
+  .method__counter {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-mid);
+    opacity: 0.45;
+    align-self: flex-end;
+    margin-top: -1rem;
+  }
+
+  /* ── Panel único ── */
+  .method__panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-height: 180px;
+    /* transform y opacity gestionados por JS durante transición */
+    will-change: transform, opacity;
+  }
+
+  .method__step-num {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 12vw, 7rem);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--color-accent-lime);
+    opacity: 0.40;
+    letter-spacing: -0.04em;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .method__step-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 4.5vw, 3rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--color-text-dark);
+    margin-top: -0.45em; /* superponer sobre número decorativo */
+  }
+
+  .method__step-title em {
+    font-style: italic;
+    font-family: var(--font-script);
+    color: var(--color-accent-lime);
+    font-weight: 600;
+  }
+
+  .method__step-text {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2.2vw, 1.15rem);
+    line-height: 1.75;
+    color: var(--color-text-mid);
+    max-width: 48ch;
+  }
+
+  /* ── Teaser ── */
+  .method__teaser {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--color-text-mid);
+    opacity: 0.5;
+    margin-top: 0.5rem;
+  }
+
+  .method__teaser em {
+    font-style: normal;
+    color: var(--color-text-dark);
+    opacity: 0.8;
+  }
+
+  /* ── Prev / Next ── */
+  .method__nav {
+    display: flex;
+    gap: 0.6rem;
+    align-self: flex-start;
+  }
+
+  .method__nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4em 0.9em;
+    border-radius: 9999px;
+    border: 1px solid rgba(26, 10, 46, 0.15);
+    background: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .method__nav-btn:hover:not(:disabled) {
+    border-color: var(--color-accent-lime);
+    background: var(--color-accent-lime);
+  }
+
+  .method__nav-btn:disabled {
+    opacity: 0.2;
+    cursor: default;
+  }
+
+  .method__nav-btn:focus-visible {
+    outline: 2px solid var(--color-accent-lime);
+    outline-offset: 2px;
+  }
+
+  /* ── Nota final ── */
+  .method__footer {
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(26, 10, 46, 0.08);
+  }
+
+  .method__note {
+    font-family: var(--font-script);
+    font-size: clamp(1.1rem, 2.8vw, 1.6rem);
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--color-text-dark);
+    max-width: 42ch;
+  }
+
+  .method__note em {
+    color: var(--color-accent-lime);
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .method__dot-ring,
+    .method__dot-num,
+    .method__nav-btn {
+      transition: none;
+    }
+  }
+
+  /* ── Desktop ── */
+  @media (min-width: 768px) {
+    .method__inner {
+      padding: 8rem 4rem 7rem;
+      gap: 5rem;
+    }
+
+    /* Prev/Next se ocultan en desktop: los dots con hover son suficientes */
+    .method__nav {
+      display: none;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .method__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 6rem;
+      align-items: start;
+    }
+
+    .method__eyebrow { grid-column: 1 / -1; }
+    .method__header  { grid-column: 1; }
+    .method__stepper { grid-column: 2; padding-top: 0.25rem; }
+    .method__footer  { grid-column: 1 / -1; }
+  }
+</style>
