@@ -1,8 +1,6 @@
 ---
 // src/sections/HeroSection.astro
-// PROFUNDIDAD: ruido SVG mejorado — ahora perceptible en móvil.
-// El original tenía baseFrequency: 0.9 (grano muy fino, invisible en pantallas pequeñas).
-// Ahora: 0.65 con más opacidad en móvil. Mismo sistema que el resto de la web.
+// FOTO STICKER: visible en móvil/tablet junto al CTA. Oculta en desktop (aparece en ManifiestoSection).
 import RotatingWord from '../components/RotatingWord.astro';
 import Stickers from '../components/Stickers.astro';
 ---
@@ -25,11 +23,35 @@ import Stickers from '../components/Stickers.astro';
         </span>
       </h1>
 
+      <!--
+        CTA GROUP — en móvil: botón a la izquierda + foto a la derecha.
+        En desktop: solo botón (la foto pasa a ManifiestoSection).
+      -->
       <div class="hero__cta-group">
-        <a href="#contacto" class="hero__btn">
-          Trabajemos juntos
-        </a>
-        <p class="hero__microcopy">Available worldwide. Based in Spain.</p>
+
+        <div class="hero__cta-left">
+          <a href="#contacto" class="hero__btn">
+            Trabajemos juntos
+          </a>
+          <p class="hero__microcopy">Available worldwide. Based in Spain.</p>
+        </div>
+
+        <!--
+          FOTO STICKER — solo móvil/tablet.
+          Borde blanco estilo sticker: drop-shadows apilados que siguen
+          el contorno exacto del PNG con fondo transparente.
+          En desktop (≥1024px) se oculta — aparece en ManifiestoSection.
+        -->
+        <img
+          src="/andrea-fusion.png"
+          alt="Andrea, diseñadora y desarrolladora web"
+          class="hero__photo"
+          width="180"
+          height="240"
+          loading="eager"
+          decoding="async"
+        />
+
       </div>
 
     </div>
@@ -41,6 +63,7 @@ import Stickers from '../components/Stickers.astro';
 </section>
 
 <style>
+  /* ---- Hero base ---- */
   .hero {
     position: sticky;
     top: 0;
@@ -52,26 +75,9 @@ import Stickers from '../components/Stickers.astro';
     align-items: center;
     justify-content: center;
     overflow: visible;
-    /*
-      Sin z-index explícito en el hero.
-      Ver comentario original en HeroSection — fix para iOS Safari sticky bug.
-    */
   }
 
-  /*
-    RUIDO DE TEXTURA — mejorado para móvil.
-
-    Antes: baseFrequency 0.9, opacidad 0.5
-    → grano muy fino, invisible en pantallas pequeñas o con densidad de píxeles alta.
-
-    Ahora: baseFrequency 0.65, opacidad adaptativa.
-    → grano perceptible en móvil sin ser agresivo.
-    → misma frecuencia que --grain-svg en global.css para consistencia visual.
-
-    El ruido se implementa aquí con SVG inline (no clase .has-grain)
-    porque el Hero necesita dos capas: ruido + gradiente radial.
-    .has-grain solo hace una capa.
-  */
+  /* Ruido de textura — baseFrequency 0.65, perceptible en móvil */
   .hero::before {
     content: '';
     position: absolute;
@@ -79,7 +85,7 @@ import Stickers from '../components/Stickers.astro';
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
     background-repeat: repeat;
     background-size: 256px 256px;
-    opacity: 0.055;       /* perceptible en móvil */
+    opacity: 0.055;
     pointer-events: none;
     z-index: 0;
   }
@@ -98,7 +104,7 @@ import Stickers from '../components/Stickers.astro';
     z-index: 0;
   }
 
-  /* ---- Inner layout ---- */
+  /* ---- Inner ---- */
   .hero__inner {
     position: relative;
     z-index: 3;
@@ -161,12 +167,25 @@ import Stickers from '../components/Stickers.astro';
   }
 
   /* ---- CTA group ---- */
+  /*
+    MÓVIL: fila con el bloque izquierdo (botón + microcopy)
+    y la foto a la derecha. align-items: flex-end para que
+    la foto "apoye" en la misma línea base que el botón.
+  */
   .hero__cta-group {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: var(--space-md);
+    opacity: 0;
+    animation: lineIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards;
+  }
+
+  .hero__cta-left {
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
-    opacity: 0;
-    animation: lineIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards;
+    flex-shrink: 0;
   }
 
   .hero__btn {
@@ -212,6 +231,59 @@ import Stickers from '../components/Stickers.astro';
     padding-left: 0.5em;
   }
 
+  /* ---- FOTO STICKER (móvil/tablet) ---- */
+  .hero__photo {
+    /*
+      Tamaño en móvil: contenida pero presente.
+      La foto tiene más altura que anchura por ser retrato,
+      usamos height fija para controlar el espacio.
+    */
+    width: auto;
+    height: clamp(140px, 30vw, 200px);
+    object-fit: contain;
+    object-position: bottom center;
+    flex-shrink: 0;
+
+    /*
+      EFECTO STICKER:
+      Drop-shadows apilados sin blur en 8 direcciones →
+      crean un borde blanco sólido que sigue el contorno del PNG.
+      La última sombra con blur añade profundidad sutil.
+    */
+    filter:
+      drop-shadow(-4px  0    0 #ffffff)
+      drop-shadow( 4px  0    0 #ffffff)
+      drop-shadow( 0   -4px  0 #ffffff)
+      drop-shadow( 0    4px  0 #ffffff)
+      drop-shadow(-3px -3px  0 #ffffff)
+      drop-shadow( 3px -3px  0 #ffffff)
+      drop-shadow(-3px  3px  0 #ffffff)
+      drop-shadow( 3px  3px  0 #ffffff)
+      drop-shadow( 0    6px 14px rgba(61, 26, 92, 0.35));
+
+    /* Entrada suave igual que el resto del hero */
+    opacity: 0;
+    animation: photoIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.75s forwards;
+  }
+
+  @keyframes photoIn {
+    from {
+      opacity: 0;
+      transform: translateY(16px) rotate(-2deg);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) rotate(-2deg); /* leve inclinación = personalidad */
+    }
+  }
+
+  /* En desktop (≥1024px) la foto se oculta aquí — aparece en ManifiestoSection */
+  @media (min-width: 1024px) {
+    .hero__photo {
+      display: none;
+    }
+  }
+
   /* ---- Scroll hint ---- */
   .hero__scroll-hint {
     position: absolute;
@@ -234,31 +306,43 @@ import Stickers from '../components/Stickers.astro';
 
   @keyframes scrollBounce {
     0%, 100% { transform: translateY(0); opacity: 1; }
-    50% { transform: translateY(8px); opacity: 0.4; }
+    50%       { transform: translateY(8px); opacity: 0.4; }
   }
 
   /* ---- Reduced motion ---- */
   @media (prefers-reduced-motion: reduce) {
     .hero__line,
     .hero__cta-group,
-    .hero__scroll-hint {
+    .hero__scroll-hint,
+    .hero__photo {
       animation: none;
       opacity: 1;
       transform: none;
     }
+    .hero__photo { transform: rotate(-2deg); } /* mantiene la inclinación estática */
     .hero__scroll-dot { animation: none; }
   }
 
-  /* ---- Responsive: tablet+ ---- */
+  /* ---- Tablet ---- */
   @media (min-width: 768px) {
     .hero__inner { padding: var(--space-xl) var(--space-xl); }
     .hero__content { max-width: 80vw; }
+    .hero__before { opacity: 0.07; }
 
-    /* En desktop el grano puede ser ligeramente más visible */
-    .hero::before { opacity: 0.07; }
+    .hero__photo {
+      height: clamp(200px, 25vw, 260px);
+    }
   }
 
+  /* ---- Desktop ---- */
   @media (min-width: 1024px) {
     .hero__content { max-width: 65vw; }
+
+    /* En desktop volvemos al layout columna para el CTA */
+    .hero__cta-group {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-xs);
+    }
   }
 </style>
