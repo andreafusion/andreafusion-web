@@ -1,12 +1,10 @@
 ---
 // src/components/NavBar.astro
-// Nav fija. Transparente sobre el hero, fondo sólido al hacer scroll.
-// Verde lima como lenguaje de interacción: hover, link activo, borde CTA.
 ---
 
 <nav class="nav" id="main-nav" aria-label="Navegación principal">
   <a href="/" class="nav__logo" aria-label="AndreaFusion — inicio">
-    <span class="nav__logo-af">AF</span>
+    <span class="nav__logo-af" aria-hidden="true">AF</span>
     <span class="nav__logo-text">AndreaFusion</span>
   </a>
 
@@ -16,12 +14,11 @@
     <li><a href="/sobre-mi"  class="nav__link">Sobre mí</a></li>
     <li>
       <a href="/contacto" class="nav__link nav__link--cta">
-        Trabajemos juntos
+        Trabajemos juntas
       </a>
     </li>
   </ul>
 
-  <!-- Botón hamburguesa para móvil -->
   <button
     class="nav__burger"
     aria-label="Abrir menú"
@@ -32,13 +29,18 @@
   </button>
 </nav>
 
-<!-- Menú móvil -->
-<div class="nav-mobile" id="nav-mobile" aria-hidden="true">
+<!--
+  ACCESIBILIDAD: cuando el menú está cerrado usamos `inert` + `aria-hidden="true"`.
+  `inert` hace que todos los descendientes sean no focusables e invisibles
+  para tecnologías de asistencia, resolviendo el warning de Lighthouse
+  "[aria-hidden] elements contain focusable descendants".
+-->
+<div class="nav-mobile" id="nav-mobile" aria-hidden="true" inert>
   <ul role="list">
     <li><a href="/portfolio">Portfolio</a></li>
     <li><a href="/tienda">Tienda</a></li>
     <li><a href="/sobre-mi">Sobre mí</a></li>
-    <li><a href="/contacto">Trabajemos juntos</a></li>
+    <li><a href="/contacto">Trabajemos juntas</a></li>
   </ul>
 </div>
 
@@ -46,21 +48,6 @@
   const nav    = document.getElementById('main-nav')!;
   const burger = nav.querySelector<HTMLButtonElement>('.nav__burger')!;
   const mobile = document.getElementById('nav-mobile')!;
-
-  // ── Helpers ──
-  const openMenu = () => {
-    burger.setAttribute('aria-expanded', 'true');
-    mobile.setAttribute('aria-hidden', 'false');
-    mobile.classList.add('is-open');
-    document.body.classList.add('nav-open');
-  };
-
-  const closeMenu = () => {
-    burger.setAttribute('aria-expanded', 'false');
-    mobile.setAttribute('aria-hidden', 'true');
-    mobile.classList.remove('is-open');
-    document.body.classList.remove('nav-open');
-  };
 
   // ── Scroll: clase is-scrolled a partir de 60px ──
   const onScroll = () => {
@@ -71,25 +58,55 @@
 
   // ── Hamburguesa ──
   burger.addEventListener('click', () => {
-    const isOpen = burger.getAttribute('aria-expanded') === 'true';
-    isOpen ? closeMenu() : openMenu();
+    const open = burger.getAttribute('aria-expanded') === 'true';
+
+    burger.setAttribute('aria-expanded', String(!open));
+
+    if (!open) {
+      // Abrir: quitar inert y aria-hidden ANTES de la transición
+      mobile.removeAttribute('inert');
+      mobile.setAttribute('aria-hidden', 'false');
+      mobile.classList.add('is-open');
+      document.body.classList.add('nav-open');
+      // Mover foco al primer enlace del menú
+      mobile.querySelector<HTMLAnchorElement>('a')?.focus();
+    } else {
+      // Cerrar: añadir inert y aria-hidden
+      mobile.setAttribute('aria-hidden', 'true');
+      mobile.classList.remove('is-open');
+      document.body.classList.remove('nav-open');
+      // Devolver foco al burger tras la transición
+      setTimeout(() => {
+        mobile.setAttribute('inert', '');
+        burger.focus();
+      }, 260); // igual que la duración de la transición CSS
+    }
   });
 
   // ── Cerrar al hacer click en enlace ──
   mobile.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', closeMenu);
+    a.addEventListener('click', () => {
+      burger.setAttribute('aria-expanded', 'false');
+      mobile.setAttribute('aria-hidden', 'true');
+      mobile.classList.remove('is-open');
+      document.body.classList.remove('nav-open');
+      setTimeout(() => mobile.setAttribute('inert', ''), 260);
+    });
   });
 
-  // ── Cerrar con tecla Escape (accesibilidad) ──
-  document.addEventListener('keydown', (e: KeyboardEvent) => {
+  // ── Cerrar con Escape ──
+  document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') {
-      closeMenu();
+      burger.setAttribute('aria-expanded', 'false');
+      mobile.setAttribute('aria-hidden', 'true');
+      mobile.classList.remove('is-open');
+      document.body.classList.remove('nav-open');
+      setTimeout(() => mobile.setAttribute('inert', ''), 260);
       burger.focus();
     }
   });
 
-  // ── Lima como lenguaje activo:
-  //    Marca el link que corresponde a la página actual ──
+  // ── Lima como lenguaje activo ──
   const currentPath = window.location.pathname;
 
   nav.querySelectorAll<HTMLAnchorElement>('.nav__link:not(.nav__link--cta)').forEach(a => {
@@ -104,6 +121,7 @@
     const href = new URL(a.href).pathname;
     if (currentPath === href || (href !== '/' && currentPath.startsWith(href))) {
       a.classList.add('is-active');
+      a.setAttribute('aria-current', 'page');
     }
   });
 </script>
@@ -217,7 +235,6 @@
     background: var(--color-accent-lime);
   }
 
-  /* CTA pill */
   .nav__link--cta {
     background: var(--color-accent-lime);
     color: var(--color-text-dark) !important;
@@ -306,7 +323,10 @@
     transition: color 0.2s ease;
   }
 
-  .nav-mobile a.is-active,
+  .nav-mobile a.is-active {
+    color: var(--color-accent-lime);
+  }
+
   .nav-mobile a:hover {
     color: var(--color-accent-lime);
   }
