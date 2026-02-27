@@ -1,11 +1,9 @@
 ---
 // src/components/RotatingWord.astro
-// Un solo nodo de texto. JS controla el swap con fade + slide.
-// Usa las variables de diseño del proyecto: --font-script, --color-accent-lime.
 ---
 
 <span class="rw-wrapper" aria-live="polite" aria-atomic="true">
-  <span class="rw-text" id="rotating-word">se quede</span>
+  <span class="rw-text" id="rotating-word"></span><span class="rw-cursor" aria-hidden="true">|</span>
 </span>
 
 <script>
@@ -19,74 +17,115 @@
     'compre sin dudar',
   ];
 
-  const VISIBLE_MS  = 2000;
-  const FADE_MS     = 240;
+  const TYPE_MS   = 80;   // ms por carácter al escribir
+  const DELETE_MS = 45;   // ms por carácter al borrar (más rápido)
+  const PAUSE_MS  = 1800; // ms que permanece la palabra completa
+  const START_MS  = 900;  // pausa antes de empezar a escribir la primera
 
-  const el = document.getElementById('rotating-word');
+  const el = document.getElementById('rotating-word') as HTMLElement;
   if (!el) throw new Error('rotating-word not found');
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    // Sin animación: primera palabra estática
+    el.textContent = WORDS[0] ?? '';
   } else {
-    let index = 0;
+    let wordIndex = 0;
+    let charIndex = 0;
+    type State = 'typing' | 'pausing' | 'deleting' | 'waiting';
+    let state: State = 'waiting';
 
-    // Estado inicial: visible
-    el.style.opacity    = '1';
-    el.style.transform  = 'translateY(0)';
-    el.style.transition = 'none';
+    const tick = () => {
+      const word = WORDS[wordIndex] ?? '';
 
-    const rotate = () => {
-      // Fase 1: fade-out hacia arriba
-      el.style.transition = `opacity ${FADE_MS}ms ease, transform ${FADE_MS}ms ease`;
-      el.style.opacity    = '0';
-      el.style.transform  = 'translateY(-40%)';
+      if (state === 'waiting') {
+        // Pausa inicial antes de escribir la primera palabra
+        state = 'typing';
+        setTimeout(tick, START_MS);
+        return;
+      }
 
-      setTimeout(() => {
-        // Fase 2: cambiar texto, reposicionar abajo sin transición
-        index = (index + 1) % WORDS.length;
-        el.textContent = WORDS[index] ?? "";
-        el.style.transition = 'none';
-        el.style.opacity    = '0';
-        el.style.transform  = 'translateY(40%)';
+      if (state === 'typing') {
+        charIndex++;
+        el.textContent = word.slice(0, charIndex);
 
-        // Forzar reflow para que el navegador aplique el estado "abajo"
-        el.getBoundingClientRect();
+        if (charIndex < word.length) {
+          // Pequeña variación aleatoria ±20ms para que no parezca robótico
+          setTimeout(tick, TYPE_MS + (Math.random() * 40 - 20));
+        } else {
+          // Palabra completa — pausa antes de borrar
+          state = 'pausing';
+          setTimeout(tick, PAUSE_MS);
+        }
+        return;
+      }
 
-        // Fase 3: fade-in desde abajo
-        el.style.transition = `opacity ${FADE_MS}ms ease, transform ${FADE_MS}ms ease`;
-        el.style.opacity    = '1';
-        el.style.transform  = 'translateY(0)';
-      }, FADE_MS);
+      if (state === 'pausing') {
+        state = 'deleting';
+        tick();
+        return;
+      }
+
+      if (state === 'deleting') {
+        charIndex--;
+        el.textContent = word.slice(0, charIndex);
+
+        if (charIndex > 0) {
+          setTimeout(tick, DELETE_MS + (Math.random() * 20 - 10));
+        } else {
+          // Borrado completo — siguiente palabra
+          wordIndex = (wordIndex + 1) % WORDS.length;
+          state = 'typing';
+          setTimeout(tick, 180); // pequeña pausa entre palabras
+        }
+        return;
+      }
     };
 
-    setInterval(rotate, VISIBLE_MS + FADE_MS);
+    tick();
   }
 </script>
 
 <style>
   .rw-wrapper {
-    display: inline-block;
-    /* Altura fija = evita que el hero salte al cambiar la palabra */
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0;
     height: 1.1em;
     min-width: 14ch;
     vertical-align: bottom;
-    overflow: hidden;
     position: relative;
+    /* Sin overflow:hidden para que el cursor no se corte */
   }
 
   .rw-text {
-    display: inline-block;
-    /* Hereda el tamaño del h1 del hero donde esté insertado */
+    display: inline;
     font-size: inherit;
     line-height: inherit;
-    /* Variables del diseño global */
     font-family: var(--font-script);
     font-style: italic;
     font-weight: 600;
     color: var(--color-accent-lime);
     white-space: nowrap;
-    /* JS controla opacity/transform desde el inicio */
+  }
+
+  /* Cursor parpadeante */
+  .rw-cursor {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-style: normal;
+    font-weight: 300;
+    font-size: 0.85em;
+    color: var(--color-accent-lime);
     opacity: 1;
-    transform: translateY(0);
+    margin-left: 2px;
+    animation: blink 0.9s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rw-cursor { animation: none; opacity: 1; }
   }
 </style>
