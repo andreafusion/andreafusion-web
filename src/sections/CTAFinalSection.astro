@@ -1,18 +1,27 @@
 ---
 // src/sections/CTAFinalSection.astro
 // Bloque de cierre. Fondo uva con gran titular y botón principal.
+// TIPOGRAFÍA: titular con mixed weight — el clímax tipográfico de la página.
 ---
 
 <section class="cta-final" id="contacto">
   <div class="cta-final__inner">
 
     <!-- Número de sección -->
-    <p class="section-num-light" aria-hidden="true">07</p>
+    <p class="section-num-light" aria-hidden="true">08</p>
 
-    <!-- Gran titular de cierre -->
+    <!--
+      GRAN TITULAR MIXED WEIGHT — clímax de la página.
+      "Tu web puede"        → 400, casi se susurra
+      "sentirse diferente." → 900 itálica, lima, máximo peso
+      
+      Es el mayor uso de mixed weight en toda la web:
+      el tamaño enorme (hasta 8rem) hace que el contraste
+      400 vs 900 sea absolutamente visible y dramático.
+    -->
     <h2 class="cta-final__title">
-      <span>Tu web puede</span>
-      <em>sentirse diferente.</em>
+      <span class="cta-final__title-thin">Tu web puede</span>
+      <em class="cta-final__title-heavy">sentirse diferente.</em>
     </h2>
 
     <!-- Texto -->
@@ -83,22 +92,39 @@
     text-transform: uppercase;
   }
 
-  /* ── Titular ── */
+  /* ── TITULAR MIXED WEIGHT — máximo impacto ── */
   .cta-final__title {
     display: flex;
     flex-direction: column;
     font-family: var(--font-display);
-    font-weight: 900;
     font-size: clamp(3rem, 10vw, 8rem);
     line-height: 0.95;
     letter-spacing: -0.03em;
-    color: var(--color-text-hero);
     gap: 0.05em;
   }
 
-  .cta-final__title em {
+  /*
+    "Tu web puede" — 400, crema muy tenue.
+    A este tamaño enorme, el 400 parece casi transparente.
+    El ojo lo lee como preparación, no como afirmación.
+  */
+  .cta-final__title-thin {
+    font-weight: 400;
+    font-style: normal;
+    color: rgba(245, 238, 230, 0.45); /* crema casi fantasma */
+    display: block;
+  }
+
+  /*
+    "sentirse diferente." — 900 itálica, lima.
+    El mayor contraste de la página: tamaño máximo + peso máximo + color acento.
+    Es el momento visual más alto de todo el scroll.
+  */
+  .cta-final__title-heavy {
+    font-weight: 900;
     font-style: italic;
     color: var(--color-accent-lime);
+    display: block;
   }
 
   /* ── Texto ── */
@@ -163,15 +189,9 @@
     transform: translate(-50%, -50%);
   }
 
-  .cta-final__rings span:nth-child(1) {
-    width: 300px; height: 300px;
-  }
-  .cta-final__rings span:nth-child(2) {
-    width: 500px; height: 500px;
-  }
-  .cta-final__rings span:nth-child(3) {
-    width: 700px; height: 700px;
-  }
+  .cta-final__rings span:nth-child(1) { width: 300px; height: 300px; }
+  .cta-final__rings span:nth-child(2) { width: 500px; height: 500px; }
+  .cta-final__rings span:nth-child(3) { width: 700px; height: 700px; }
 
   /* ── Footer ── */
   .footer {

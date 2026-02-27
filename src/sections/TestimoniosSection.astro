@@ -1,27 +1,28 @@
 ---
 // src/sections/TestimoniosSection.astro
 // Fondo uva oscuro. Carousel CSS puro con scroll snap. Sin JS de librerías.
+// TIPOGRAFÍA: título con mixed weight para ritmo editorial.
 
 interface Testimonio {
-  cita:     string;
-  nombre:   string;
+  cita: string;
+  nombre: string;
   proyecto?: string;
 }
 
 const testimonios: Testimonio[] = [
   {
-    cita:     'Sentí que por fin mi web hablaba como yo.',
-    nombre:   'Cliente',
+    cita: 'Sentí que por fin mi web hablaba como yo.',
+    nombre: 'Cliente',
     proyecto: 'Marca personal',
   },
   {
-    cita:     'Ahora todo tiene coherencia y se entiende muchísimo mejor.',
-    nombre:   'Cliente',
+    cita: 'Ahora todo tiene coherencia y se entiende muchísimo mejor.',
+    nombre: 'Cliente',
     proyecto: 'Proyecto creativo',
   },
   {
-    cita:     'El proceso fue claro y el resultado superó lo que imaginaba.',
-    nombre:   'Cliente',
+    cita: 'El proceso fue claro y el resultado superó lo que imaginaba.',
+    nombre: 'Cliente',
     proyecto: 'Landing estratégica',
   },
 ];
@@ -31,10 +32,15 @@ const testimonios: Testimonio[] = [
   <div class="testimonios__inner">
 
     <div class="testimonios__header">
-      <p class="section-num-light" aria-hidden="true">05</p>
+      <p class="section-num-light" aria-hidden="true">06</p>
+      <!--
+        TITULAR MIXED WEIGHT
+        "Lo que dicen después de" → 400, fino, como contexto
+        "ver su web terminada."   → 900 itálica, lima, el peso cae aquí
+      -->
       <h2 class="testimonios__title">
-        Lo que dicen después de<br>
-        <em>ver su web terminada.</em>
+        <span class="testimonios__title-thin">Lo que dicen después de</span>
+        <em class="testimonios__title-heavy">ver su web terminada.</em>
       </h2>
     </div>
 
@@ -72,11 +78,12 @@ const testimonios: Testimonio[] = [
 
 <style>
   .testimonios {
-  position: relative;
-  z-index: 15;
-  background: var(--color-bg-hero);
-  overflow: clip;
-}
+    position: relative;
+    z-index: 15;
+    background: var(--color-bg-hero);
+    overflow: hidden;
+    will-change: transform;
+  }
 
   .testimonios__inner {
     position: relative;
@@ -89,18 +96,48 @@ const testimonios: Testimonio[] = [
     gap: 3rem;
   }
 
+  .section-num-light {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    color: var(--color-accent-pink);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  /* ── TITULAR MIXED WEIGHT ── */
   .testimonios__title {
     font-family: var(--font-display);
-    font-weight: 900;
     font-size: clamp(2rem, 5vw, 4rem);
     line-height: 1.05;
     letter-spacing: -0.02em;
-    color: var(--color-text-hero);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
   }
 
-  .testimonios__title em {
+  /*
+    Línea fina (400): introduce el contexto.
+    Sobre fondo uva oscuro, el 400 se lee casi como "grabado".
+  */
+  .testimonios__title-thin {
+    font-weight: 400;
+    font-style: normal;
+    color: rgba(245, 238, 230, 0.55); /* crema muy tenue */
+    display: block;
+  }
+
+  /*
+    Línea pesada (900 itálica): donde cae el impacto.
+    Lima sobre uva — máximo contraste cromático y de peso.
+  */
+  .testimonios__title-heavy {
+    font-weight: 900;
     font-style: italic;
     color: var(--color-accent-lime);
+    display: block;
   }
 
   /* ── Track (carousel) ── */
@@ -111,17 +148,16 @@ const testimonios: Testimonio[] = [
   }
 
   .testimonios__track {
-  display: flex;
-  gap: 1.5rem;
-  list-style: none;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-x;   /* ← AÑADIR: dice al navegador que este elemento sólo hace scroll horizontal */
-  scrollbar-width: none;
-  padding-bottom: 0.5rem;
-}
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 0.5rem;
+  }
 
   .testimonios__track::-webkit-scrollbar { display: none; }
 
@@ -234,6 +270,6 @@ const testimonios: Testimonio[] = [
   /* ── Desktop ── */
   @media (min-width: 768px) {
     .testimonios__inner { padding: 7rem 4rem; }
-    .testimonio-card    { flex: 0 0 min(40vw, 380px); }
+    .testimonio-card { flex: 0 0 min(40vw, 380px); }
   }
 </style>

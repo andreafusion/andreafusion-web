@@ -1,14 +1,14 @@
 ---
 // src/sections/LogosSection.astro
 // Prueba social / logos. Placeholders preparados para sustituir con logos reales.
-// Fondo blanco limpio entre dos secciones para dar aire.
+// PROFUNDIDAD: fondo blanco tintado (--color-bg-white) + grain sutil.
 ---
 
-<section class="logos" id="confianza">
+<section class="logos has-grain" id="confianza">
   <div class="logos__inner">
 
     <div class="logos__header">
-      <p class="section-num" aria-hidden="true">02</p>
+      <p class="section-num" aria-hidden="true">03</p>
       <h2 class="logos__title">
         Marcas que confían en procesos<br>
         <em>claros y diseño con intención.</em>
@@ -23,7 +23,6 @@
     <div class="logos__strip" aria-label="Clientes y colaboraciones">
       {Array.from({ length: 6 }).map((_, i) => (
         <div class="logos__item" aria-label={`Cliente ${i + 1}`}>
-          <!-- Logo placeholder: reemplazar con <img src="/logos/nombre.svg" alt="Nombre"> -->
           <svg class="logos__placeholder" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <rect x="0.5" y="0.5" width="119" height="39" rx="6" stroke="currentColor" stroke-opacity="0.2"/>
             <rect x="10" y="16" width="40" height="8" rx="3" fill="currentColor" fill-opacity="0.18"/>
@@ -34,7 +33,6 @@
       ))}
     </div>
 
-    <!-- Nota interna: quitar antes de publicar -->
     <p class="logos__note" aria-hidden="true">[ Logos reales próximamente ]</p>
 
   </div>
@@ -44,11 +42,20 @@
   .logos {
     position: relative;
     z-index: 12;
-    background: #fff;
+    /*
+      Blanco tintado: no es blanco puro.
+      Tiene un tinte lila muy sutil que lo conecta visualmente
+      con el resto de la paleta (lila, uva).
+      En móvil OLED se percibe claramente frente a un blanco puro.
+    */
+    background: var(--color-bg-white);
     will-change: transform;
   }
 
+  /* El contenido necesita z-index > 0 para quedar sobre el grain (::before z-index: 0) */
   .logos__inner {
+    position: relative;
+    z-index: 1;
     max-width: 1200px;
     margin: 0 auto;
     padding: 5rem 1.5rem;
@@ -131,8 +138,6 @@
   /* ── Desktop ── */
   @media (min-width: 768px) {
     .logos__inner { padding: 6rem 4rem; }
-    .logos__strip {
-      grid-template-columns: repeat(6, 1fr);
-    }
+    .logos__strip { grid-template-columns: repeat(6, 1fr); }
   }
 </style>

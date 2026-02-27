@@ -1,5 +1,8 @@
 ---
 // src/sections/HeroSection.astro
+// PROFUNDIDAD: ruido SVG mejorado — ahora perceptible en móvil.
+// El original tenía baseFrequency: 0.9 (grano muy fino, invisible en pantallas pequeñas).
+// Ahora: 0.65 con más opacidad en móvil. Mismo sistema que el resto de la web.
 import RotatingWord from '../components/RotatingWord.astro';
 import Stickers from '../components/Stickers.astro';
 ---
@@ -10,7 +13,7 @@ import Stickers from '../components/Stickers.astro';
   <div class="hero__inner">
     <div class="hero__content">
 
-      <p class="hero__eyebrow">te cuento...</p>
+      <p class="hero__eyebrow">Diseño &amp; Desarrollo Web</p>
 
       <h1 class="hero__headline">
         <span class="hero__line">DISEÑO</span>
@@ -50,20 +53,33 @@ import Stickers from '../components/Stickers.astro';
     justify-content: center;
     overflow: visible;
     /*
-      Sin z-index explícito (valor: auto) → el hero es la capa base.
-      Las secciones con z-index >= 11 se pintan encima de forma fiable
-      en todos los navegadores, incluido iOS Safari.
-      NO añadir overflow:hidden — rompe sticky en WebKit.
+      Sin z-index explícito en el hero.
+      Ver comentario original en HeroSection — fix para iOS Safari sticky bug.
     */
   }
 
-  /* Textura de ruido sutil */
+  /*
+    RUIDO DE TEXTURA — mejorado para móvil.
+
+    Antes: baseFrequency 0.9, opacidad 0.5
+    → grano muy fino, invisible en pantallas pequeñas o con densidad de píxeles alta.
+
+    Ahora: baseFrequency 0.65, opacidad adaptativa.
+    → grano perceptible en móvil sin ser agresivo.
+    → misma frecuencia que --grain-svg en global.css para consistencia visual.
+
+    El ruido se implementa aquí con SVG inline (no clase .has-grain)
+    porque el Hero necesita dos capas: ruido + gradiente radial.
+    .has-grain solo hace una capa.
+  */
   .hero::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    opacity: 0.5;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+    opacity: 0.055;       /* perceptible en móvil */
     pointer-events: none;
     z-index: 0;
   }
@@ -82,7 +98,7 @@ import Stickers from '../components/Stickers.astro';
     z-index: 0;
   }
 
-  /* ── Inner layout ── */
+  /* ---- Inner layout ---- */
   .hero__inner {
     position: relative;
     z-index: 3;
@@ -98,7 +114,7 @@ import Stickers from '../components/Stickers.astro';
     max-width: 90vw;
   }
 
-  /* ── Eyebrow ── */
+  /* ---- Eyebrow ---- */
   .hero__eyebrow {
     font-family: var(--font-body);
     font-size: clamp(0.7rem, 2vw, 0.85rem);
@@ -109,7 +125,7 @@ import Stickers from '../components/Stickers.astro';
     opacity: 0.9;
   }
 
-  /* ── Titular ── */
+  /* ---- Titular ---- */
   .hero__headline {
     display: flex;
     flex-direction: column;
@@ -129,7 +145,7 @@ import Stickers from '../components/Stickers.astro';
     animation: lineIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
 
-  .hero__line:nth-child(1) { animation-delay: 0.10s; }
+  .hero__line:nth-child(1) { animation-delay: 0.1s; }
   .hero__line:nth-child(2) { animation-delay: 0.18s; }
   .hero__line:nth-child(3) { animation-delay: 0.26s; }
   .hero__line:nth-child(4) { animation-delay: 0.34s; }
@@ -141,13 +157,10 @@ import Stickers from '../components/Stickers.astro';
   }
 
   @keyframes lineIn {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ── CTA group ── */
+  /* ---- CTA group ---- */
   .hero__cta-group {
     display: flex;
     flex-direction: column;
@@ -199,7 +212,7 @@ import Stickers from '../components/Stickers.astro';
     padding-left: 0.5em;
   }
 
-  /* ── Scroll hint ── */
+  /* ---- Scroll hint ---- */
   .hero__scroll-hint {
     position: absolute;
     bottom: var(--space-md);
@@ -220,11 +233,11 @@ import Stickers from '../components/Stickers.astro';
   }
 
   @keyframes scrollBounce {
-    0%, 100% { transform: translateY(0);   opacity: 1;   }
-    50%       { transform: translateY(8px); opacity: 0.4; }
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(8px); opacity: 0.4; }
   }
 
-  /* ── Reduced motion ── */
+  /* ---- Reduced motion ---- */
   @media (prefers-reduced-motion: reduce) {
     .hero__line,
     .hero__cta-group,
@@ -236,10 +249,13 @@ import Stickers from '../components/Stickers.astro';
     .hero__scroll-dot { animation: none; }
   }
 
-  /* ── Tablet+ ── */
+  /* ---- Responsive: tablet+ ---- */
   @media (min-width: 768px) {
-    .hero__inner   { padding: var(--space-xl) var(--space-xl); }
+    .hero__inner { padding: var(--space-xl) var(--space-xl); }
     .hero__content { max-width: 80vw; }
+
+    /* En desktop el grano puede ser ligeramente más visible */
+    .hero::before { opacity: 0.07; }
   }
 
   @media (min-width: 1024px) {

@@ -1,21 +1,23 @@
 ---
 // src/sections/PortfolioSection.astro
 // Home — 4 proyectos destacados en grid.
+// PROFUNDIDAD: fondo blanco tintado (--color-bg-white) + grain sutil.
+// Aplica mixed weight en título (Mejora 3).
 
 import { featuredProjects } from '../data/projects';
 import BugSquasher from '../components/BugSquasher.astro';
 ---
 
-<section class="portfolio" id="portfolio">
+<section class="portfolio has-grain" id="portfolio">
   <div class="portfolio__inner">
 
     <div class="portfolio__header">
-      <p class="section-num" aria-hidden="true">06</p>
+      <p class="section-num" aria-hidden="true">07</p>
       <div class="portfolio__header-row">
         <div>
           <h2 class="portfolio__title">
-            Algunos proyectos que muestran<br>
-            <em>cómo diseño y desarrollo.</em>
+            <span class="portfolio__title-thin">Algunos proyectos que muestran</span>
+            <em class="portfolio__title-heavy">cómo diseño y desarrollo.</em>
           </h2>
           <p class="portfolio__subtitle">
             Cada web nace de una estrategia distinta, pero todas comparten algo:
@@ -35,7 +37,7 @@ import BugSquasher from '../components/BugSquasher.astro';
           target="_blank"
           rel="noopener noreferrer"
           class="proyecto-card"
-          aria-label={`Ver proyecto: ${p.titulo} (abre en nueva pestaña)`}
+          aria-label={`Ver proyecto: ${p.titulo}`}
         >
           <div
             class="proyecto-card__img"
@@ -76,10 +78,19 @@ import BugSquasher from '../components/BugSquasher.astro';
   .portfolio {
     position: relative;
     z-index: 16;
-    background: #fff;
+    /*
+      Mismo blanco tintado que LogosSection.
+      La consistencia de fondo entre estas dos secciones
+      crea una familia visual: "las secciones claras son siempre este blanco".
+    */
+    background: var(--color-bg-white);
+    will-change: transform;
   }
 
+  /* z-index: 1 para quedar sobre el grain ::before */
   .portfolio__inner {
+    position: relative;
+    z-index: 1;
     max-width: 1200px;
     margin: 0 auto;
     padding: 5rem 1.5rem;
@@ -88,27 +99,38 @@ import BugSquasher from '../components/BugSquasher.astro';
     gap: 3.5rem;
   }
 
+  /* ── TITULAR MIXED WEIGHT ── */
+  .portfolio__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    max-width: 24ch;
+    margin-bottom: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .portfolio__title-thin {
+    font-weight: 400;
+    font-style: normal;
+    color: var(--color-text-mid);
+    display: block;
+  }
+
+  .portfolio__title-heavy {
+    font-weight: 900;
+    font-style: italic;
+    color: var(--color-text-dark);
+    display: block;
+  }
+
   /* ── Cabecera ── */
   .portfolio__header-row {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-  }
-
-  .portfolio__title {
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: clamp(2rem, 5vw, 4rem);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    color: var(--color-text-dark);
-    max-width: 24ch;
-    margin-bottom: 0.75rem;
-  }
-
-  .portfolio__title em {
-    font-style: italic;
-    color: var(--color-text-mid);
   }
 
   .portfolio__subtitle {
@@ -128,6 +150,7 @@ import BugSquasher from '../components/BugSquasher.astro';
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--color-text-dark);
+    text-decoration: none;
     padding-bottom: 2px;
     border-bottom: 2px solid var(--color-accent-lime);
     align-self: flex-start;
@@ -162,6 +185,18 @@ import BugSquasher from '../components/BugSquasher.astro';
     align-items: flex-end;
     justify-content: flex-start;
     padding: 1.25rem;
+    /*
+      Sombra suave en las tarjetas de proyecto.
+      En móvil: ligera para no sobrecargar.
+      Crea separación visual entre la tarjeta y el fondo blanco tintado.
+    */
+    box-shadow: var(--shadow-soft);
+    transition: box-shadow 0.25s ease;
+  }
+
+  .proyecto-card:hover .proyecto-card__img,
+  .proyecto-card:focus-visible .proyecto-card__img {
+    box-shadow: var(--shadow-soft-md);
   }
 
   .proyecto-card__year {
@@ -258,7 +293,11 @@ import BugSquasher from '../components/BugSquasher.astro';
     font-size: 0.72rem;
     font-weight: 600;
     color: var(--color-text-mid);
-    background: var(--color-bg-light);
+    /*
+      Tag sobre blanco tintado: usa --color-bg-white-warm
+      para que el tag tenga contraste perceptible sobre el fondo blanco.
+    */
+    background: var(--color-bg-white-warm);
     border-radius: 9999px;
     padding: 0.25em 0.75em;
     letter-spacing: 0.02em;
@@ -277,5 +316,13 @@ import BugSquasher from '../components/BugSquasher.astro';
       justify-content: space-between;
     }
     .portfolio__ver-todos { align-self: flex-end; }
+
+    /* En desktop las sombras pueden ser más pronunciadas */
+    .proyecto-card__img {
+      box-shadow: var(--shadow-soft-md);
+    }
+    .proyecto-card:hover .proyecto-card__img {
+      box-shadow: var(--shadow-soft-lg);
+    }
   }
 </style>
