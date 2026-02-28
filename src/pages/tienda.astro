@@ -211,7 +211,13 @@ const faqs = [
                       ))}
                     </ul>
 
-                    <h2 class="plantilla-card__titulo">{p.titulo}</h2>
+                      {p.urlDetalle ? (
+                        <h2 class="plantilla-card__titulo">
+                          <a href={p.urlDetalle} class="plantilla-card__titulo-link">{p.titulo}</a>
+                        </h2>
+                      ) : (
+                        <h2 class="plantilla-card__titulo">{p.titulo}</h2>
+                      )}
                     <p class="plantilla-card__para-quien">{p.paraQuien}</p>
 
                     <!-- Bullets -->
@@ -230,9 +236,7 @@ const faqs = [
                       <div class="plantilla-card__ctas">
                         <a
                           href={p.urlDetalle}
-                          class="plantilla-card__btn plantilla-card__btn--soon"
-                          aria-disabled="true"
-                          tabindex="-1"
+                          class="plantilla-card__btn plantilla-card__btn--details"
                         >
                           Ver detalles
                         </a>
@@ -851,13 +855,24 @@ const faqs = [
   white-space: nowrap;
 }
 
-/* "Ver detalles" deshabilitado */
-.plantilla-card__btn--soon {
-  background: rgba(90, 58, 122, 0.08);
-  color: rgba(90, 58, 122, 0.35);
-  border: 1.5px solid rgba(90, 58, 122, 0.12);
-  cursor: not-allowed;
-  pointer-events: none;
+/* "Ver detalles" activo (cuando ya existe la página) */
+.plantilla-card__btn--details {
+  background: rgba(90, 58, 122, 0.10);
+  color: rgba(90, 58, 122, 0.9);
+  border: 1.5px solid rgba(90, 58, 122, 0.18);
+  cursor: pointer;
+  pointer-events: auto;
+  text-decoration: none; /* por si es <a> */
+}
+
+.plantilla-card__btn--details:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px var(--color-accent-lime);
+}
+
+.plantilla-card__btn--details:focus-visible {
+  outline: 2px solid rgba(90, 58, 122, 0.45);
+  outline-offset: 3px;
 }
 
 /* "Early access" activo */
