@@ -1,0 +1,1247 @@
+---
+// src/pages/tienda/coach-podcast-blog.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const paginas = [
+  'Home',
+  'Sobre mí',
+  'Servicios',
+  'Blog',
+  'Post individual',
+  'Recursos',
+  'Contacto',
+  'Legal básico',
+];
+
+const faqs = [
+  {
+    q: '¿Necesito saber programar?',
+    a: 'No. Todo se edita visualmente en Framer.',
+  },
+  {
+    q: '¿Puedo añadir mi propio blog?',
+    a: 'Sí. La plantilla incluye una sección de blog y página de post individual lista para publicar.',
+  },
+  {
+    q: '¿Funciona bien en móvil?',
+    a: 'Sí. Está diseñada mobile-first.',
+  },
+  {
+    q: '¿Incluye dominio y hosting?',
+    a: 'No. Eso se gestiona desde Framer, pero te explico cómo hacerlo.',
+  },
+  {
+    q: '¿Puedo usarla para clientes?',
+    a: 'Sí, con licencia por proyecto.',
+  },
+  {
+    q: '¿Hay reembolsos?',
+    a: 'Al ser producto digital descargable, no hay reembolsos tras la entrega.',
+  },
+];
+---
+
+<BaseLayout
+  title="Coach / Podcast / Blog — Plantilla Framer | AndreaFusion"
+  description="Plantilla web para marcas personales que necesitan autoridad. Estructura clara, mensaje directo, espacio para contenido. Lista para editar en Framer."
+>
+  <main class="bp-page">
+
+    <!-- ══════════════════════════════════════
+         1) HERO
+    ══════════════════════════════════════ -->
+    <header class="bp-hero">
+      <div class="bp-hero__inner">
+
+        <a href="/tienda" class="bp-hero__back" aria-label="Volver a la tienda">
+          <span aria-hidden="true">←</span> Tienda
+        </a>
+
+        <p class="bp-hero__eyebrow">Framer Website Template</p>
+
+        <h1 class="bp-hero__title">Coach / Podcast / Blog</h1>
+
+        <p class="bp-hero__sub">
+          La plantilla pensada para marcas personales que necesitan autoridad, no solo estética.
+        </p>
+
+        <p class="bp-hero__texto">
+          Estructura clara. Mensaje directo. Espacio para contenido.<br />
+          Montas tu web en una tarde y empiezas a posicionarte como referente.
+        </p>
+
+        <ul class="bp-hero__bullets" aria-label="Características principales">
+          <li class="bp-hero__bullet">
+            <span class="bp-hero__bullet-icon" aria-hidden="true">—</span>
+            8–10 páginas listas para editar
+          </li>
+          <li class="bp-hero__bullet">
+            <span class="bp-hero__bullet-icon" aria-hidden="true">—</span>
+            Blog o sección de contenido integrada
+          </li>
+          <li class="bp-hero__bullet">
+            <span class="bp-hero__bullet-icon" aria-hidden="true">—</span>
+            Estructura pensada para generar confianza
+          </li>
+        </ul>
+
+        <div class="bp-hero__ctas">
+          <a href="#" class="bp-cta bp-cta--primary bp-cta--disabled" aria-disabled="true" tabindex="-1">
+            Demo próximamente
+          </a>
+          <a
+            href="https://andreafusion.gumroad.com/l/earlyaccess"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="bp-cta bp-cta--secondary"
+          >
+            Entrar al early access
+          </a>
+        </div>
+
+      </div>
+
+      <div class="bp-hero__deco" aria-hidden="true"></div>
+    </header>
+
+    <!-- ══════════════════════════════════════
+         CUERPO
+    ══════════════════════════════════════ -->
+    <div class="bp-body">
+      <div class="bp-body__inner">
+
+        <!-- ══════════════════════════════════════
+             2) SHOWCASE
+        ══════════════════════════════════════ -->
+        <section class="bp-showcase" aria-label="Vista previa de la plantilla">
+          <div class="bp-showcase__texto">
+            <p class="section-num">Vista previa</p>
+            <h2 class="bp-showcase__titulo">
+              Diseñada para que tu mensaje sea el protagonista.
+            </h2>
+            <p class="bp-showcase__desc">
+              Nada de diseño que distrae.<br />
+              Aquí primero se entiende quién eres y qué ofreces.
+            </p>
+          </div>
+
+          <div class="bp-showcase__mocks" aria-label="Mockups de la plantilla">
+            <div class="bp-mock bp-mock--desktop" aria-label="Vista escritorio">
+              <div class="bp-mock__screen">
+                <div class="bp-mock__bar" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="bp-mock__canvas">
+                  <div class="bp-mock__blob" aria-hidden="true"></div>
+                  <div class="bp-mock__grain" aria-hidden="true"></div>
+                  <div class="bp-mock__ui" aria-hidden="true">
+                    <div class="bp-mock__ui-nav"></div>
+                    <div class="bp-mock__ui-hero"></div>
+                    <div class="bp-mock__ui-row">
+                      <div class="bp-mock__ui-card"></div>
+                      <div class="bp-mock__ui-card"></div>
+                      <div class="bp-mock__ui-card"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bp-mock bp-mock--mobile" aria-label="Vista móvil">
+              <div class="bp-mock__phone">
+                <div class="bp-mock__phone-notch" aria-hidden="true"></div>
+                <div class="bp-mock__phone-canvas">
+                  <div class="bp-mock__blob" aria-hidden="true"></div>
+                  <div class="bp-mock__grain" aria-hidden="true"></div>
+                  <div class="bp-mock__ui" aria-hidden="true">
+                    <div class="bp-mock__ui-hero bp-mock__ui-hero--sm"></div>
+                    <div class="bp-mock__ui-card bp-mock__ui-card--full"></div>
+                    <div class="bp-mock__ui-card bp-mock__ui-card--full"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══════════════════════════════════════
+             3) PARA QUIÉN ES
+        ══════════════════════════════════════ -->
+        <section class="bp-quien" aria-label="Para quién es esta plantilla">
+          <div class="bp-quien__inner">
+            <div class="bp-quien__header">
+              <p class="section-num">Para quién es</p>
+              <h2 class="bp-quien__titulo">Perfecta para…</h2>
+            </div>
+            <ul class="bp-quien__lista" aria-label="Perfiles ideales">
+              <li class="bp-quien__item">
+                <span class="bp-quien__check" aria-hidden="true">✔</span>
+                Coaches y mentoras
+              </li>
+              <li class="bp-quien__item">
+                <span class="bp-quien__check" aria-hidden="true">✔</span>
+                Podcasters
+              </li>
+              <li class="bp-quien__item">
+                <span class="bp-quien__check" aria-hidden="true">✔</span>
+                Creadoras de contenido
+              </li>
+              <li class="bp-quien__item">
+                <span class="bp-quien__check" aria-hidden="true">✔</span>
+                Profesionales que venden conocimiento
+              </li>
+              <li class="bp-quien__item">
+                <span class="bp-quien__check" aria-hidden="true">✔</span>
+                Marcas personales en crecimiento
+              </li>
+            </ul>
+            <p class="bp-quien__micro">
+              Si tu negocio vive de tu mensaje, esta estructura lo sostiene.
+            </p>
+          </div>
+        </section>
+
+        <!-- ══════════════════════════════════════
+             4) PÁGINAS INCLUIDAS
+        ══════════════════════════════════════ -->
+        <section class="bp-paginas" aria-label="Páginas incluidas en la plantilla">
+          <p class="section-num">Páginas incluidas</p>
+          <h2 class="bp-paginas__titulo">Páginas incluidas</h2>
+          <ul class="bp-paginas__grid" role="list">
+            {paginas.map((p, i) => (
+              <li class="bp-paginas__item">
+                <span class="bp-paginas__num" aria-hidden="true">0{i + 1}</span>
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="bp-paginas__micro">No son páginas sueltas. Es un recorrido pensado.</p>
+        </section>
+
+        <!-- ══════════════════════════════════════
+             5) ESTRUCTURA PARA CONVERTIR
+        ══════════════════════════════════════ -->
+        <section class="bp-estructura" aria-label="Estructura pensada para convertir">
+          <div class="bp-estructura__inner">
+            <div class="bp-estructura__texto">
+              <p class="section-num-light">Por qué convierte</p>
+              <h2 class="bp-estructura__titulo">
+                No es solo bonita.<br />Está pensada.
+              </h2>
+              <p class="bp-estructura__desc">
+                Cada sección tiene una función.<br />
+                Primero claridad.<br />
+                Después prueba social.<br />
+                Luego acción.
+              </p>
+            </div>
+            <ul class="bp-estructura__bullets" aria-label="Principios de estructura">
+              <li class="bp-estructura__bullet">
+                <span class="bp-estructura__dash" aria-hidden="true">—</span>
+                Hero claro con propuesta directa
+              </li>
+              <li class="bp-estructura__bullet">
+                <span class="bp-estructura__dash" aria-hidden="true">—</span>
+                Bloques de autoridad y prueba social
+              </li>
+              <li class="bp-estructura__bullet">
+                <span class="bp-estructura__dash" aria-hidden="true">—</span>
+                Sección estratégica de servicios
+              </li>
+              <li class="bp-estructura__bullet">
+                <span class="bp-estructura__dash" aria-hidden="true">—</span>
+                CTA coherentes y repetidos
+              </li>
+              <li class="bp-estructura__bullet">
+                <span class="bp-estructura__dash" aria-hidden="true">—</span>
+                Scroll fluido
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- ══════════════════════════════════════
+             6) QUÉ LA HACE DIFERENTE
+        ══════════════════════════════════════ -->
+        <section class="bp-diferente" aria-label="Qué la hace diferente">
+          <div class="bp-diferente__inner">
+            <div class="bp-diferente__texto">
+              <p class="section-num">Qué la hace diferente</p>
+              <h2 class="bp-diferente__titulo">
+                No es otra plantilla aesthetic.
+              </h2>
+              <p class="bp-diferente__desc">
+                Muchas webs personales parecen diarios.<br />
+                Aquí es estrategia.
+              </p>
+            </div>
+            <ul class="bp-diferente__bullets" aria-label="Diferenciadores">
+              <li class="bp-diferente__bullet">
+                <span class="bp-diferente__dash" aria-hidden="true">—</span>
+                Jerarquía pensada para posicionarte
+              </li>
+              <li class="bp-diferente__bullet">
+                <span class="bp-diferente__dash" aria-hidden="true">—</span>
+                Sección de contenido optimizada
+              </li>
+              <li class="bp-diferente__bullet">
+                <span class="bp-diferente__dash" aria-hidden="true">—</span>
+                Copy guiado
+              </li>
+              <li class="bp-diferente__bullet">
+                <span class="bp-diferente__dash" aria-hidden="true">—</span>
+                Mobile-first real
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- ══════════════════════════════════════
+             7) EDITARLA ES FÁCIL + CTA INTERMEDIO
+        ══════════════════════════════════════ -->
+        <section class="bp-editar" aria-label="Cómo editar la plantilla">
+          <div class="bp-editar__inner">
+            <div class="bp-editar__texto">
+              <p class="section-num">Sin código</p>
+              <h2 class="bp-editar__titulo">¿Y si no soy técnica?</h2>
+              <p class="bp-editar__desc">
+                Cambias textos, imágenes y colores en Framer sin tocar código.
+              </p>
+              <ul class="bp-editar__includes" aria-label="Incluye">
+                <li class="bp-editar__include">
+                  <span class="bp-editar__check" aria-hidden="true">✔</span>
+                  Guía paso a paso
+                </li>
+                <li class="bp-editar__include">
+                  <span class="bp-editar__check" aria-hidden="true">✔</span>
+                  Checklist de publicación
+                </li>
+                <li class="bp-editar__include">
+                  <span class="bp-editar__check" aria-hidden="true">✔</span>
+                  Soporte por email
+                </li>
+              </ul>
+              <p class="bp-editar__micro">
+                No necesitas convertirte en diseñadora. Solo necesitas intención.
+              </p>
+            </div>
+
+            <div class="bp-editar__cta-wrap">
+              <a
+                href="https://andreafusion.gumroad.com/l/earlyaccess"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="bp-cta bp-cta--lime"
+              >
+                Entrar al early access
+              </a>
+              <p class="bp-editar__cta-micro">Las primeras salen con precio especial.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══════════════════════════════════════
+             8) FAQ
+        ══════════════════════════════════════ -->
+        <section class="bp-faq" aria-label="Preguntas frecuentes">
+          <p class="section-num">FAQ</p>
+          <h2 class="bp-faq__titulo">Preguntas frecuentes</h2>
+          <dl class="bp-faq__lista">
+            {faqs.map((faq, i) => (
+              <div class="bp-faq__item">
+                <dt>
+                  <button
+                    class="bp-faq__pregunta"
+                    aria-expanded="false"
+                    aria-controls={`bp-faq-resp-${i}`}
+                    id={`bp-faq-btn-${i}`}
+                  >
+                    <span>{faq.q}</span>
+                    <span class="bp-faq__icono" aria-hidden="true">+</span>
+                  </button>
+                </dt>
+                <dd
+                  class="bp-faq__respuesta"
+                  id={`bp-faq-resp-${i}`}
+                  role="region"
+                  aria-labelledby={`bp-faq-btn-${i}`}
+                  hidden
+                >
+                  <p>{faq.a}</p>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        <!-- ══════════════════════════════════════
+             9) CTA FINAL
+        ══════════════════════════════════════ -->
+        <section class="bp-cta-final" aria-label="Llamada a la acción final">
+          <div class="bp-cta-final__inner">
+            <h2 class="bp-cta-final__titulo">
+              Tu mensaje merece una estructura a la altura.
+            </h2>
+            <p class="bp-cta-final__texto">
+              Si quieres que te tomen en serio,<br />
+              tu web también debe hacerlo.
+            </p>
+            <a
+              href="https://andreafusion.gumroad.com/l/earlyaccess"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="bp-cta bp-cta--lime"
+            >
+              Entrar al early access
+            </a>
+            <p class="bp-cta-final__micro">Las primeras salen con precio especial.</p>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+  </main>
+</BaseLayout>
+
+<script>
+  const faqBtns = document.querySelectorAll<HTMLButtonElement>('.bp-faq__pregunta');
+
+  faqBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      const targetId = btn.getAttribute('aria-controls');
+      const respuesta = targetId ? document.getElementById(targetId) : null;
+
+      faqBtns.forEach(b => {
+        const otherId = b.getAttribute('aria-controls');
+        const other = otherId ? document.getElementById(otherId) : null;
+        b.setAttribute('aria-expanded', 'false');
+        const icon = b.querySelector<HTMLElement>('.bp-faq__icono');
+        if (icon) icon.textContent = '+';
+        if (other && other !== respuesta) {
+          other.style.maxHeight = '0';
+          setTimeout(() => { if (other) other.hidden = true; }, 280);
+        }
+      });
+
+      if (!isExpanded && respuesta) {
+        btn.setAttribute('aria-expanded', 'true');
+        const icon = btn.querySelector<HTMLElement>('.bp-faq__icono');
+        if (icon) icon.textContent = '×';
+        respuesta.hidden = false;
+        respuesta.style.maxHeight = respuesta.scrollHeight + 'px';
+      } else if (respuesta) {
+        respuesta.style.maxHeight = '0';
+        setTimeout(() => { if (respuesta) respuesta.hidden = true; }, 280);
+      }
+    });
+  });
+</script>
+
+<style>
+.bp-page {
+  padding-top: 80px;
+  background: var(--color-bg-hero);
+}
+
+.bp-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9em 2.2em;
+  border-radius: var(--radius-btn);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  white-space: nowrap;
+}
+
+.bp-cta--primary {
+  background: var(--color-accent-lime);
+  color: var(--color-text-dark);
+  box-shadow: var(--shadow-btn);
+}
+
+.bp-cta--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.bp-cta--secondary {
+  background: transparent;
+  color: var(--color-text-hero);
+  border: 1.5px solid rgba(245, 238, 230, 0.35);
+}
+
+.bp-cta--secondary:hover {
+  border-color: var(--color-accent-lime);
+  color: var(--color-accent-lime);
+}
+
+.bp-cta--lime {
+  background: var(--color-bg-hero);
+  color: var(--color-accent-lime);
+}
+
+.bp-cta--lime:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(61, 26, 92, 0.3);
+}
+
+/* HERO */
+.bp-hero {
+  position: relative;
+  background: var(--color-bg-hero);
+  overflow: hidden;
+  padding: 3rem 1.5rem 6rem;
+}
+
+.bp-hero__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.bp-hero__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(245, 238, 230, 0.45);
+  text-decoration: none;
+  transition: color 0.18s ease;
+  width: fit-content;
+}
+
+.bp-hero__back:hover { color: var(--color-accent-lime); }
+
+.bp-hero__eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent-pink);
+}
+
+.bp-hero__title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.6rem, 9vw, 7rem);
+  line-height: 0.93;
+  letter-spacing: -0.03em;
+  color: var(--color-text-hero);
+}
+
+.bp-hero__sub {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  line-height: 1.3;
+  color: var(--color-accent-lime);
+  max-width: 56ch;
+  font-weight: 700;
+}
+
+.bp-hero__texto {
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  line-height: 1.75;
+  color: rgba(245, 238, 230, 0.7);
+  max-width: 52ch;
+}
+
+.bp-hero__bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 0.25rem;
+}
+
+.bp-hero__bullet {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-hero);
+}
+
+.bp-hero__bullet-icon {
+  color: var(--color-accent-lime);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.bp-hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+}
+
+.bp-hero__deco {
+  position: absolute;
+  bottom: -6rem;
+  right: -5rem;
+  width: clamp(260px, 50vw, 480px);
+  height: clamp(260px, 50vw, 480px);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(200, 241, 53, 0.09) 0%,
+    rgba(245, 184, 208, 0.07) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .bp-hero { padding: 5rem 4rem 8rem; }
+}
+
+/* CUERPO */
+.bp-body {
+  background: #fff;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  box-shadow: var(--shadow-card);
+  margin-top: -2.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.bp-body__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem 7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+@media (min-width: 768px) {
+  .bp-body__inner { padding: 5rem 4rem 8rem; }
+}
+
+/* SHOWCASE */
+.bp-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+@media (min-width: 900px) {
+  .bp-showcase { flex-direction: row; align-items: flex-start; gap: 5rem; }
+  .bp-showcase__texto { flex: 0 0 38%; }
+  .bp-showcase__mocks { flex: 1; }
+}
+
+.bp-showcase__titulo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-text-dark);
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+
+.bp-showcase__desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--color-text-mid);
+}
+
+.bp-showcase__mocks {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5rem;
+}
+
+.bp-mock--desktop { flex: 1; }
+
+.bp-mock__screen {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1.5px solid rgba(90, 58, 122, 0.15);
+  box-shadow: 0 16px 48px rgba(61, 26, 92, 0.12);
+  background: var(--color-bg-light);
+}
+
+.bp-mock__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.75rem;
+  background: rgba(90, 58, 122, 0.06);
+  border-bottom: 1px solid rgba(90, 58, 122, 0.1);
+}
+
+.bp-mock__bar span {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(90, 58, 122, 0.18);
+}
+
+.bp-mock__canvas {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: var(--color-bg-light);
+  overflow: hidden;
+}
+
+.bp-mock--mobile { flex: 0 0 min(35%, 140px); }
+
+.bp-mock__phone {
+  border-radius: 1.25rem;
+  overflow: hidden;
+  border: 1.5px solid rgba(90, 58, 122, 0.15);
+  box-shadow: 0 10px 30px rgba(61, 26, 92, 0.1);
+  background: var(--color-bg-light);
+}
+
+.bp-mock__phone-notch {
+  height: 0.5rem;
+  background: rgba(90, 58, 122, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bp-mock__phone-notch::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 4px;
+  border-radius: 99px;
+  background: rgba(90, 58, 122, 0.18);
+}
+
+.bp-mock__phone-canvas {
+  position: relative;
+  aspect-ratio: 9 / 17;
+  background: var(--color-bg-light);
+  overflow: hidden;
+}
+
+.bp-mock__blob {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 80% 70% at 65% 45%,
+    rgba(122, 58, 154, 0.2),
+    rgba(245, 184, 208, 0.2) 50%,
+    transparent 75%
+  );
+  pointer-events: none;
+}
+
+.bp-mock__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.15;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  pointer-events: none;
+}
+
+.bp-mock__ui {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+}
+
+.bp-mock__ui-nav {
+  height: 12px;
+  border-radius: 4px;
+  background: rgba(61, 26, 92, 0.12);
+  flex-shrink: 0;
+}
+
+.bp-mock__ui-hero {
+  flex: 0 0 34%;
+  border-radius: 6px;
+  background: rgba(61, 26, 92, 0.1);
+}
+
+.bp-mock__ui-hero--sm { flex: 0 0 28%; }
+
+.bp-mock__ui-row {
+  display: flex;
+  gap: 5px;
+  flex: 1;
+}
+
+.bp-mock__ui-card {
+  flex: 1;
+  border-radius: 6px;
+  background: rgba(61, 26, 92, 0.08);
+}
+
+.bp-mock__ui-card--full {
+  flex: unset;
+  width: 100%;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+/* PARA QUIÉN ES */
+.bp-quien {
+  background: var(--color-bg-light);
+  border-radius: 2rem;
+  padding: 3rem 2rem;
+}
+
+@media (min-width: 768px) { .bp-quien { padding: 4rem 3.5rem; } }
+
+.bp-quien__inner { max-width: 720px; }
+
+.bp-quien__titulo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--color-text-dark);
+  letter-spacing: -0.02em;
+  margin-bottom: 1.75rem;
+  margin-top: 0.5rem;
+}
+
+.bp-quien__lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+.bp-quien__item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-dark);
+}
+
+.bp-quien__check {
+  color: var(--color-text-mid);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.bp-quien__micro {
+  font-family: var(--font-script);
+  font-size: 1.1rem;
+  color: var(--color-text-mid);
+}
+
+/* PÁGINAS INCLUIDAS */
+.bp-paginas {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.bp-paginas__titulo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--color-text-dark);
+  letter-spacing: -0.02em;
+}
+
+.bp-paginas__grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 560px) {
+  .bp-paginas__grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem 3rem; }
+}
+
+@media (min-width: 900px) {
+  .bp-paginas__grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.bp-paginas__item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.9rem 1.25rem;
+  background: var(--color-bg-light);
+  border-radius: 1rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-dark);
+}
+
+.bp-paginas__num {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 900;
+  color: var(--color-accent-pink);
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+.bp-paginas__micro {
+  font-family: var(--font-script);
+  font-size: 1.1rem;
+  color: var(--color-text-mid);
+}
+
+/* ESTRUCTURA */
+.bp-estructura {
+  background: var(--color-bg-hero);
+  border-radius: 2rem;
+  padding: 3.5rem 2rem;
+}
+
+@media (min-width: 768px) { .bp-estructura { padding: 4.5rem 3.5rem; } }
+
+.bp-estructura__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .bp-estructura__inner { flex-direction: row; align-items: flex-start; gap: 5rem; }
+  .bp-estructura__texto { flex: 1; }
+  .bp-estructura__bullets { flex: 0 0 280px; }
+}
+
+.bp-estructura__titulo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.8rem, 4.5vw, 3rem);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--color-text-hero);
+  margin-bottom: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.bp-estructura__desc {
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  line-height: 1.85;
+  color: rgba(245, 238, 230, 0.65);
+}
+
+.bp-estructura__bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .bp-estructura__bullets {
+    border-left: 1px solid rgba(200, 241, 53, 0.2);
+    padding-left: 2.5rem;
+  }
+}
+
+.bp-estructura__bullet {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text-hero);
+}
+
+.bp-estructura__dash {
+  color: var(--color-accent-lime);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* QUÉ LA HACE DIFERENTE */
+.bp-diferente { display: flex; flex-direction: column; gap: 2rem; }
+
+.bp-diferente__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .bp-diferente__inner { flex-direction: row; gap: 5rem; align-items: flex-start; }
+  .bp-diferente__texto { flex: 1; }
+  .bp-diferente__bullets { flex: 0 0 280px; }
+}
+
+.bp-diferente__titulo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  color: var(--color-text-dark);
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+
+.bp-diferente__desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--color-text-mid);
+}
+
+.bp-diferente__bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .bp-diferente__bullets {
+    border-left: 1px solid rgba(90, 58, 122, 0.15);
+    padding-left: 2.5rem;
+    padding-top: 0;
+  }
+}
+
+.bp-diferente__bullet {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text-dark);
+}
+
+.bp-diferente__dash {
+  color: var(--color-text-mid);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* EDITARLA ES FÁCIL */
+.bp-editar {
+  background: var(--color-bg-light);
+  border-radius: 2rem;
+  padding: 3rem 2rem;
+}
+
+@media (min-width: 768px) { .bp-editar { padding: 4rem 3.5rem; } }
+
+.bp-editar__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .bp-editar__inner { flex-direction: row; align-items: center; gap: 5rem; justify-content: space-between; }
+  .bp-editar__texto { flex: 1; }
+}
+
+.bp-editar__titulo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--color-text-dark);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.bp-editar__desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--color-text-mid);
+  margin-bottom: 1.5rem;
+}
+
+.bp-editar__includes {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+
+.bp-editar__include {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-dark);
+}
+
+.bp-editar__check {
+  color: var(--color-text-mid);
+  font-size: 0.82rem;
+  flex-shrink: 0;
+}
+
+.bp-editar__micro {
+  font-family: var(--font-script);
+  font-size: 1.05rem;
+  color: var(--color-text-mid);
+}
+
+.bp-editar__cta-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.bp-editar__cta-micro {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--color-text-mid);
+  font-weight: 500;
+}
+
+/* FAQ */
+.bp-faq { display: flex; flex-direction: column; gap: 2rem; }
+
+.bp-faq__titulo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--color-text-dark);
+  letter-spacing: -0.02em;
+}
+
+.bp-faq__lista { display: flex; flex-direction: column; }
+
+.bp-faq__item { border-bottom: 1px solid rgba(90, 58, 122, 0.12); }
+.bp-faq__item:first-of-type { border-top: 1px solid rgba(90, 58, 122, 0.12); }
+
+.bp-faq__pregunta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1.35rem 0;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  font-weight: 600;
+  color: var(--color-text-dark);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  gap: 1rem;
+  transition: color 0.18s ease;
+}
+
+.bp-faq__pregunta:hover { color: var(--color-text-mid); }
+
+.bp-faq__icono {
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--color-text-mid);
+  flex-shrink: 0;
+  line-height: 1;
+  transition: transform 0.25s ease, color 0.18s ease;
+  display: inline-block;
+}
+
+.bp-faq__pregunta[aria-expanded="true"] .bp-faq__icono {
+  transform: rotate(45deg);
+  color: var(--color-text-dark);
+}
+
+.bp-faq__respuesta {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.28s ease;
+}
+
+.bp-faq__respuesta p {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--color-text-mid);
+  padding-bottom: 1.35rem;
+}
+
+/* CTA FINAL */
+.bp-cta-final {
+  background: var(--color-accent-lime);
+  border-radius: 2rem;
+  padding: 4rem 2rem;
+}
+
+@media (min-width: 768px) { .bp-cta-final { padding: 5rem 4rem; } }
+
+.bp-cta-final__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+}
+
+.bp-cta-final__titulo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--color-text-dark);
+}
+
+.bp-cta-final__texto {
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  line-height: 1.75;
+  color: rgba(26, 10, 46, 0.65);
+  max-width: 44ch;
+}
+
+.bp-cta-final__micro {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(26, 10, 46, 0.5);
+  letter-spacing: 0.03em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bp-cta, .bp-hero__back { transition: none; }
+}
+</style>
