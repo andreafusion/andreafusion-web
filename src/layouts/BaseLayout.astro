@@ -2,7 +2,6 @@
 // src/layouts/BaseLayout.astro
 import '../styles/global.css';
 import NavBar from '../components/NavBar.astro';
-import CursorEffect from '../components/CursorEffect.astro';
 
 interface Props {
   title?:       string;
@@ -74,7 +73,6 @@ const FONTS_URL =
   <body>
     <NavBar />
     <!-- Cursor retro: solo activo en desktop con pointer:fine -->
-    <CursorEffect />
     <slot />
   </body>
 </html>

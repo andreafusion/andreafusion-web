@@ -2,84 +2,120 @@
 // src/pages/tienda.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-interface Producto {
-  id:          string;
-  titulo:      string;
-  tipo:        'Plantilla' | 'Recurso' | 'Kit' | 'Guía';
-  descripcion: string;
-  precio:      number | null;
-  precioAntes?: number;
-  tags:        string[];
-  color:       string;
+interface Plantilla {
+  id: string;
+  titulo: string;
+  paraQuien: string;
+  bullets: string[];
+  tags: string[];
+  paginas: string;
+  urlDetalle: string;
+  color: string;
   colorAccent: string;
-  url?:        string;
-  nuevo?:      boolean;
-  disponible:  boolean;
 }
 
-const productos: Producto[] = [
+const plantillas: Plantilla[] = [
   {
-    id:          'kit-landing-astro',
-    titulo:      'Kit Landing Astro',
-    tipo:        'Kit',
-    descripcion: 'Una landing pro en Astro sin comerte la cabeza: componentes listos, estilos finos y estructura que guía. Montas, adaptas y publicas.',
-    precio:      29,
-    tags:        ['Astro', 'HTML/CSS', 'Mobile-first'],
-    color:       '#EDE4F5',
-    colorAccent: '#7A3A9A',
-    disponible:  false,
-    nuevo:       true,
+    id: 'beauty-booking',
+    titulo: 'Beauty Booking',
+    paraQuien: 'Para estéticas, nails, lashes, hair y negocios que viven de reservas.',
+    bullets: [
+      'Página de servicios clara y visual',
+      'Sección de reservas lista para integrar',
+      'Estructura pensada para convertir visitas en citas',
+    ],
+    tags: ['Booking-ready'],
+    paginas: '6–10 páginas',
+    urlDetalle: '/tienda/beauty-booking',
+    color: '#f5eee6',
+    colorAccent: '#c8a4b4',
   },
   {
-    id:          'plantilla-portfolio',
-    titulo:      'Portfolio Creativo',
-    tipo:        'Plantilla',
-    descripcion: 'Plantilla de portfolio para diseñadores y creativos. Editorial, oscura, animada. Astro + CSS puro, sin dependencias pesadas. Para que tu trabajo se vea... y se sienta.',
-    precio:      19,
-    tags:        ['Astro', 'Portfolio', 'Dark mode'],
-    color:       '#1a0a2e',
+    id: 'coach-podcast-blog',
+    titulo: 'Coach / Podcast / Blog',
+    paraQuien: 'Para mentoras, creadoras y marcas personales que necesitan autoridad.',
+    bullets: [
+      'Home estratégica (no solo presentación)',
+      'Blog o sección de contenido integrada',
+      'Estructura pensada para generar confianza',
+    ],
+    tags: ['Authority builder'],
+    paginas: '6–10 páginas',
+    urlDetalle: '/tienda/coach-podcast-blog',
+    color: '#ede4f5',
+    colorAccent: '#7a3a9a',
+  },
+  {
+    id: 'creative-portfolio',
+    titulo: 'Creative Portfolio',
+    paraQuien: 'Para diseñadores, fotógrafos y creativos con marca personal.',
+    bullets: [
+      'Portfolio modular y fácil de actualizar',
+      'Página de proyecto optimizada',
+      'Equilibrio entre estética y claridad',
+    ],
+    tags: ['Personal brand'],
+    paginas: '6–10 páginas',
+    urlDetalle: '/tienda/creative-portfolio',
+    color: '#1a0a2e',
     colorAccent: '#c8f135',
-    disponible:  false,
-  },
-  {
-    id:          'guia-mobile-first',
-    titulo:      'Guía Mobile-First',
-    tipo:        'Guía',
-    descripcion: 'La guía que te evita el clásico “en móvil ya lo miramos luego”. Checklist + ejemplos reales para diseñar primero donde importa: el pulgar.',
-    precio:      9,
-    tags:        ['PDF', 'Checklist', 'CSS'],
-    color:       '#f5eee6',
-    colorAccent: '#3d1a5c',
-    disponible:  false,
-    nuevo:       true,
-  },
-  {
-    id:          'kit-branding-css',
-    titulo:      'Kit Tokens de Diseño',
-    tipo:        'Kit',
-    descripcion: 'Tokens en CSS para empezar cualquier proyecto con coherencia desde el minuto 0. Colores, tipografía, spacing… sin inventarte el sistema cada vez.',
-    precio:      null,
-    tags:        ['CSS Variables', 'Design System'],
-    color:       '#D4EAE0',
-    colorAccent: '#2D7A5F',
-    disponible:  false,
   },
 ];
 
-const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
+const features = [
+  '6–10 páginas core listas para editar',
+  'Sistema tipográfico y jerarquía definidos',
+  'Componentes reutilizables (botones, cards, bloques)',
+  'Optimización básica SEO',
+  'Diseño responsive cuidado',
+  'Guía paso a paso para editar en Framer',
+  'Soporte por email',
+];
+
+const faqs = [
+  {
+    q: '¿Necesito saber programar?',
+    a: 'No. Están hechas para editar en Framer sin tocar código.',
+  },
+  {
+    q: '¿Funcionan bien en móvil?',
+    a: 'Sí. Se diseñan mobile-first, no como añadido de última hora.',
+  },
+  {
+    q: '¿Puedo usarlas para clientes?',
+    a: 'Sí, con licencia de uso por proyecto. Los detalles estarán especificados en cada producto.',
+  },
+  {
+    q: '¿Incluyen dominio y hosting?',
+    a: 'No. Eso lo gestionas desde Framer, pero te explico cómo hacerlo.',
+  },
+  {
+    q: '¿Y si me pierdo editando?',
+    a: 'Incluyen guía paso a paso. Y si te atascas, tienes soporte por email.',
+  },
+  {
+    q: '¿Puedo pedir personalización?',
+    a: 'Sí. Si quieres que la adapte a tu medida, lo hablamos.',
+  },
+  {
+    q: '¿Hay reembolsos?',
+    a: 'Al ser producto digital descargable, no hay reembolsos una vez entregado.',
+  },
+];
 ---
 
 <BaseLayout
   title="Tienda — AndreaFusion"
-  description="Plantillas, kits y recursos para diseñar y desarrollar webs mejores. Herramientas que uso yo misma en cada proyecto."
+  description="Plantillas web completas para lanzar tu web en una tarde. Sin código. Sin líos. Hechas con intención."
 >
   <main class="tienda-page">
 
     <!-- ══════════════════════════════════════
-         HERO
+         A) HERO
     ══════════════════════════════════════ -->
     <header class="tienda-hero">
       <div class="tienda-hero__inner">
+
         <p class="section-num">Shop</p>
 
         <h1 class="tienda-hero__title">
@@ -88,129 +124,274 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
         </h1>
 
         <p class="tienda-hero__sub">
-          Elige una, cambia tu texto y en 1 tarde tienes web lista.<br>
-          Sin líos. Sin código. (Y si quierees, la hacemos a medida).
+          Elige una, cambia tu texto y en 1 tarde tienes web lista.<br />
+          Sin líos. Sin código. (Y si quieres, la hacemos a medida.)
         </p>
 
-        <div class="tienda-hero__badge">
+        <div class="tienda-hero__badge" role="status">
           <span class="tienda-hero__dot" aria-hidden="true"></span>
           <span>Están en el horno. Y salen con descuento si llegas pronto.</span>
         </div>
+
+        <div class="tienda-hero__ctas">
+          <a href="#tienda-grid" class="tienda-hero__cta tienda-hero__cta--primary">
+            Ver plantillas
+          </a>
+          <a
+            href="https://andreafusion.gumroad.com/l/earlyaccess"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="tienda-hero__cta tienda-hero__cta--secondary"
+          >
+            Entrar al early access
+          </a>
+        </div>
+
       </div>
 
       <div class="tienda-hero__deco" aria-hidden="true"></div>
     </header>
 
     <!-- ══════════════════════════════════════
-         CUERPO: filtros + grid
+         CUERPO (card blanca sobre hero)
     ══════════════════════════════════════ -->
     <div class="tienda-body">
       <div class="tienda-body__inner">
 
-        <div class="tienda-topbar">
-          <p class="tienda-topbar__count">
-            <span id="product-count">{productos.length}</span> recursos (y subiendo)
-          </p>
-          <nav class="tienda-filters" aria-label="Filtrar por categoría">
-            {categorias.map((cat, i) => (
-              <button
-                class={`tienda-filter${i === 0 ? ' is-active' : ''}`}
-                data-filter={cat}
-                aria-pressed={i === 0 ? 'true' : 'false'}
-              >
-                {cat}
-              </button>
-            ))}
-          </nav>
-        </div>
+        <!-- ══════════════════════════════════════
+             B) CÓMO FUNCIONA
+        ══════════════════════════════════════ -->
+        <section class="como-funciona" aria-label="Cómo funciona">
+          <p class="section-num">Cómo funciona</p>
+          <ol class="como-funciona__pasos" role="list">
+            <li class="como-funciona__paso">
+              <span class="como-funciona__num" aria-hidden="true">01</span>
+              <p class="como-funciona__texto">Eliges la plantilla que encaja contigo.</p>
+            </li>
+            <li class="como-funciona__paso">
+              <span class="como-funciona__num" aria-hidden="true">02</span>
+              <p class="como-funciona__texto">Cambias textos, imágenes y colores en Framer (sin tocar código).</p>
+            </li>
+            <li class="como-funciona__paso">
+              <span class="como-funciona__num" aria-hidden="true">03</span>
+              <p class="como-funciona__texto">Publicas y listo. Web online en una tarde.</p>
+            </li>
+          </ol>
+          <p class="como-funciona__micro">Sin dramas. Sin tutoriales eternos.</p>
+        </section>
 
-        <ul class="tienda-grid" role="list" id="tienda-grid">
-          {productos.map((p) => (
-            <li
-              class="producto-wrap"
-              data-tipo={p.tipo}
-              data-disponible={p.disponible}
-            >
-              <article
-                class={`producto-card${!p.disponible ? ' producto-card--soon' : ''}`}
-                data-tilt
-                style={`--c: ${p.color}; --a: ${p.colorAccent};`}
-                aria-label={p.titulo + (p.disponible ? '' : ' — Próximamente')}
-              >
-                <div class="producto-card__visual">
-                  <div class="producto-card__blob" aria-hidden="true"></div>
-                  <span class="producto-card__tipo">{p.tipo}</span>
-                  {p.nuevo && (
-                    <span class="producto-card__nuevo" aria-label="Producto nuevo">Nuevo</span>
-                  )}
-                  {!p.disponible && (
-                    <div class="producto-card__overlay" aria-hidden="true">
+        <!-- ══════════════════════════════════════
+             C) GRID DE PLANTILLAS
+        ══════════════════════════════════════ -->
+        <section aria-label="Plantillas disponibles">
+          <ul class="tienda-grid" role="list" id="tienda-grid">
+
+            {plantillas.map((p) => (
+              <li class="plantilla-wrap">
+                <article
+                  class="plantilla-card"
+                  style={`--c: ${p.color}; --a: ${p.colorAccent};`}
+                  aria-label={`${p.titulo} — Próximamente`}
+                >
+                  <!-- Visual -->
+                  <div class="plantilla-card__visual">
+                    <div class="plantilla-card__blob" aria-hidden="true"></div>
+                    <div class="plantilla-card__grain" aria-hidden="true"></div>
+                    <div class="plantilla-card__overlay" aria-hidden="true">
                       <span>Próximamente</span>
                     </div>
-                  )}
-                </div>
-
-                <div class="producto-card__body">
-                  <h2 class="producto-card__titulo">{p.titulo}</h2>
-                  <p class="producto-card__desc">{p.descripcion}</p>
-
-                  <ul class="producto-card__tags" aria-label="Tecnologías">
-                    {p.tags.map(tag => (
-                      <li class="producto-card__tag">{tag}</li>
-                    ))}
-                  </ul>
-
-                  <div class="producto-card__footer">
-                    <div class="producto-card__precio-wrap">
-                      {p.precio !== null ? (
-                        <>
-                          {p.precioAntes && (
-                            <span class="producto-card__precio-antes" aria-label={`Antes ${p.precioAntes}€`}>
-                              {p.precioAntes}€
-                            </span>
-                          )}
-                          <span class="producto-card__precio">{p.precio}€</span>
-                        </>
-                      ) : (
-                        <span class="producto-card__precio-soon">Gratis · Muy pronto</span>
-                      )}
-                    </div>
-
-                    {p.disponible && p.url ? (
-                      <a
-                        href={p.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="producto-card__btn smart-btn"
-                        data-default="Conseguir"
-                        data-hover="Ir →"
-                      >
-                        <span class="smart-btn__text">Conseguir</span>
-                      </a>
-                    ) : (
-                      <button
-                        class="producto-card__btn producto-card__btn--notify smart-btn"
-                        data-default="Quiero mi acceso early"
-                        data-hover="✓ Te aviso"
-                        aria-label={`Notificarme cuando ${p.titulo} esté disponible`}
-                      >
-                        <span class="smart-btn__text">Quiero mi acceso early</span>
-                      </button>
-                    )}
                   </div>
-                </div>
-              </article>
-            </li>
-          ))}
-        </ul>
 
-        <div class="tienda-cta">
-          <p class="tienda-cta__text">¿Quieres algo a medida?</p>
-          <p class="tienda-cta__sub">
-            Puedo crear recursos personalizados para tu equipo o proyecto.
+                  <!-- Body -->
+                  <div class="plantilla-card__body">
+                    <!-- Tags arriba -->
+                    <ul class="plantilla-card__tags" aria-label="Categoría">
+                      {p.tags.map(tag => (
+                        <li class="plantilla-card__tag">{tag}</li>
+                      ))}
+                    </ul>
+
+                    <h2 class="plantilla-card__titulo">{p.titulo}</h2>
+                    <p class="plantilla-card__para-quien">{p.paraQuien}</p>
+
+                    <!-- Bullets -->
+                    <ul class="plantilla-card__bullets" aria-label="Qué incluye">
+                      {p.bullets.map(b => (
+                        <li class="plantilla-card__bullet">
+                          <span class="plantilla-card__bullet-icon" aria-hidden="true">—</span>
+                          {b}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <!-- Footer -->
+                    <div class="plantilla-card__footer">
+                      <span class="plantilla-card__paginas">{p.paginas}</span>
+                      <div class="plantilla-card__ctas">
+                        <a
+                          href={p.urlDetalle}
+                          class="plantilla-card__btn plantilla-card__btn--soon"
+                          aria-disabled="true"
+                          tabindex="-1"
+                        >
+                          Ver detalles
+                        </a>
+                        <a
+                          href="https://andreafusion.gumroad.com/l/earlyaccess"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="plantilla-card__btn plantilla-card__btn--ea"
+                        >
+                          Early access
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </li>
+            ))}
+
+          </ul>
+        </section>
+
+        <!-- ══════════════════════════════════════
+             D) DIFERENCIADOR
+        ══════════════════════════════════════ -->
+        <section class="diferenciador" aria-label="Por qué estas plantillas">
+          <div class="diferenciador__inner">
+            <div class="diferenciador__texto">
+              <p class="section-num-light">Por qué estas plantillas</p>
+              <h2 class="diferenciador__titulo">
+                No son plantillas<br />para hacer bulto.
+              </h2>
+              <p class="diferenciador__parrafo">
+                Aquí no vienes a comprar "algo bonito".<br />
+                Vienes a montar una web que se entiende rápido, se usa fácil y hace que pasen cosas.
+              </p>
+              <p class="diferenciador__parrafo">
+                Primero claridad.<br />
+                Luego diseño.<br />
+                Y debajo, código limpio que lo sostiene todo.
+              </p>
+              <p class="diferenciador__parrafo">
+                Si solo quieres estética, hay miles.<br />
+                Si quieres intención, estás en el sitio correcto.
+              </p>
+            </div>
+            <ul class="diferenciador__bullets" aria-label="Principios de diseño">
+              <li class="diferenciador__bullet">
+                <span class="diferenciador__bullet-mark" aria-hidden="true">—</span>
+                Estructura pensada para que se entienda en 5 segundos
+              </li>
+              <li class="diferenciador__bullet">
+                <span class="diferenciador__bullet-mark" aria-hidden="true">—</span>
+                Mobile-first de verdad (no parcheado después)
+              </li>
+              <li class="diferenciador__bullet">
+                <span class="diferenciador__bullet-mark" aria-hidden="true">—</span>
+                Flujo de scroll con intención
+              </li>
+              <li class="diferenciador__bullet">
+                <span class="diferenciador__bullet-mark" aria-hidden="true">—</span>
+                Componentes reutilizables y ordenados
+              </li>
+              <li class="diferenciador__bullet">
+                <span class="diferenciador__bullet-mark" aria-hidden="true">—</span>
+                Nada de secciones de relleno
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- ══════════════════════════════════════
+             E) QUÉ INCLUYE
+        ══════════════════════════════════════ -->
+        <section class="que-incluye" aria-label="Qué incluye cada plantilla">
+          <p class="section-num">Qué incluye cada plantilla</p>
+          <ul class="que-incluye__grid" role="list">
+            {features.map(f => (
+              <li class="que-incluye__item">
+                <span class="que-incluye__check" aria-hidden="true">✔</span>
+                <span>{f}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="que-incluye__micro">Te llevas la estructura. El resto es tu mensaje.</p>
+        </section>
+
+        <!-- ══════════════════════════════════════
+             F) BANNER EARLY ACCESS
+        ══════════════════════════════════════ -->
+        <section class="ea-banner" aria-label="Early access">
+          <div class="ea-banner__inner">
+            <div class="ea-banner__texto">
+              <h2 class="ea-banner__titulo">¿Quieres el descuento de lanzamiento?</h2>
+              <p class="ea-banner__sub">
+                Descarga el checklist y te aviso antes que nadie cuando salgan.<br />
+                Los primeros salen con precio especial.
+              </p>
+            </div>
+            <a
+              href="https://andreafusion.gumroad.com/l/earlyaccess"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="ea-banner__btn"
+            >
+              Entrar al early access
+            </a>
+          </div>
+        </section>
+
+        <!-- ══════════════════════════════════════
+             G) FAQ
+        ══════════════════════════════════════ -->
+        <section class="faq" aria-label="Preguntas frecuentes">
+          <p class="section-num">FAQ</p>
+          <h2 class="faq__titulo">Preguntas frecuentes</h2>
+          <dl class="faq__lista">
+            {faqs.map((faq, i) => (
+              <div class="faq__item">
+                <dt>
+                  <button
+                    class="faq__pregunta"
+                    aria-expanded="false"
+                    aria-controls={`faq-respuesta-${i}`}
+                    id={`faq-btn-${i}`}
+                  >
+                    <span>{faq.q}</span>
+                    <span class="faq__icono" aria-hidden="true">+</span>
+                  </button>
+                </dt>
+                <dd
+                  class="faq__respuesta"
+                  id={`faq-respuesta-${i}`}
+                  role="region"
+                  aria-labelledby={`faq-btn-${i}`}
+                  hidden
+                >
+                  <p>{faq.a}</p>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        <!-- ══════════════════════════════════════
+             H) CTA FINAL MINI
+        ══════════════════════════════════════ -->
+        <section class="cta-final" aria-label="Llamada a la acción final">
+          <p class="cta-final__frase">
+            Los primeros en llegar se quedan con el mejor precio.
           </p>
-          <a href="/contacto" class="tienda-cta__btn">Cuéntame qué necesitas</a>
-        </div>
+          <a
+            href="https://andreafusion.gumroad.com/l/earlyaccess"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="cta-final__btn"
+          >
+            Entrar al early access
+          </a>
+        </section>
 
       </div>
     </div>
@@ -218,560 +399,795 @@ const categorias = ['Todos', 'Plantilla', 'Kit', 'Recurso', 'Guía'];
   </main>
 </BaseLayout>
 
+<!-- ══════════════════════════════════════
+     FAQ ACCORDION — vanilla JS mínimo
+══════════════════════════════════════ -->
 <script>
-  // ── FILTROS ──
-  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.tienda-filter');
-  const productos  = document.querySelectorAll<HTMLElement>('.producto-wrap');
-  const countEl    = document.getElementById('product-count');
+  const faqBtns = document.querySelectorAll<HTMLButtonElement>('.faq__pregunta');
 
-  filterBtns.forEach(btn => {
+  faqBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      filterBtns.forEach(b => {
-        b.classList.remove('is-active');
-        b.setAttribute('aria-pressed', 'false');
-      });
-      btn.classList.add('is-active');
-      btn.setAttribute('aria-pressed', 'true');
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      const targetId = btn.getAttribute('aria-controls');
+      const respuesta = targetId ? document.getElementById(targetId) : null;
 
-      const filter = btn.dataset.filter ?? 'Todos';
-      let visible = 0;
-
-      productos.forEach(p => {
-        const show = filter === 'Todos' || p.dataset.tipo === filter;
-        p.style.display = show ? '' : 'none';
-        if (show) visible++;
-      });
-
-      if (countEl) countEl.textContent = String(visible);
-    });
-  });
-
-  // ── CARD 3D TILT — solo en pointer:fine, sin reduced-motion ──
-  const isCoarse       = window.matchMedia('(pointer: coarse)').matches;
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (!isCoarse && !prefersReduced) {
-    document.querySelectorAll<HTMLElement>('[data-tilt]').forEach(card => {
-      card.addEventListener('mousemove', (e: MouseEvent) => {
-        const rect = card.getBoundingClientRect();
-        const dx   = (e.clientX - rect.left  - rect.width  / 2) / (rect.width  / 2);
-        const dy   = (e.clientY - rect.top   - rect.height / 2) / (rect.height / 2);
-        card.style.transform = `perspective(800px) rotateX(${-dy * 6}deg) rotateY(${dx * 6}deg) scale(1.02)`;
+      // Cierra todos los demás
+      faqBtns.forEach(b => {
+        const otherId = b.getAttribute('aria-controls');
+        const other = otherId ? document.getElementById(otherId) : null;
+        b.setAttribute('aria-expanded', 'false');
+        const icon = b.querySelector<HTMLElement>('.faq__icono');
+        if (icon) icon.textContent = '+';
+        if (other && other !== respuesta) {
+          other.hidden = true;
+          other.style.maxHeight = '0';
+        }
       });
 
-      card.addEventListener('mouseleave', () => {
-        card.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-        card.style.transform  = '';
-        setTimeout(() => { card.style.transition = ''; }, 500);
-      });
-    });
-  }
-
-  // ── SMART BUTTONS ──
-  document.querySelectorAll<HTMLElement>('.smart-btn').forEach(btn => {
-    const textEl    = btn.querySelector<HTMLElement>('.smart-btn__text');
-    const defText   = btn.dataset.default ?? '';
-    const hoverText = btn.dataset.hover   ?? '';
-    if (!textEl) return;
-
-    const swap = (to: string) => {
-      textEl.style.transition = 'opacity 0.15s ease, transform 0.15s ease';
-      textEl.style.opacity    = '0';
-      textEl.style.transform  = 'translateY(-4px)';
-      setTimeout(() => {
-        textEl.textContent      = to;
-        textEl.style.transition = 'none';
-        textEl.style.transform  = 'translateY(4px)';
-        textEl.getBoundingClientRect();
-        textEl.style.transition = 'opacity 0.15s ease, transform 0.15s ease';
-        textEl.style.opacity    = '1';
-        textEl.style.transform  = 'translateY(0)';
-      }, 150);
-    };
-
-    btn.addEventListener('mouseenter', () => swap(hoverText));
-    btn.addEventListener('mouseleave', () => swap(defText));
-    btn.addEventListener('focus',      () => swap(hoverText));
-    btn.addEventListener('blur',       () => swap(defText));
-  });
-
-  // ── BOTÓN NOTIFÍCAME ──
-  document.querySelectorAll<HTMLButtonElement>('.producto-card__btn--notify').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const textEl = btn.querySelector<HTMLElement>('.smart-btn__text');
-      if (textEl) {
-        textEl.textContent = '✓ Te avisamos';
-        btn.disabled       = true;
-        btn.style.opacity  = '0.7';
+      // Abre/cierra el actual
+      if (!expanded && respuesta) {
+        btn.setAttribute('aria-expanded', 'true');
+        const icon = btn.querySelector<HTMLElement>('.faq__icono');
+        if (icon) icon.textContent = '×';
+        respuesta.hidden = false;
+        // Anima alto
+        respuesta.style.maxHeight = respuesta.scrollHeight + 'px';
+      } else if (respuesta) {
+        respuesta.style.maxHeight = '0';
+        setTimeout(() => { respuesta.hidden = true; }, 280);
       }
     });
   });
 </script>
 
 <style>
-  .tienda-page {
-    padding-top: 80px;
-    background: #fff;
-  }
+/* ══════════════════════════════════
+   PÁGINA BASE
+══════════════════════════════════ */
+.tienda-page {
+  padding-top: 80px;
+  background: var(--color-bg-hero);
+}
 
-  /* ══════════════════════════════════
-     HERO
-  ══════════════════════════════════ */
-  .tienda-hero {
-    position: relative;
-    background: var(--color-bg-hero);
-    overflow: hidden;
-    padding: 4rem 1.5rem 5rem;
-  }
+/* ══════════════════════════════════
+   A) HERO
+══════════════════════════════════ */
+.tienda-hero {
+  position: relative;
+  background: var(--color-bg-hero);
+  overflow: hidden;
+  padding: 4rem 1.5rem 6rem;
+}
 
-  .tienda-hero__inner {
-    position: relative;
-    z-index: 2;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
+.tienda-hero__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
 
-  .tienda-hero__title {
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: clamp(2.8rem, 9vw, 7rem);
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-    color: var(--color-text-hero);
-  }
+.tienda-hero__title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.8rem, 9vw, 7rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--color-text-hero);
+}
 
-  .tienda-hero__title em {
-    display: block;
-    font-style: italic;
-    color: var(--color-accent-lime);
-  }
+.tienda-hero__title em {
+  display: block;
+  font-style: italic;
+  color: var(--color-accent-lime);
+}
 
-  .tienda-hero__sub {
-    font-family: var(--font-body);
-    font-size: clamp(1rem, 2.2vw, 1.1rem);
-    line-height: 1.75;
-    color: rgba(245, 238, 230, 0.65);
-    max-width: 50ch;
-  }
+.tienda-hero__sub {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2.2vw, 1.15rem);
+  line-height: 1.75;
+  color: rgba(245, 238, 230, 0.7);
+  max-width: 50ch;
+}
 
-  .tienda-hero__badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.5em 1.2em;
-    background: rgba(200, 241, 53, 0.12);
-    border: 1px solid rgba(200, 241, 53, 0.25);
-    border-radius: 9999px;
-    font-family: var(--font-body);
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--color-accent-lime);
-    letter-spacing: 0.03em;
-    width: fit-content;
-  }
+.tienda-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5em 1.2em;
+  background: rgba(200, 241, 53, 0.1);
+  border: 1px solid rgba(200, 241, 53, 0.25);
+  border-radius: 9999px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-accent-lime);
+  letter-spacing: 0.02em;
+  width: fit-content;
+}
 
-  .tienda-hero__dot {
-    display: block;
-    width: 7px;
-    height: 7px;
-    background: var(--color-accent-lime);
-    border-radius: 50%;
-    flex-shrink: 0;
-    animation: pulse 2.4s ease-in-out infinite;
-  }
+.tienda-hero__dot {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-accent-lime);
+  flex-shrink: 0;
+  animation: pulse 2.4s ease-in-out infinite;
+}
 
-  @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 0   rgba(200, 241, 53, 0.5); }
-    50%       { box-shadow: 0 0 0 6px rgba(200, 241, 53, 0);   }
-  }
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200, 241, 53, 0.5); }
+  50%       { box-shadow: 0 0 0 6px rgba(200, 241, 53, 0); }
+}
 
-  .tienda-hero__deco {
-    position: absolute;
-    bottom: -6rem;
-    right: -6rem;
-    width: clamp(280px, 55vw, 500px);
-    height: clamp(280px, 55vw, 500px);
-    border-radius: 50%;
-    background: radial-gradient(
-      circle,
-      rgba(200, 241, 53, 0.1) 0%,
-      rgba(245, 184, 208, 0.07) 50%,
-      transparent 70%
-    );
-    pointer-events: none;
-    z-index: 1;
-  }
+.tienda-hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+}
 
-  @media (min-width: 768px) {
-    .tienda-hero { padding: 6rem 4rem 7rem; }
-  }
+.tienda-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85em 2em;
+  border-radius: var(--radius-btn);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  text-decoration: none;
+}
 
-  /* ══════════════════════════════════
-     CUERPO
-  ══════════════════════════════════ */
-  .tienda-body {
-    background: #fff;
-    border-radius: var(--radius-card) var(--radius-card) 0 0;
-    box-shadow: var(--shadow-card);
-    margin-top: -2rem;
-    position: relative;
-    z-index: 2;
-  }
+.tienda-hero__cta--primary {
+  background: var(--color-accent-lime);
+  color: var(--color-text-dark);
+  box-shadow: var(--shadow-btn);
+}
 
-  .tienda-body__inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 3rem 1.5rem 6rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
-  }
+.tienda-hero__cta--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(200, 241, 53, 0.5);
+}
 
-  @media (min-width: 768px) {
-    .tienda-body__inner { padding: 4rem 4rem 7rem; }
-  }
+.tienda-hero__cta--secondary {
+  background: transparent;
+  color: var(--color-text-hero);
+  border: 1.5px solid rgba(245, 238, 230, 0.35);
+}
 
-  /* ══════════════════════════════════
-     TOPBAR
-  ══════════════════════════════════ */
-  .tienda-topbar {
-    display: flex;
-    flex-wrap: wrap;
+.tienda-hero__cta--secondary:hover {
+  border-color: var(--color-accent-lime);
+  color: var(--color-accent-lime);
+}
+
+.tienda-hero__deco {
+  position: absolute;
+  bottom: -6rem;
+  right: -6rem;
+  width: clamp(280px, 55vw, 500px);
+  height: clamp(280px, 55vw, 500px);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(200, 241, 53, 0.1) 0%,
+    rgba(245, 184, 208, 0.07) 50%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .tienda-hero { padding: 6rem 4rem 8rem; }
+}
+
+/* ══════════════════════════════════
+   CUERPO (card blanca)
+══════════════════════════════════ */
+.tienda-body {
+  background: #fff;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  box-shadow: var(--shadow-card);
+  margin-top: -2.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.tienda-body__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem 7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+@media (min-width: 768px) {
+  .tienda-body__inner { padding: 5rem 4rem 8rem; }
+}
+
+/* ══════════════════════════════════
+   B) CÓMO FUNCIONA
+══════════════════════════════════ */
+.como-funciona {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.como-funciona__pasos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .como-funciona__pasos { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+}
+
+.como-funciona__paso {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.75rem;
+  background: var(--color-bg-light);
+  border-radius: 1.5rem;
+}
+
+.como-funciona__num {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--color-accent-pink);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.como-funciona__texto {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-text-dark);
+  font-weight: 500;
+}
+
+.como-funciona__micro {
+  font-family: var(--font-script);
+  font-size: 1.1rem;
+  color: var(--color-text-mid);
+}
+
+/* ══════════════════════════════════
+   C) GRID DE PLANTILLAS
+══════════════════════════════════ */
+.tienda-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 900px) {
+  .tienda-grid { grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
+}
+
+.plantilla-wrap { display: contents; }
+
+.plantilla-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-light);
+  border-radius: 2rem;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+.plantilla-card:hover {
+  box-shadow: 0 16px 48px rgba(61, 26, 92, 0.15);
+}
+
+/* Visual */
+.plantilla-card__visual {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background-color: var(--c, #ede4f5);
+  overflow: hidden;
+}
+
+.plantilla-card__blob {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 80% 70% at 60% 50%,
+    color-mix(in srgb, var(--a, #7a3a9a) 30%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* Grano sutil usando SVG data-uri */
+.plantilla-card__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  pointer-events: none;
+}
+
+.plantilla-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 10, 46, 0.42);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.plantilla-card__overlay span {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245, 238, 230, 0.8);
+  border: 1px solid rgba(245, 238, 230, 0.3);
+  border-radius: 9999px;
+  padding: 0.4em 1.2em;
+}
+
+/* Body */
+.plantilla-card__body {
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+}
+
+.plantilla-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  list-style: none;
+}
+
+.plantilla-card__tag {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-mid);
+  background: rgba(90, 58, 122, 0.1);
+  border-radius: 9999px;
+  padding: 0.3em 0.85em;
+}
+
+.plantilla-card__titulo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+  color: var(--color-text-dark);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.plantilla-card__para-quien {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--color-text-mid);
+}
+
+.plantilla-card__bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.plantilla-card__bullet {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--color-text-dark);
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.plantilla-card__bullet-icon {
+  color: var(--color-accent-pink);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* Footer */
+.plantilla-card__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(90, 58, 122, 0.1);
+  margin-top: auto;
+}
+
+.plantilla-card__paginas {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--color-text-mid);
+  text-transform: uppercase;
+}
+
+.plantilla-card__ctas {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.plantilla-card__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6em 1.3em;
+  border-radius: var(--radius-btn);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  white-space: nowrap;
+}
+
+/* "Ver detalles" deshabilitado */
+.plantilla-card__btn--soon {
+  background: rgba(90, 58, 122, 0.08);
+  color: rgba(90, 58, 122, 0.35);
+  border: 1.5px solid rgba(90, 58, 122, 0.12);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* "Early access" activo */
+.plantilla-card__btn--ea {
+  background: var(--color-bg-hero);
+  color: var(--color-accent-lime);
+}
+
+.plantilla-card__btn--ea:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(61, 26, 92, 0.2);
+}
+
+/* ══════════════════════════════════
+   D) DIFERENCIADOR
+══════════════════════════════════ */
+.diferenciador {
+  background: var(--color-bg-hero);
+  border-radius: 2rem;
+  padding: 3.5rem 2rem;
+}
+
+@media (min-width: 768px) {
+  .diferenciador { padding: 4.5rem 3.5rem; }
+}
+
+.diferenciador__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .diferenciador__inner {
+    flex-direction: row;
+    gap: 5rem;
+    align-items: flex-start;
+  }
+  .diferenciador__texto { flex: 1; }
+  .diferenciador__bullets { flex: 0 0 280px; }
+}
+
+.diferenciador__titulo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-text-hero);
+  margin-bottom: 1.5rem;
+}
+
+.diferenciador__parrafo {
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  line-height: 1.8;
+  color: rgba(245, 238, 230, 0.7);
+  margin-bottom: 1rem;
+}
+
+.diferenciador__bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .diferenciador__bullets {
+    border-left: 1px solid rgba(200, 241, 53, 0.2);
+    padding-left: 2.5rem;
+    padding-top: 0;
+  }
+}
+
+.diferenciador__bullet {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--color-text-hero);
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.diferenciador__bullet-mark {
+  color: var(--color-accent-lime);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════
+   E) QUÉ INCLUYE
+══════════════════════════════════ */
+.que-incluye {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.que-incluye__grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.9rem;
+}
+
+@media (min-width: 640px) {
+  .que-incluye__grid { grid-template-columns: 1fr 1fr; gap: 1rem 3rem; }
+}
+
+.que-incluye__item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--color-text-dark);
+}
+
+.que-incluye__check {
+  color: var(--color-text-mid);
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.que-incluye__micro {
+  font-family: var(--font-script);
+  font-size: 1.15rem;
+  color: var(--color-text-mid);
+}
+
+/* ══════════════════════════════════
+   F) BANNER EARLY ACCESS
+══════════════════════════════════ */
+.ea-banner {
+  background: var(--color-accent-lime);
+  border-radius: 2rem;
+  padding: 3rem 2rem;
+}
+
+@media (min-width: 768px) {
+  .ea-banner { padding: 3.5rem 3.5rem; }
+}
+
+.ea-banner__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+@media (min-width: 768px) {
+  .ea-banner__inner {
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+    gap: 3rem;
   }
+}
 
-  .tienda-topbar__count {
-    font-family: var(--font-body);
-    font-size: 0.8rem;
-    color: var(--color-text-mid);
-    font-weight: 600;
-    letter-spacing: 0.05em;
-  }
+.ea-banner__titulo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text-dark);
+}
 
-  .tienda-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
+.ea-banner__sub {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: rgba(26, 10, 46, 0.7);
+  margin-top: 0.75rem;
+}
 
-  .tienda-filter {
-    font-family: var(--font-body);
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    color: var(--color-text-mid);
-    border: 1.5px solid rgba(90, 58, 122, 0.18);
-    border-radius: 9999px;
-    padding: 0.35em 1em;
-    cursor: pointer;
-    background: transparent;
-    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
-  }
+.ea-banner__btn {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  padding: 0.9em 2.2em;
+  background: var(--color-bg-hero);
+  color: var(--color-accent-lime);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius-btn);
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
 
-  .tienda-filter:hover {
-    border-color: var(--color-accent-lime);
-    color: var(--color-text-dark);
-  }
+.ea-banner__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(61, 26, 92, 0.3);
+}
 
-  .tienda-filter.is-active {
-    background: var(--color-bg-light);
-    border-color: var(--color-text-mid);
-    color: var(--color-text-dark);
-  }
+/* ══════════════════════════════════
+   G) FAQ
+══════════════════════════════════ */
+.faq {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 
-  /* ══════════════════════════════════
-     GRID DE PRODUCTOS
-  ══════════════════════════════════ */
-  .tienda-grid {
-    list-style: none;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
+.faq__titulo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--color-text-dark);
+  letter-spacing: -0.02em;
+}
 
-  @media (min-width: 560px) {
-    .tienda-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  }
+.faq__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
 
-  @media (min-width: 1024px) {
-    .tienda-grid { grid-template-columns: repeat(4, 1fr); gap: 1.75rem; }
-  }
+.faq__item {
+  border-bottom: 1px solid rgba(90, 58, 122, 0.12);
+}
 
-  /* ══════════════════════════════════
-     TARJETA DE PRODUCTO
-  ══════════════════════════════════ */
-  .producto-wrap { display: contents; }
+.faq__item:first-of-type {
+  border-top: 1px solid rgba(90, 58, 122, 0.12);
+}
 
-  .producto-card {
-    display: flex;
-    flex-direction: column;
-    background: var(--color-bg-light);
-    border-radius: 1.5rem;
-    overflow: hidden;
-    transition: box-shadow 0.3s ease;
-    will-change: transform; /* solo en cards que usan tilt JS */
-  }
+.faq__pregunta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1.35rem 0;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  font-weight: 600;
+  color: var(--color-text-dark);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  gap: 1rem;
+  transition: color 0.18s ease;
+}
 
-  .producto-card:hover {
-    box-shadow: 0 12px 40px rgba(61, 26, 92, 0.15);
-  }
+.faq__pregunta:hover {
+  color: var(--color-text-mid);
+}
 
-  .producto-card--soon { opacity: 0.85; }
+.faq__icono {
+  font-family: var(--font-body);
+  font-size: 1.4rem;
+  font-weight: 300;
+  color: var(--color-text-mid);
+  flex-shrink: 0;
+  line-height: 1;
+  transition: transform 0.25s ease, color 0.18s ease;
+  display: inline-block;
+}
 
-  /* Visual */
-  .producto-card__visual {
-    position: relative;
-    aspect-ratio: 16 / 9;
-    background-color: var(--c, #EDE4F5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
+.faq__pregunta[aria-expanded="true"] .faq__icono {
+  transform: rotate(45deg);
+  color: var(--color-text-dark);
+}
 
-  .producto-card__blob {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-      ellipse 70% 60% at 55% 45%,
-      color-mix(in srgb, var(--a, #7A3A9A) 25%, transparent),
-      transparent 70%
-    );
-    pointer-events: none;
-  }
+.faq__respuesta {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.28s ease;
+}
 
-  .producto-card__tipo {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    font-family: var(--font-body);
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--a, #7A3A9A);
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border-radius: 9999px;
-    padding: 0.3em 0.8em;
-    z-index: 2;
-  }
+.faq__respuesta p {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--color-text-mid);
+  padding-bottom: 1.35rem;
+}
 
-  .producto-card__nuevo {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    font-family: var(--font-body);
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-text-dark);
-    background: var(--color-accent-lime);
-    border-radius: 9999px;
-    padding: 0.3em 0.8em;
-    z-index: 2;
-  }
+/* ══════════════════════════════════
+   H) CTA FINAL MINI
+══════════════════════════════════ */
+.cta-final {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  text-align: center;
+}
 
-  .producto-card__overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(26, 10, 46, 0.55);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 3;
-  }
+.cta-final__frase {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.3rem, 3.5vw, 2rem);
+  font-weight: 700;
+  color: var(--color-text-dark);
+  letter-spacing: -0.02em;
+  max-width: 40ch;
+}
 
-  .producto-card__overlay span {
-    font-family: var(--font-body);
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(245, 238, 230, 0.7);
-    border: 1px solid rgba(245, 238, 230, 0.25);
-    border-radius: 9999px;
-    padding: 0.4em 1.1em;
-  }
+.cta-final__btn {
+  display: inline-flex;
+  padding: 0.9em 2.4em;
+  background: var(--color-bg-hero);
+  color: var(--color-accent-lime);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius-btn);
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
 
-  /* Body */
-  .producto-card__body {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    flex: 1;
-  }
+.cta-final__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(61, 26, 92, 0.25);
+}
 
-  .producto-card__titulo {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(1.1rem, 2vw, 1.3rem);
-    color: var(--color-text-dark);
-    line-height: 1.15;
-  }
-
-  .producto-card__desc {
-    font-family: var(--font-body);
-    font-size: 0.88rem;
-    line-height: 1.65;
-    color: var(--color-text-mid);
-    flex: 1;
-  }
-
-  .producto-card__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    list-style: none;
-  }
-
-  .producto-card__tag {
-    font-family: var(--font-body);
-    font-size: 0.65rem;
-    font-weight: 600;
-    color: var(--color-text-mid);
-    background: rgba(90, 58, 122, 0.1);
-    border-radius: 9999px;
-    padding: 0.25em 0.65em;
-    letter-spacing: 0.04em;
-  }
-
-  /* Footer: precio + CTA */
-  .producto-card__footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-    padding-top: 0.5rem;
-    border-top: 1px solid rgba(90, 58, 122, 0.1);
-    margin-top: auto;
-  }
-
-  .producto-card__precio-wrap {
-    display: flex;
-    align-items: baseline;
-    gap: 0.4rem;
-  }
-
-  .producto-card__precio {
-    font-family: var(--font-display);
-    font-size: 1.3rem;
-    font-weight: 900;
-    color: var(--color-text-dark);
-    letter-spacing: -0.02em;
-  }
-
-  .producto-card__precio-antes {
-    font-family: var(--font-body);
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--color-text-mid);
-    text-decoration: line-through;
-    opacity: 0.6;
-  }
-
-  .producto-card__precio-soon {
-    font-family: var(--font-body);
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--color-accent-pink);
-    letter-spacing: 0.03em;
-  }
-
-  .producto-card__btn.smart-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.55em 1.2em;
-    background: var(--color-bg-hero);
-    color: var(--color-accent-lime);
-    font-family: var(--font-body);
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    border-radius: 9999px;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .producto-card__btn.smart-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(61, 26, 92, 0.2);
-  }
-
-  .producto-card__btn.smart-btn:disabled {
-    opacity: 0.6;
-    cursor: default;
-    transform: none;
-  }
-
-  .smart-btn__text { display: inline-block; }
-
-  /* ══════════════════════════════════
-     CTA FINAL
-  ══════════════════════════════════ */
-  .tienda-cta {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 3.5rem 1.5rem;
-    text-align: center;
-    background: var(--color-bg-light);
-    border-radius: 2rem;
-  }
-
-  .tienda-cta__text {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 4vw, 2.2rem);
-    font-weight: 900;
-    font-style: italic;
-    color: var(--color-text-dark);
-    letter-spacing: -0.02em;
-  }
-
-  .tienda-cta__sub {
-    font-family: var(--font-body);
-    font-size: 0.95rem;
-    color: var(--color-text-mid);
-    max-width: 40ch;
-    line-height: 1.6;
-  }
-
-  .tienda-cta__btn {
-    display: inline-flex;
-    margin-top: 0.5rem;
-    padding: 0.85em 2.2em;
-    background: var(--color-bg-hero);
-    color: var(--color-accent-lime);
-    font-family: var(--font-body);
-    font-size: 0.95rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    border-radius: 9999px;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
-  }
-
-  .tienda-cta__btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(61, 26, 92, 0.25);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .tienda-hero__dot { animation: none; }
-    .producto-card    { will-change: auto; }
-  }
+/* ══════════════════════════════════
+   REDUCED MOTION
+══════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .tienda-hero__dot { animation: none; }
+}
 </style>
