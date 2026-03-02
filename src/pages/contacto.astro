@@ -1,130 +1,376 @@
 ---
-// src/pages/contacto.astro
-// Formulario con Formspree (estático, sin backend).
+// src/pages/trabaja-conmigo.astro
+// Inspirada en la estructura de pxldesignlab.com/contact:
+// Hero marquee → Servicios numerados con acordeón → Testimonios → Formulario
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const FORMSPREE_ID = 'xykdondo';
+
+const servicios = [
+  {
+    num: '01',
+    tag: 'auditoría',
+    titulo: 'Auditoría de marca / web',
+    bajada:
+      'Solo feedback — no incluye rediseño. Entregado en 7 días.',
+    descripcion:
+      'Un análisis claro y honesto de por qué tu marca o web no está convirtiendo como debería, y exactamente qué cambiar para que eso cambie. Elige marca o web y te envío una revisión detallada que muestra qué funciona, qué no y qué mejorar para parecer más profesional, atraer a las personas correctas y vender más. Claridad, dirección y próximos pasos concretos por una fracción del coste de un rediseño completo.',
+    entregables: [
+      'Solo feedback — no incluye rediseño',
+      'Entregado en 7 días',
+      'Análisis de marca o de web (a elegir)',
+      'Documento PDF con puntos de mejora accionables',
+    ],
+    precio: '€ 350',
+    cta: 'Reservar auditoría',
+    href: 'mailto:andreafusiondigital@gmail.com?subject=Auditoría%20web%20/%20marca',
+  },
+  {
+    num: '02',
+    tag: 'landing page',
+    titulo: 'Landing page estratégica',
+    bajada:
+      'Una sola página. Un solo objetivo. Diseñada para que quien entra, actúe.',
+    descripcion:
+      'Tienes un servicio o lanzamiento claro y necesitas una página que lo comunique bien, rápido y sin distracciones. No una web completa — una landing enfocada, ligera y diseñada para convertir visitas en clientes reales. Combino copywriting estructurado, diseño editorial y código limpio para que cada sección tenga un propósito. Ideal para coaches, freelancers, servicios concretos o cualquier proyecto que necesite presencia online sin la complejidad de una web entera.',
+    entregables: [
+      'Landing de una página completa (diseño + desarrollo en Astro)',
+      'Estructura estratégica: hero, problema, solución, prueba social, CTA',
+      'Copywriting orientado a conversión incluido',
+      'Diseño responsive mobile-first',
+      'Formulario de contacto o botón de reserva integrado',
+      'SEO básico: meta tags, Open Graph, velocidad optimizada',
+      '7 días de soporte post-entrega',
+    ],
+    precio: 'Desde € 650',
+    cta: 'Quiero mi landing',
+    href: 'mailto:andreafusiondigital@gmail.com?subject=Landing%20page',
+  },
+  {
+    num: '03',
+    tag: 'web a medida',
+    titulo: 'Web a medida',
+    bajada:
+      'Para cuando sabes que tu web actual ya no te representa y quieres resultados.',
+    descripcion:
+      'Ya lo sabes: has superado tu web. Quieres atraer a clientes premium, expandir tu negocio y disfrutar por fin de los resultados de tu trabajo. Pero tienes el negocio que llevar, no el tiempo de arreglar una web. Para que esto funcione, necesitas branding profesional como base. Una web de alta conversión necesita cimientos sólidos — sin ellos, el diseño no entrega resultados. Convierto lo que te hace diferente en una web clara y efectiva, simplificando tu flujo de usuario y tu mensaje.',
+    entregables: [
+      'Web completamente a medida en Astro (o Next.js para e-commerce)',
+      'Copywriting claro para que la gente "lo entienda" al instante',
+      'Diseño que refleja tu personalidad y atrae a las personas correctas',
+      'Diseño responsive mobile-first',
+      'SEO básico configurado',
+      'Web fácil de editar tú misma + tutoriales en vídeo',
+      '14 días de soporte post-lanzamiento',
+    ],
+    precio: 'Desde € 1.800',
+    cta: 'Quiero mi nueva web',
+    href: 'mailto:andreafusiondigital@gmail.com?subject=Web%20a%20medida',
+  },
+];
+
+const testimonios = [
+  {
+    cita: 'El resultado final fue exactamente lo que esperábamos, y más.',
+    nombre: 'Laura M.',
+    empresa: 'Estudio Nómada',
+  },
+  {
+    cita: 'Sin estrés, sin complicaciones y exactamente lo que necesitábamos.',
+    nombre: 'Carla P.',
+    empresa: 'Carla Pereira Coaching',
+  },
+  {
+    cita: 'Trajo mi visión a la vida y la mejoró. No hubiera podido hacerlo sin ella.',
+    nombre: 'Marta R.',
+    empresa: 'Marta Roca Studio',
+  },
+  {
+    cita: 'Fue como si me conociera de toda la vida. El proceso fue fluido y el resultado, increíble.',
+    nombre: 'Sofía G.',
+    empresa: 'Sofía G. Photography',
+  },
+];
 ---
 
 <BaseLayout
-  title="Contacto — AndreaFusion"
-  description="Cuéntame tu proyecto y vemos si tiene sentido trabajar juntos."
+  title="Trabaja conmigo — AndreaFusion"
+  description="Auditoría web, identidad de marca o web a medida. Webs con personalidad para marcas que quieren diferenciarse."
 >
-  <main class="contacto-page">
+  <main class="tmc-page">
 
     <!-- ══════════════════════════════════════
          HERO
     ══════════════════════════════════════ -->
-    <header class="contacto-hero">
-      <div class="contacto-hero__inner">
-        <p class="section-num">Contacto</p>
-        <h1 class="contacto-hero__title">
-          Cuéntame qué<br>
-          <em>estás creando.</em>
+    <header class="tmc-hero">
+      <div class="tmc-hero__inner">
+
+        <p class="section-num">Trabaja conmigo</p>
+
+        <h1 class="tmc-hero__title">
+          Estás perdiendo clientes
+          <em>cada día que tu web</em>
+          <em class="em-lime">no te representa.</em>
         </h1>
-        <p class="contacto-hero__sub">
-          Si tienes una idea, una web que ya no te representa o simplemente
-          quieres algo nuevo, escríbeme y vemos si tiene sentido trabajar juntos.
+
+        <p class="tmc-hero__sub">
+          Te ayudo a crear la marca y la web que por fin están a la altura
+          de lo que haces — para que la gente vea tu valor y esté lista para comprar.
         </p>
+
+        <a href="#servicios" class="tmc-hero__cta">
+          Ver cómo puedo ayudarte
+        </a>
+
       </div>
-      <div class="contacto-hero__deco" aria-hidden="true"></div>
+
+      <div class="tmc-hero__deco" aria-hidden="true"></div>
     </header>
 
     <!-- ══════════════════════════════════════
-         CUERPO: intro + formulario + alternativa
+         MARQUEE
     ══════════════════════════════════════ -->
-    <div class="contacto-body">
-      <div class="contacto-body__inner">
+    <div class="tmc-marquee" aria-hidden="true">
+      <div class="tmc-marquee__track">
+        <span>WEBS CON PERSONALIDAD</span>
+        <span class="tmc-marquee__sep">·</span>
+        <span>DISEÑO QUE CONVIERTE</span>
+        <span class="tmc-marquee__sep">·</span>
+        <span>CÓDIGO LIMPIO</span>
+        <span class="tmc-marquee__sep">·</span>
+        <span>IDENTIDAD QUE IMPACTA</span>
+        <span class="tmc-marquee__sep">·</span>
+        <span>WEBS CON PERSONALIDAD</span>
+        <span class="tmc-marquee__sep">·</span>
+        <span>DISEÑO QUE CONVIERTE</span>
+        <span class="tmc-marquee__sep">·</span>
+        <span>CÓDIGO LIMPIO</span>
+        <span class="tmc-marquee__sep">·</span>
+        <span>IDENTIDAD QUE IMPACTA</span>
+        <span class="tmc-marquee__sep">·</span>
+        <!-- duplicado para loop infinito -->
+        <span>WEBS CON PERSONALIDAD</span>
+        <span class="tmc-marquee__sep">·</span>
+        <span>DISEÑO QUE CONVIERTE</span>
+        <span class="tmc-marquee__sep">·</span>
+        <span>CÓDIGO LIMPIO</span>
+        <span class="tmc-marquee__sep">·</span>
+        <span>IDENTIDAD QUE IMPACTA</span>
+        <span class="tmc-marquee__sep">·</span>
+        <span>WEBS CON PERSONALIDAD</span>
+        <span class="tmc-marquee__sep">·</span>
+        <span>DISEÑO QUE CONVIERTE</span>
+        <span class="tmc-marquee__sep">·</span>
+        <span>CÓDIGO LIMPIO</span>
+        <span class="tmc-marquee__sep">·</span>
+        <span>IDENTIDAD QUE IMPACTA</span>
+        <span class="tmc-marquee__sep">·</span>
+      </div>
+    </div>
 
-        <!-- Columna izquierda -->
-        <aside class="contacto-aside">
-          <div class="contacto-aside__intro">
-            <h2 class="contacto-aside__title">
-              Sin presión ni <em>guiones.</em>
-            </h2>
-            <p>
-              Me gusta empezar con una conversación tranquila para entender
-              bien qué necesitas. No tienes que tenerlo todo claro ni preparado.
-              Solo cuéntame en qué punto estás y hacia dónde quieres ir.
-            </p>
+    <!-- ══════════════════════════════════════
+         SERVICIOS NUMERADOS
+    ══════════════════════════════════════ -->
+    <section class="tmc-servicios" id="servicios" aria-labelledby="servicios-heading">
+      <div class="tmc-servicios__inner">
+
+        <div class="tmc-servicios__header">
+          <p class="section-num">Servicios</p>
+          <h2 class="tmc-servicios__title" id="servicios-heading">
+            ¿Qué estás<br>
+            <em>buscando?</em>
+          </h2>
+        </div>
+
+        <!-- Tabs de navegación (desktop) / acordeón (mobile) -->
+        <nav class="tmc-tabs" role="tablist" aria-label="Servicios disponibles">
+          {servicios.map((s, i) => (
+            <button
+              class={`tmc-tab${i === 0 ? ' is-active' : ''}`}
+              role="tab"
+              aria-selected={i === 0 ? 'true' : 'false'}
+              aria-controls={`panel-${i}`}
+              id={`tab-${i}`}
+              data-index={i}
+              data-hash={`servicio-${i}`}
+            >
+              <span class="tmc-tab__num">{s.num}</span>
+              <span class="tmc-tab__label">{s.tag}</span>
+            </button>
+          ))}
+        </nav>
+
+        <!-- Paneles de contenido -->
+        {servicios.map((s, i) => (
+          <div
+            class={`tmc-panel${i === 0 ? ' is-active' : ''}`}
+            role="tabpanel"
+            id={`panel-${i}`}
+            aria-labelledby={`tab-${i}`}
+            hidden={i !== 0}
+          >
+            <div class="tmc-panel__layout">
+
+              <!-- Columna info -->
+              <div class="tmc-panel__info">
+                <p class="tmc-panel__bajada">{s.bajada}</p>
+                <p class="tmc-panel__desc">{s.descripcion}</p>
+
+                <div class="tmc-panel__entregables">
+                  <p class="tmc-panel__ent-label">Qué incluye:</p>
+                  <ul role="list">
+                    {s.entregables.map((e) => (
+                      <li>
+                        <span class="tmc-panel__ent-dot" aria-hidden="true">—</span>
+                        {e}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Columna CTA + precio -->
+              <div class="tmc-panel__cta-col">
+                <div class="tmc-panel__precio-card">
+                  <p class="tmc-panel__titulo">{s.titulo}</p>
+                  <p class="tmc-panel__precio">{s.precio}</p>
+                  <a href={s.href} class="tmc-panel__btn">
+                    {s.cta}
+                    <span aria-hidden="true"> ↗</span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
           </div>
+        ))}
 
-          <div class="contacto-aside__sep" aria-hidden="true"></div>
+      </div>
+    </section>
 
-          <div class="contacto-aside__direct">
-            <p class="contacto-aside__direct-label">¿Prefieres algo rápido?</p>
-            <p>Puedes escribirme directamente a:</p>
+    <!-- ══════════════════════════════════════
+         TESTIMONIOS
+    ══════════════════════════════════════ -->
+    <section class="tmc-testis" aria-labelledby="testis-heading">
+      <div class="tmc-testis__inner">
+
+        <p class="section-num-light">Clientes</p>
+
+        <div class="tmc-testis__grid">
+          {testimonios.map((t) => (
+            <article class="tmc-testi-card">
+              <blockquote class="tmc-testi-card__quote">
+                <p>"{t.cita}"</p>
+              </blockquote>
+              <footer class="tmc-testi-card__footer">
+                <span class="tmc-testi-card__nombre">{t.nombre}</span>
+                <span class="tmc-testi-card__empresa">{t.empresa}</span>
+              </footer>
+            </article>
+          ))}
+        </div>
+
+      </div>
+
+      <p class="tmc-testis__ghost" aria-hidden="true">AF</p>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         FORMULARIO DE CONTACTO
+    ══════════════════════════════════════ -->
+    <section class="tmc-form-sec" id="contacto" aria-labelledby="form-heading">
+      <div class="tmc-form-sec__inner">
+
+        <!-- Cabecera de sección -->
+        <div class="tmc-form-sec__header">
+          <p class="section-num">Empecemos</p>
+          <h2 class="tmc-form-sec__title" id="form-heading">
+            Cuéntame tu proyecto
+          </h2>
+          <p class="tmc-form-sec__sub">
+            ¿Lista para dar el paso? Rellena el formulario y cuéntame en qué
+            punto estás. Sin presión ni guiones preparados.
+          </p>
+          <p class="tmc-form-sec__email-alt">
+            O escríbeme directamente a{' '}
             <a
               href="mailto:andreafusiondigital@gmail.com"
-              class="contacto-aside__email"
+              class="tmc-form-sec__email-link"
               aria-label="Enviar email a Andrea"
             >
               andreafusiondigital@gmail.com
             </a>
+          </p>
+
+          <div class="tmc-form-sec__avail">
+            <span class="tmc-form-sec__dot" aria-hidden="true"></span>
+            <p>Available worldwide · Based in Spain</p>
           </div>
+        </div>
 
-          <div class="contacto-aside__avail">
-            <span class="contacto-aside__dot" aria-hidden="true"></span>
-            <p>Available worldwide. Based in Spain.</p>
-          </div>
-        </aside>
-
-        <!-- Columna derecha: formulario -->
-        <section class="contacto-form-wrap" aria-labelledby="form-heading">
-          <h2 class="contacto-form-wrap__heading" id="form-heading">
-            Envíame un mensaje
-          </h2>
-
+        <!-- Formulario -->
+        <div class="tmc-form-wrap">
           <form
-            class="contacto-form"
+            class="tmc-form"
             action={`https://formspree.io/f/${FORMSPREE_ID}`}
             method="POST"
             novalidate
-            id="contact-form"
+            id="tmc-contact-form"
           >
-            <div class="form-field">
-              <label class="form-label" for="nombre">Nombre</label>
-              <input
-                class="form-input"
-                type="text"
-                id="nombre"
-                name="nombre"
-                autocomplete="given-name"
-                required
-                placeholder="Tu nombre"
-              />
+            <div class="form-row">
+              <div class="form-field">
+                <label class="form-label" for="nombre">Nombre</label>
+                <input
+                  class="form-input"
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  autocomplete="given-name"
+                  required
+                  placeholder="Tu nombre"
+                />
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="email">Email</label>
+                <input
+                  class="form-input"
+                  type="email"
+                  id="email"
+                  name="email"
+                  autocomplete="email"
+                  required
+                  placeholder="tu@email.com"
+                />
+              </div>
             </div>
 
             <div class="form-field">
-              <label class="form-label" for="email">Email</label>
-              <input
-                class="form-input"
-                type="email"
-                id="email"
-                name="email"
-                autocomplete="email"
-                required
-                placeholder="tu@email.com"
-              />
+              <label class="form-label" for="servicio">¿Qué servicio te interesa?</label>
+              <select class="form-input form-input--select" id="servicio" name="servicio">
+                <option value="">Selecciona un servicio…</option>
+                <option value="auditoria">Auditoría de marca / web</option>
+                <option value="landing">Landing page estratégica</option>
+                <option value="web">Web a medida</option>
+                <option value="otro">Aún no lo tengo claro</option>
+              </select>
             </div>
 
             <div class="form-field">
-              <label class="form-label" for="proyecto">
-                Tu proyecto en pocas palabras
-              </label>
+              <label class="form-label" for="proyecto">Tu proyecto en pocas palabras</label>
               <input
                 class="form-input"
                 type="text"
                 id="proyecto"
                 name="proyecto"
                 required
-                placeholder="Ej: Landing para mi servicio de coaching"
+                placeholder="Ej: Quiero rediseñar mi web de coaching"
               />
             </div>
 
             <div class="form-field">
               <label class="form-label" for="mensaje">
-                ¿Qué te gustaría crear ahora?
+                ¿En qué punto estás y hacia dónde quieres ir?
               </label>
               <textarea
                 class="form-input form-input--textarea"
@@ -132,426 +378,849 @@ const FORMSPREE_ID = 'xykdondo';
                 name="mensaje"
                 rows="5"
                 required
-                placeholder="Cuéntame en qué punto estás y hacia dónde quieres ir. Sin presión."
+                placeholder="Cuéntame qué está pasando con tu marca o web ahora mismo y qué te gustaría cambiar. Sin presión."
               ></textarea>
             </div>
 
-            <!-- Anti-spam honeypot -->
+            <!-- Anti-spam -->
             <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-            <!-- Redirect tras envío -->
-            <input type="hidden" name="_next" value="/contacto?enviado=true" />
+            <input type="hidden" name="_next" value="/trabaja-conmigo?enviado=true" />
 
             <div class="form-footer">
               <button class="form-submit" type="submit" id="form-submit">
-                <span class="form-submit__text">Enviar mensaje</span>
+                <span class="form-submit__text">Enviar solicitud</span>
                 <span class="form-submit__icon" aria-hidden="true">↗</span>
               </button>
               <p class="form-note">Respondo normalmente en 24–48h.</p>
             </div>
           </form>
 
-          <!-- Estado: enviado correctamente -->
           <div class="form-success" id="form-success" aria-live="polite" hidden>
             <span class="form-success__icon" aria-hidden="true">✓</span>
-            <h3>¡Mensaje enviado!</h3>
+            <h3>¡Solicitud enviada!</h3>
             <p>Gracias por escribirme. Te respondo en 24–48h.</p>
           </div>
-        </section>
+        </div>
 
       </div>
-    </div>
+    </section>
 
   </main>
 </BaseLayout>
 
 <script>
-  // Mostrar estado "enviado" si viene de redirect de Formspree
-  if (window.location.search.includes('enviado=true')) {
-    const form    = document.getElementById('contact-form');
-    const success = document.getElementById('form-success');
-    if (form)    form.setAttribute('hidden', '');
-    if (success) success.removeAttribute('hidden');
-  }
+// ── Formspree: estado enviado ──
+if (window.location.search.includes('enviado=true')) {
+  const form    = document.getElementById('tmc-contact-form');
+  const success = document.getElementById('form-success');
+  if (form)    form.setAttribute('hidden', '');
+  if (success) success.removeAttribute('hidden');
+}
 
-  // Feedback visual en el botón al enviar
-  const form = document.getElementById('contact-form') as HTMLFormElement | null;
-  const btn  = document.getElementById('form-submit')  as HTMLButtonElement | null;
+// ── Feedback visual en el botón ──
+const form = document.getElementById('tmc-contact-form') as HTMLFormElement | null;
+const btn  = document.getElementById('form-submit') as HTMLButtonElement | null;
+form?.addEventListener('submit', () => {
+  if (!btn) return;
+  btn.disabled = true;
+  const txt = btn.querySelector('.form-submit__text');
+  if (txt) txt.textContent = 'Enviando…';
+});
 
-  form?.addEventListener('submit', () => {
-    if (!btn) return;
-    btn.disabled = true;
-    const txt = btn.querySelector('.form-submit__text');
-    if (txt) txt.textContent = 'Enviando…';
+// ── Lógica de tabs ──
+const tabs   = document.querySelectorAll<HTMLButtonElement>('.tmc-tab');
+const panels = document.querySelectorAll<HTMLElement>('.tmc-panel');
+
+function activateTab(idx: number) {
+  tabs.forEach((t, i) => {
+    const active = i === idx;
+    t.classList.toggle('is-active', active);
+    t.setAttribute('aria-selected', active ? 'true' : 'false');
   });
+  panels.forEach((p, i) => {
+    const active = i === idx;
+    p.classList.toggle('is-active', active);
+    active ? p.removeAttribute('hidden') : p.setAttribute('hidden', '');
+  });
+}
+
+// Clicks en tabs
+tabs.forEach((tab) => {
+  tab.addEventListener('click', () => {
+    activateTab(Number(tab.dataset.index));
+  });
+});
+
+// ── Activación por hash en la URL ──
+// Los links de /links usan #servicio-0, #servicio-1, #servicio-2
+function activateFromHash() {
+  const hash = window.location.hash.replace('#', ''); // ej: "servicio-1"
+  const matchedTab = Array.from(tabs).find(t => t.dataset.hash === hash);
+  if (matchedTab) {
+    const idx = Number(matchedTab.dataset.index);
+    activateTab(idx);
+    // Scroll suave hasta la sección de servicios
+    setTimeout(() => {
+      document.getElementById('servicios')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 80);
+  }
+}
+
+// Al cargar la página (por si viene con hash desde /links)
+activateFromHash();
+// Al cambiar el hash sin recargar (navegación interna)
+window.addEventListener('hashchange', activateFromHash);
 </script>
 
 <style>
-  .contacto-page {
-    padding-top: 80px;
-    background: #fff;
-  }
+/* ══════════════════════════════════
+   BASE
+══════════════════════════════════ */
+.tmc-page {
+  padding-top: 80px;
+}
 
-  /* ══════════════════════════════════
-     HERO
-  ══════════════════════════════════ */
-  .contacto-hero {
-    position: relative;
-    background: var(--color-bg-hero);
-    overflow: hidden;
-    padding: 4rem 1.5rem 5rem;
-  }
+/* ══════════════════════════════════
+   HERO
+══════════════════════════════════ */
+.tmc-hero {
+  position: relative;
+  background: var(--color-bg-hero);
+  overflow: hidden;
+  padding: 4rem 1.5rem 5rem;
+}
 
-  .contacto-hero__inner {
-    position: relative;
-    z-index: 2;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
+.tmc-hero__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
 
-  .contacto-hero__title {
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: clamp(3rem, 10vw, 8rem);
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-    color: var(--color-text-hero);
-  }
+.tmc-hero__title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.8rem, 9vw, 7.5rem);
+  line-height: 0.97;
+  letter-spacing: -0.035em;
+  color: var(--color-text-hero);
+}
 
-  .contacto-hero__title em {
-    display: block;
-    font-style: italic;
-    color: var(--color-accent-lime);
-  }
+.tmc-hero__title em {
+  display: block;
+  font-style: italic;
+}
 
-  .contacto-hero__sub {
-    font-family: var(--font-body);
-    font-size: clamp(1rem, 2.2vw, 1.1rem);
-    line-height: 1.75;
-    color: rgba(245, 238, 230, 0.68);
-    max-width: 48ch;
-  }
+.tmc-hero__title .em-lime {
+  color: var(--color-accent-lime);
+}
 
-  .contacto-hero__deco {
-    position: absolute;
-    bottom: -6rem;
-    right: -6rem;
-    width: clamp(280px, 55vw, 500px);
-    height: clamp(280px, 55vw, 500px);
-    border-radius: 50%;
-    background: radial-gradient(
-      circle,
-      rgba(200, 241, 53, 0.09) 0%,
-      rgba(245, 184, 208, 0.07) 50%,
-      transparent 70%
-    );
-    pointer-events: none;
-    z-index: 1;
-  }
+.tmc-hero__sub {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2.2vw, 1.12rem);
+  line-height: 1.75;
+  color: rgba(245, 238, 230, 0.68);
+  max-width: 50ch;
+}
 
-  @media (min-width: 768px) {
-    .contacto-hero { padding: 6rem 4rem 7rem; }
-  }
+.tmc-hero__cta {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 0.9em 2.4em;
+  background: var(--color-accent-lime);
+  color: var(--color-text-dark);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: var(--radius-btn);
+  box-shadow: var(--shadow-btn);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
 
-  /* ══════════════════════════════════
-     CUERPO
-  ══════════════════════════════════ */
-  .contacto-body {
-    background: #fff;
-    border-radius: var(--radius-card) var(--radius-card) 0 0;
-    box-shadow: var(--shadow-card);
-    margin-top: -2rem;
-    position: relative;
-    z-index: 2;
-  }
+.tmc-hero__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(200, 241, 53, 0.45);
+}
 
-  .contacto-body__inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 4rem 1.5rem 6rem;
-    display: flex;
-    flex-direction: column;
+.tmc-hero__deco {
+  position: absolute;
+  bottom: -6rem;
+  right: -6rem;
+  width: clamp(260px, 55vw, 480px);
+  height: clamp(260px, 55vw, 480px);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(200, 241, 53, 0.09) 0%,
+    rgba(245, 184, 208, 0.07) 50%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .tmc-hero { padding: 6rem 4rem 7rem; }
+}
+
+/* ══════════════════════════════════
+   MARQUEE
+══════════════════════════════════ */
+.tmc-marquee {
+  background: var(--color-accent-lime);
+  overflow: hidden;
+  padding: 0.85rem 0;
+  white-space: nowrap;
+}
+
+.tmc-marquee__track {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  animation: marquee 28s linear infinite;
+  will-change: transform;
+}
+
+.tmc-marquee__track span {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text-dark);
+  flex-shrink: 0;
+}
+
+.tmc-marquee__sep {
+  opacity: 0.5;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tmc-marquee__track { animation: none; }
+}
+
+/* ══════════════════════════════════
+   SERVICIOS
+══════════════════════════════════ */
+.tmc-servicios {
+  background: var(--color-bg-light);
+  border-radius: 0;
+}
+
+.tmc-servicios__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.tmc-servicios__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tmc-servicios__title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--color-text-dark);
+}
+
+.tmc-servicios__title em {
+  font-style: italic;
+  color: var(--color-text-mid);
+}
+
+/* ── Tabs de navegación ── */
+.tmc-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.tmc-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7em 1.4em;
+  border: 1.5px solid rgba(90, 58, 122, 0.2);
+  border-radius: var(--radius-btn);
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+  font-family: var(--font-body);
+  color: var(--color-text-mid);
+}
+
+.tmc-tab:hover {
+  border-color: var(--color-text-mid);
+}
+
+.tmc-tab.is-active {
+  background: var(--color-bg-hero);
+  border-color: var(--color-bg-hero);
+  color: var(--color-accent-lime);
+}
+
+.tmc-tab__num {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+}
+
+.tmc-tab.is-active .tmc-tab__num {
+  opacity: 0.8;
+}
+
+.tmc-tab__label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* ── Panel ── */
+.tmc-panel {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.tmc-panel.is-active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.tmc-panel__layout {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* Info */
+.tmc-panel__info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.tmc-panel__bajada {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent-pink);
+  /* pink sobre fondo claro */
+  color: var(--color-text-mid);
+  opacity: 0.8;
+}
+
+.tmc-panel__desc {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2.2vw, 1.08rem);
+  line-height: 1.8;
+  color: var(--color-text-mid);
+  max-width: 62ch;
+}
+
+/* Entregables */
+.tmc-panel__entregables {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tmc-panel__ent-label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text-mid);
+}
+
+.tmc-panel__entregables ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.tmc-panel__entregables li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  line-height: 1.55;
+  color: var(--color-text-dark);
+}
+
+.tmc-panel__ent-dot {
+  color: var(--color-accent-lime);
+  font-weight: 700;
+  flex-shrink: 0;
+  /* lime sobre fondo claro → usamos color dark con acento */
+  color: var(--color-text-mid);
+}
+
+/* CTA card */
+.tmc-panel__cta-col {
+  align-self: flex-start;
+  width: 100%;
+}
+
+.tmc-panel__precio-card {
+  background: var(--color-bg-hero);
+  border-radius: 2rem;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  color: var(--color-text-hero);
+}
+
+.tmc-panel__titulo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.3rem, 3vw, 1.75rem);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.tmc-panel__precio {
+  font-family: var(--font-body);
+  font-size: clamp(1.6rem, 5vw, 2.5rem);
+  font-weight: 700;
+  color: var(--color-accent-lime);
+  letter-spacing: -0.02em;
+}
+
+.tmc-panel__btn {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 0.9em 2.2em;
+  background: var(--color-accent-lime);
+  color: var(--color-text-dark);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: var(--radius-btn);
+  box-shadow: var(--shadow-btn);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.tmc-panel__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(200, 241, 53, 0.5);
+}
+
+@media (min-width: 768px) {
+  .tmc-servicios__inner { padding: 7rem 4rem 8rem; }
+
+  .tmc-panel__layout {
+    display: grid;
+    grid-template-columns: 1fr 360px;
     gap: 4rem;
+    align-items: start;
   }
 
-  @media (min-width: 768px) {
-    .contacto-body__inner {
-      padding: 6rem 4rem 8rem;
-      display: grid;
-      grid-template-columns: 1fr 1.6fr;
-      gap: 5rem;
-      align-items: start;
-    }
+  .tmc-panel__cta-col {
+    width: auto;
+    position: sticky;
+    top: 100px;
+  }
+}
+
+/* ══════════════════════════════════
+   TESTIMONIOS
+══════════════════════════════════ */
+.tmc-testis {
+  position: relative;
+  background: var(--color-bg-hero);
+  overflow: hidden;
+}
+
+.tmc-testis__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.tmc-testis__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.tmc-testi-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(245, 238, 230, 0.1);
+  border-radius: 1.75rem;
+  padding: 2rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  transition: background 0.2s ease;
+}
+
+.tmc-testi-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.tmc-testi-card__quote p {
+  font-family: var(--font-script);
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  line-height: 1.55;
+  color: var(--color-text-hero);
+}
+
+.tmc-testi-card__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.tmc-testi-card__nombre {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-accent-lime);
+}
+
+.tmc-testi-card__empresa {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-style: italic;
+  color: rgba(245, 238, 230, 0.45);
+  letter-spacing: 0.03em;
+}
+
+/* Texto fantasma de fondo */
+.tmc-testis__ghost {
+  position: absolute;
+  bottom: -3rem;
+  right: -2rem;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(10rem, 32vw, 26rem);
+  line-height: 0.85;
+  color: rgba(245, 238, 230, 0.03);
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.05em;
+  z-index: 1;
+}
+
+@media (min-width: 600px) {
+  .tmc-testis__grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 768px) {
+  .tmc-testis__inner { padding: 7rem 4rem 8rem; }
+  .tmc-testis__grid  { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ══════════════════════════════════
+   FORMULARIO
+══════════════════════════════════ */
+.tmc-form-sec {
+  background: #fff;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  box-shadow: var(--shadow-card);
+  margin-top: -2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.tmc-form-sec__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+/* Header del formulario */
+.tmc-form-sec__header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 56ch;
+}
+
+.tmc-form-sec__title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--color-text-dark);
+}
+
+.tmc-form-sec__sub {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2.2vw, 1.08rem);
+  line-height: 1.75;
+  color: var(--color-text-mid);
+}
+
+.tmc-form-sec__email-alt {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--color-text-mid);
+}
+
+.tmc-form-sec__email-link {
+  font-weight: 700;
+  color: var(--color-text-dark);
+  border-bottom: 2px solid var(--color-accent-lime);
+  padding-bottom: 1px;
+  transition: color 0.2s ease;
+}
+
+.tmc-form-sec__email-link:hover {
+  color: var(--color-text-mid);
+}
+
+/* Disponibilidad */
+.tmc-form-sec__avail {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
+}
+
+.tmc-form-sec__dot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent-lime);
+  flex-shrink: 0;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200, 241, 53, 0.5); }
+  50%       { box-shadow: 0 0 0 6px rgba(200, 241, 53, 0); }
+}
+
+.tmc-form-sec__avail p {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--color-text-mid);
+  letter-spacing: 0.03em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tmc-form-sec__dot { animation: none; }
+}
+
+/* ── Formulario en sí ── */
+.tmc-form-wrap {
+  width: 100%;
+}
+
+.tmc-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 600px) {
+  .form-row {
+    flex-direction: row;
+    gap: 1.25rem;
+  }
+  .form-row .form-field { flex: 1; }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-mid);
+}
+
+.form-input {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-text-dark);
+  background: var(--color-bg-light);
+  border: 1.5px solid transparent;
+  border-radius: 0.875rem;
+  padding: 0.9em 1.2em;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.form-input::placeholder { color: rgba(90, 58, 122, 0.4); }
+
+.form-input:focus {
+  border-color: var(--color-text-mid);
+  box-shadow: 0 0 0 3px rgba(200, 241, 53, 0.2);
+}
+
+.form-input:user-invalid { border-color: rgba(245, 184, 208, 0.8); }
+
+.form-input--textarea {
+  resize: vertical;
+  min-height: 150px;
+  line-height: 1.65;
+}
+
+.form-input--select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235a3a7a' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+/* Footer del form */
+.form-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.form-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.95em 2.4em;
+  background: var(--color-bg-hero);
+  color: var(--color-accent-lime);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-radius: var(--radius-btn);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+
+.form-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(61, 26, 92, 0.25);
+}
+
+.form-submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.form-submit__icon {
+  font-size: 1.1em;
+  transition: transform 0.2s ease;
+}
+
+.form-submit:hover .form-submit__icon {
+  transform: translate(2px, -2px);
+}
+
+.form-note {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--color-text-mid);
+  letter-spacing: 0.03em;
+  opacity: 0.7;
+}
+
+/* Estado enviado */
+.form-success[hidden] { display: none !important; }
+
+.form-success {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 2rem;
+  background: var(--color-bg-light);
+  border-radius: 1.5rem;
+  border-left: 4px solid var(--color-accent-lime);
+}
+
+.form-success__icon {
+  font-size: 2rem;
+  color: var(--color-accent-lime);
+  line-height: 1;
+}
+
+.form-success h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--color-text-dark);
+}
+
+.form-success p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-text-mid);
+  line-height: 1.65;
+}
+
+/* Layout desktop: 2 columnas */
+@media (min-width: 768px) {
+  .tmc-form-sec__inner {
+    padding: 7rem 4rem 9rem;
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 5rem;
+    align-items: start;
   }
 
-  /* ══════════════════════════════════
-     ASIDE IZQUIERDO
-  ══════════════════════════════════ */
-  .contacto-aside {
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
+  .tmc-form-sec__header {
+    position: sticky;
+    top: 100px;
+    max-width: none;
   }
-
-  .contacto-aside__title {
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    color: var(--color-text-dark);
-    margin-bottom: 0.75rem;
-  }
-
-  .contacto-aside__title em {
-    font-style: italic;
-    color: var(--color-text-mid);
-  }
-
-  .contacto-aside__intro p {
-    font-family: var(--font-body);
-    font-size: clamp(0.95rem, 2vw, 1.05rem);
-    line-height: 1.75;
-    color: var(--color-text-mid);
-  }
-
-  .contacto-aside__sep {
-    width: 3rem;
-    height: 2px;
-    background: var(--color-accent-lime);
-    border-radius: 9999px;
-  }
-
-  .contacto-aside__direct {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-
-  .contacto-aside__direct-label {
-    font-family: var(--font-body);
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-accent-pink);
-  }
-
-  .contacto-aside__direct p {
-    font-family: var(--font-body);
-    font-size: 0.9rem;
-    color: var(--color-text-mid);
-  }
-
-  .contacto-aside__email {
-    font-family: var(--font-body);
-    font-size: clamp(0.85rem, 2vw, 1rem);
-    font-weight: 700;
-    color: var(--color-text-dark);
-    border-bottom: 2px solid var(--color-accent-lime);
-    padding-bottom: 2px;
-    word-break: break-all;
-    transition: color 0.2s ease;
-  }
-
-  .contacto-aside__email:hover {
-    color: var(--color-text-mid);
-  }
-
-  .contacto-aside__avail {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-  }
-
-  .contacto-aside__dot {
-    display: block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--color-accent-lime);
-    flex-shrink: 0;
-    animation: pulse 2.4s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 0   rgba(200, 241, 53, 0.5); }
-    50%       { box-shadow: 0 0 0 6px rgba(200, 241, 53, 0);   }
-  }
-
-  .contacto-aside__avail p {
-    font-family: var(--font-body);
-    font-size: 0.82rem;
-    font-style: italic;
-    color: var(--color-text-mid);
-    letter-spacing: 0.03em;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .contacto-aside__dot { animation: none; }
-  }
-
-  /* ══════════════════════════════════
-     FORMULARIO
-  ══════════════════════════════════ */
-  .contacto-form-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .contacto-form-wrap__heading {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
-    color: var(--color-text-dark);
-    letter-spacing: -0.01em;
-  }
-
-  .contacto-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .form-field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .form-label {
-    font-family: var(--font-body);
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-text-mid);
-  }
-
-  .form-input {
-    font-family: var(--font-body);
-    font-size: 1rem;
-    color: var(--color-text-dark);
-    background: var(--color-bg-light);
-    border: 1.5px solid transparent;
-    border-radius: 0.875rem;
-    padding: 0.9em 1.2em;
-    width: 100%;
-    outline: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    appearance: none;
-    -webkit-appearance: none;
-  }
-
-  .form-input::placeholder {
-    color: rgba(90, 58, 122, 0.4);
-  }
-
-  .form-input:focus {
-    border-color: var(--color-text-mid);
-    box-shadow: 0 0 0 3px rgba(200, 241, 53, 0.2);
-  }
-
-  .form-input:user-invalid {
-    border-color: rgba(245, 184, 208, 0.8);
-  }
-
-  .form-input--textarea {
-    resize: vertical;
-    min-height: 140px;
-    line-height: 1.65;
-  }
-
-  .form-footer {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    align-items: flex-start;
-  }
-
-  .form-submit {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.95em 2.4em;
-    background: var(--color-bg-hero);
-    color: var(--color-accent-lime);
-    font-family: var(--font-body);
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    border-radius: var(--radius-btn);
-    border: none;
-    cursor: pointer;
-    transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
-  }
-
-  .form-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(61, 26, 92, 0.25);
-  }
-
-  .form-submit:disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-    transform: none;
-  }
-
-  .form-submit__icon {
-    font-size: 1.1em;
-    transition: transform 0.2s ease;
-  }
-
-  .form-submit:hover .form-submit__icon {
-    transform: translate(2px, -2px);
-  }
-
-  .form-note {
-    font-family: var(--font-body);
-    font-size: 0.78rem;
-    font-style: italic;
-    color: var(--color-text-mid);
-    letter-spacing: 0.03em;
-    opacity: 0.7;
-  }
-
-  /*
-    FIX: El atributo HTML `hidden` puede quedar sobreescrito por CSS scoped
-    de Astro. Esta regla lo garantiza explícitamente.
-  */
-  .form-success[hidden] { display: none !important; }
-
-  .form-success {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
-    padding: 2rem;
-    background: var(--color-bg-light);
-    border-radius: 1.5rem;
-    border-left: 4px solid var(--color-accent-lime);
-  }
-
-  .form-success__icon {
-    font-size: 2rem;
-    color: var(--color-accent-lime);
-    line-height: 1;
-  }
-
-  .form-success h3 {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: var(--color-text-dark);
-  }
-
-  .form-success p {
-    font-family: var(--font-body);
-    font-size: 1rem;
-    color: var(--color-text-mid);
-    line-height: 1.65;
-  }
+}
 </style>
