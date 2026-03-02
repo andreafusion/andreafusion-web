@@ -36,7 +36,7 @@ const STEPS = [
   <div class="method__inner">
 
     <!-- Eyebrow -->
-    <p class="method__eyebrow" aria-hidden="true">02 · Mi método</p>
+    <p class="method__eyebrow kicker muted" aria-hidden="true">02 · Mi método</p>
 
     <!-- Titular editorial -->
     <header class="method__header">
@@ -45,7 +45,7 @@ const STEPS = [
         <em>la historia.</em><br>
         Luego te programo la web.
       </h2>
-      <p class="method__subtitle">
+      <p class="method__subtitle lead">
         Porque "bonita" no sirve si confunde.<br>
         Yo hago que se entienda y que pase algo.
       </p>
@@ -144,7 +144,7 @@ const STEPS = [
   .method__title {
     font-family: var(--font-display);
     font-weight: 900;
-    font-size: clamp(2rem, 6vw, 4.5rem);
+    font-size: var(--text-h1);
     line-height: 1.05;
     letter-spacing: -0.02em;
     color: var(--color-text-dark);
@@ -154,7 +154,7 @@ const STEPS = [
     font-style: italic;
     font-family: var(--font-script);
     color: var(--color-accent-lime);
-    font-weight: 600;
+    font-weight: 400;
   }
 
   .method__subtitle {
@@ -224,7 +224,7 @@ const STEPS = [
     font-style: italic;
     font-family: var(--font-script);
     color: var(--color-accent-lime);
-    font-weight: 600;
+    font-weight: 400;
   }
 
   .method__step-text {

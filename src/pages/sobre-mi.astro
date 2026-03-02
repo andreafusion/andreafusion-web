@@ -15,7 +15,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <header class="sobre-hero">
       <div class="sobre-hero__inner">
 
-        <p class="section-num">Sobre mí</p>
+        <p class="section-num kicker">Sobre mí</p>
 
         <div class="sobre-hero__layout">
 
@@ -24,7 +24,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               Creo webs que se entienden
               <em>en 5 segundos.</em>
             </h1>
-            <p class="sobre-hero__sub">
+            <p class="sobre-hero__sub lead">
               Soy Andrea, frontend creativa. Desarrollo, estructuro y diseño webs 
               con un objetivo muy poco romántico y muy efectivo:
               que te encuentren, te entiendan y te escriban.
@@ -77,7 +77,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
 
         <div class="sobre-editorial__col-right">
-          <p>
+          <p class="lead">
             Vamos con lo que importa: la mayoría entra a tu web con la atención de un pez con wifi.<br>
             Si no pillan lo que haces y por qué tú en 5 segundos, adiós.
           </p>
@@ -101,7 +101,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <section class="sobre-filosofia" aria-labelledby="sobre-filo">
       <div class="sobre-filosofia__inner">
 
-        <p class="section-num-light">Filosofía</p>
+        <p class="section-num-light kicker">Filosofía</p>
 
         <h2 class="sobre-filosofia__title" id="sobre-filo">
           Código con intención,<br>
@@ -132,7 +132,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <section class="sobre-diffs" aria-labelledby="sobre-diferencia">
       <div class="sobre-diffs__inner">
 
-        <p class="section-num">Cómo trabajo</p>
+        <p class="section-num kicker">Cómo trabajo</p>
 
         <h2 class="sobre-diffs__title" id="sobre-diferencia">
           Podemos <em>encajar...</em><br>o no.
@@ -161,7 +161,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <section class="sobre-cierre">
       <div class="sobre-cierre__inner">
         <blockquote class="sobre-cierre__quote">
-          Si quieres una web con perseonalidad, rápida y pensada para convertir, me caes bien.
+          Si quieres una web con perseonalidad, rápida y pensada para convertir, me caes bien.<br>
           Si quieres "algo cuqui" para enseñarlo y ya... mejor nos ahorramos el sufrimiento.
         </blockquote>
         <a href="/contacto" class="sobre-cierre__btn">
@@ -214,7 +214,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .sobre-hero__title {
     font-family: var(--font-display);
     font-weight: 900;
-    font-size: clamp(2.4rem, 7vw, 5.5rem);
+    font-size: var(--text-h1);
     line-height: 1.0;
     letter-spacing: -0.025em;
     color: var(--color-text-hero);
@@ -224,6 +224,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     display: block;
     font-style: italic;
     color: var(--color-accent-lime);
+    font-weight: 400;
   }
 
   .sobre-hero__sub {
@@ -368,7 +369,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .sobre-editorial__title {
     font-family: var(--font-display);
     font-weight: 900;
-    font-size: clamp(2rem, 5.5vw, 4.5rem);
+    font-size: var(--text-h1);
     line-height: 1.05;
     letter-spacing: -0.02em;
     color: var(--color-text-dark);
@@ -377,6 +378,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .sobre-editorial__title em {
     font-style: italic;
     color: var(--color-text-mid);
+    font-weight: 400;
   }
 
   .sobre-editorial__col-right {
@@ -426,7 +428,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .sobre-filosofia__title {
     font-family: var(--font-display);
     font-weight: 900;
-    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    font-size: var(--text-h1);
     line-height: 1.05;
     letter-spacing: -0.02em;
     color: var(--color-text-hero);
@@ -436,6 +438,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .sobre-filosofia__title em {
     font-style: italic;
     color: var(--color-accent-lime);
+    font-weight: 400;
   }
 
   .sobre-filosofia__body {
@@ -490,7 +493,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .sobre-diffs__title {
     font-family: var(--font-display);
     font-weight: 900;
-    font-size: clamp(2rem, 5vw, 3.8rem);
+    font-size: var(--text-h1);
     line-height: 1.05;
     letter-spacing: -0.02em;
     color: var(--color-text-dark);
@@ -500,6 +503,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .sobre-diffs__title em {
     font-style: italic;
     color: var(--color-text-mid);
+    font-weight: 400;
   }
 
   .sobre-diffs__list {
@@ -565,7 +569,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .sobre-cierre__quote {
     font-family: var(--font-script);
-    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    font-size: var(--text-h3);
     font-style: italic;
     line-height: 1.5;
     color: var(--color-text-dark);
