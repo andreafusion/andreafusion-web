@@ -3,47 +3,47 @@
 ---
 
 <span class="rw-wrapper" aria-live="polite" aria-atomic="true">
-  <span class="rw-text" id="rotating-word"></span><span class="rw-cursor" aria-hidden="true">|</span>
+  <span class="rw-text" id="rotating-word"></span>
 </span>
 
 <script>
   const WORDS = [
-    'te entienda',
-    'te recuerde',
-    'se divierta',
-    'confíe',
-    'te escriba',
-    'reserve',
-    'compre',
+    "te entienda",
+    "te recuerde",
+    "se divierta",
+    "confíe",
+    "te escriba",
+    "reserve",
+    "compre"
   ];
 
-  const TYPE_MS   = 80;   // ms por carácter al escribir
-  const DELETE_MS = 45;   // ms por carácter al borrar (más rápido)
-  const PAUSE_MS  = 1800; // ms que permanece la palabra completa
-  const START_MS  = 900;  // pausa antes de empezar a escribir la primera
+  const TYPE_MS = 80; // ms por carácter al escribir
+  const DELETE_MS = 45; // ms por carácter al borrar (más rápido)
+  const PAUSE_MS = 1800; // ms que permanece la palabra completa
+  const START_MS = 900; // pausa antes de empezar a escribir la primera
 
-  const el = document.getElementById('rotating-word') as HTMLElement;
-  if (!el) throw new Error('rotating-word not found');
+  const el = document.getElementById("rotating-word") as HTMLElement;
+  if (!el) throw new Error("rotating-word not found");
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    el.textContent = WORDS[0] ?? '';
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    el.textContent = WORDS[0] ?? "";
   } else {
     let wordIndex = 0;
     let charIndex = 0;
-    type State = 'typing' | 'pausing' | 'deleting' | 'waiting';
-    let state: State = 'waiting';
+    type State = "typing" | "pausing" | "deleting" | "waiting";
+    let state: State = "waiting";
 
     const tick = () => {
-      const word = WORDS[wordIndex] ?? '';
+      const word = WORDS[wordIndex] ?? "";
 
-      if (state === 'waiting') {
+      if (state === "waiting") {
         // Pausa inicial antes de escribir la primera palabra
-        state = 'typing';
+        state = "typing";
         setTimeout(tick, START_MS);
         return;
       }
 
-      if (state === 'typing') {
+      if (state === "typing") {
         charIndex++;
         el.textContent = word.slice(0, charIndex);
 
@@ -52,19 +52,19 @@
           setTimeout(tick, TYPE_MS + (Math.random() * 40 - 20));
         } else {
           // Palabra completa — pausa antes de borrar
-          state = 'pausing';
+          state = "pausing";
           setTimeout(tick, PAUSE_MS);
         }
         return;
       }
 
-      if (state === 'pausing') {
-        state = 'deleting';
+      if (state === "pausing") {
+        state = "deleting";
         tick();
         return;
       }
 
-      if (state === 'deleting') {
+      if (state === "deleting") {
         charIndex--;
         el.textContent = word.slice(0, charIndex);
 
@@ -73,7 +73,7 @@
         } else {
           // Borrado completo — siguiente palabra
           wordIndex = (wordIndex + 1) % WORDS.length;
-          state = 'typing';
+          state = "typing";
           setTimeout(tick, 180); // pequeña pausa entre palabras
         }
         return;
@@ -88,12 +88,10 @@
   .rw-wrapper {
     display: inline-flex;
     align-items: baseline;
-    gap: 0;
     height: 1.1em;
     min-width: 14ch;
     vertical-align: bottom;
     position: relative;
-    /* Sin overflow:hidden para que el cursor no se corte */
   }
 
   .rw-text {
@@ -106,26 +104,32 @@
     color: var(--color-accent-lime);
     white-space: nowrap;
   }
-
-  /* Cursor parpadeante */
-  .rw-cursor {
+  /* Cursor por CSS, no aparece en el HTML */
+  .rw-wrapper::after {
+    content: "";
     display: inline-block;
-    font-family: var(--font-body);
-    font-style: normal;
-    font-weight: 300;
-    font-size: 0.85em;
-    color: var(--color-accent-lime);
-    opacity: 1;
+    border-right: 2px solid currentColor;
+    height: 0.9em;
     margin-left: 2px;
+    transform: translateY(0.08em);
+    color: var(--color-accent-lime);
     animation: blink 0.9s step-end infinite;
   }
 
   @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0; }
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .rw-cursor { animation: none; opacity: 1; }
+    .rw-wrapper::after {
+      animation: none;
+      opacity: 1;
+    }
   }
 </style>

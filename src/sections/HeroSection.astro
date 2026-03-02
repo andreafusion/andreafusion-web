@@ -13,10 +13,13 @@ import Stickers from '../components/Stickers.astro';
       <p class="hero__eyebrow">Frontend creativa</p>
 
       <h1 class="hero__headline">
-        <span class="hero__line">CREO</span>
-        <span class="hero__line">WEBS QUE HACEN</span>
-        <span class="hero__line">QUE LA GENTE</span>
-        <span class="hero__line hero__line--rotating">
+        <span class="sr-only">Desarrollo webs que hacen que la gente actúe</span>
+
+        <span class="hero__line" aria-hidden="true">DESARROLLO</span>
+        <span class="hero__line" aria-hidden="true">WEBS QUE HACEN</span>
+        <span class="hero__line" aria-hidden="true">QUE LA GENTE</span>
+
+        <span class="hero__line hero__line--rotating" aria-hidden="true">
           <RotatingWord />
         </span>
       </h1>
@@ -46,6 +49,7 @@ import Stickers from '../components/Stickers.astro';
     loading="eager"
     decoding="async"
     draggable="false"
+    fetchpriority="high"
   />
 
   <div class="hero__scroll-hint" aria-hidden="true">

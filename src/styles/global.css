@@ -24,7 +24,7 @@
 
   /* ── Colores de acento ── */
   --color-accent-lime: #c8f135; /* Verde lima — el color que "vive" */
-  --color-accent-pink: #f58f2f; /* Rosa suave */
+  --color-accent-pink: #f58f2f; /* Naranja suave */
 
   /* ── Colores de texto ── */
   --color-text-hero: #f5eee6; /* Crema */
@@ -188,7 +188,7 @@ h3 {
   background-image: var(--grain-svg);
   background-repeat: repeat;
   background-size: 256px 256px;
-  opacity: 0.035; /* muy sutil en móvil */
+  opacity: 0.065; /* muy sutil en móvil */
   pointer-events: none;
   z-index: 0;
 
@@ -202,17 +202,17 @@ h3 {
 /* En fondos oscuros (uva) el grain se percibe menos,
    subimos ligeramente la opacidad */
 .has-grain.grain-dark::before {
-  opacity: 0.055;
+  opacity: 0.075;
 }
 
 /* Desktop: el grano puede ser un poco más visible */
 @media (min-width: 768px) {
   .has-grain::before {
-    opacity: 0.045;
+    opacity: 0.1;
   }
 
   .has-grain.grain-dark::before {
-    opacity: 0.07;
+    opacity: 0.1;
   }
 }
 
