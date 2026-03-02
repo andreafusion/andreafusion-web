@@ -21,34 +21,39 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
           <div class="sobre-hero__text">
             <h1 class="sobre-hero__title">
-              Creo webs que se sienten
-              <em>tan bien como se ven.</em>
+              Creo webs que se entienden
+              <em>en 5 segundos.</em>
             </h1>
             <p class="sobre-hero__sub">
-              Soy Andrea, diseñadora y desarrolladora web enfocada en
-              crear páginas ligeras, claras y con intención.<br>
-              Trabajo especialmente con marcas personales y proyectos
-              creativos que quieren algo diferente a lo de siempre.
+              Soy Andrea, frontend creativa. Desarrollo, estructuro y diseño webs 
+              con un objetivo muy poco romántico y muy efectivo:
+              que te encuentren, te entiendan y te escriban.
+            </p>
+            <p class="sobre-hero__sub">
+              Olvídate de "hazme algo moderno" y cruzar los dedos. Yo constuyo estrategia, jerarquía y 
+              un scroll que no te deja el pulgar roto.
             </p>
             <a href="/contacto" class="sobre-hero__cta">
-              Trabajemos juntos
+              Trabaja conmigo
             </a>
           </div>
 
           <div class="sobre-hero__photo-wrap" aria-hidden="true">
             <div class="sobre-hero__photo">
-              <!--
-                SUSTITUIR por:
-                <img src="/img/andrea.webp" alt="Andrea, diseñadora y desarrolladora web" width="380" height="507" />
-              -->
+              <img
+                src="/andrea.webp"
+                alt="Andrea, desarrolladora frontend creativa"
+                loading="lazy"
+                decoding="async"
+              />
               <div class="sobre-hero__photo-placeholder">
                 <span>AF</span>
               </div>
             </div>
             <div class="sobre-hero__photo-badge">
-              <span>Diseño</span>
-              <span class="badge-sep" aria-hidden="true">+</span>
-              <span>Código</span>
+              <span>Frontend</span>
+              <span class="badge-sep" aria-hidden="true">·</span>
+              <span>Creativa</span>
             </div>
           </div>
 
@@ -66,23 +71,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <div class="sobre-editorial__col-left">
           <h2 class="sobre-editorial__title" id="sobre-historia">
-            Mi forma de diseñar<br>
-            <em>empieza por escuchar.</em>
+            Primero ordenamos el mensaje<br>
+            <em>luego ya nos ponemos guapos.</em>
           </h2>
         </div>
 
         <div class="sobre-editorial__col-right">
           <p>
-            Siempre me ha interesado entender qué hay detrás de una marca
-            antes de empezar a diseñar. No creo en webs llenas de ruido o
-            efectos sin sentido. Prefiero crear experiencias que respiren,
-            que guíen y que hagan que quien entra entienda quién eres
-            sin esfuerzo.
+            Vamos con lo que importa: la mayoría entra a tu web con la atención de un pez con wifi.<br>
+            Si no pillan lo que haces y por qué tú en 5 segundos, adiós.
           </p>
           <p>
-            Mi trabajo mezcla diseño editorial, desarrollo web y sensibilidad
-            estética. No separo lo visual de lo técnico, porque para mí una
-            buena web funciona desde dentro hacia fuera.
+            Así que yo empiezo por lo que casi nadie quiere hacer: pensar.<br>
+            Mensaje, jerarquía, secciones, recorrido, CTAs. El guión, vaya.
+          </p>
+          <p>
+            Entonces sí: frontend fino. Limpio, rápido y responsive de verdad. con detalles que suman.
+            <br>Porque poner animaciones a una web que no se entiende es como echarte perfume y no ducharte.
+            Se nota... pero no arregla nada.
           </p>
         </div>
 
@@ -98,21 +104,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p class="section-num-light">Filosofía</p>
 
         <h2 class="sobre-filosofia__title" id="sobre-filo">
-          Diseño con intención,<br>
-          <em>desarrollo con calma.</em>
+          Código con intención,<br>
+          <em>diseño con sentido.</em>
         </h2>
 
         <div class="sobre-filosofia__body">
           <p>
-            Cada proyecto es diferente, pero todos comparten algo: busco
-            claridad antes que tendencia, estructura antes que exceso y
-            personalidad antes que plantillas genéricas.
+            No creo webs para hacer bulto. Creo webs para ganar: en claridad,
+            en velocidad, en confianza y en Google.<br>
+            Me gustan las marcas que se atreven y los proyectos que quieren dejar de pasar
+            desapercibidos.
           </p>
           <p>
-            Trabajo mucho desde el detalle. Desde cómo entra una sección al
-            hacer scroll hasta cómo se siente el ritmo de la página en móvil.
-            Porque hoy la primera impresión casi siempre empieza en una
-            pantalla pequeña.
+            Mobile-first, estructura sólida, SEO desde la base y copywriting con intención. <br>
+            Porque Google no regala nada, y tu usuario tampoco.
           </p>
         </div>
 
@@ -130,15 +135,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p class="section-num">Cómo trabajo</p>
 
         <h2 class="sobre-diffs__title" id="sobre-diferencia">
-          Por qué <em>encajamos</em> o no encajamos.
+          Podemos <em>encajar...</em><br>o no.
         </h2>
 
         <ul class="sobre-diffs__list" role="list">
           {[
-            'Diseño y desarrollo yo misma cada web, sin delegar el código.',
-            'Pienso primero en la experiencia móvil.',
-            'Busco equilibrio entre estética y funcionalidad real.',
-            'Prefiero webs ligeras que duren años antes que modas pasajeras.',
+            'Desarrollo y diseño yo. No hay "equipo" fantasma ni entregas raras. Te llevas tu web y la entiendes.',
+            'Rendimiento primero. Si tarda en cargar, ya has perdido. Yo no negocio con eso.',
+            'SEO y conversión integrados. Estructura, jerarquía, intención de búsqueda y CTAs con sentido.',
+            'Diseño con criterio. Animaciones sí, pero cno propósito. Efectos "porque queda guay", no.',
           ].map((item) => (
             <li class="sobre-diffs__item">
               <span class="sobre-diffs__dash" aria-hidden="true">—</span>
@@ -156,8 +161,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <section class="sobre-cierre">
       <div class="sobre-cierre__inner">
         <blockquote class="sobre-cierre__quote">
-          Si buscas una web que represente quién eres de verdad y que
-          funcione sin complicarte la vida, probablemente encajemos bien.
+          Si quieres una web con perseonalidad, rápida y pensada para convertir, me caes bien.
+          Si quieres "algo cuqui" para enseñarlo y ya... mejor nos ahorramos el sufrimiento.
         </blockquote>
         <a href="/contacto" class="sobre-cierre__btn">
           Trabajemos juntos
