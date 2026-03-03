@@ -6,12 +6,13 @@
 
 <section class="manifiesto has-grain" id="manifiesto">
   <div class="manifiesto__inner">
-
     <p class="section-num" aria-hidden="true">01</p>
 
     <h2 class="manifiesto__title">
       <span class="manifiesto__title-thin">El problema no es tu web.</span>
-      <em class="manifiesto__title-heavy">Es que la gente se aburre cuando entra.</em>
+      <em class="manifiesto__title-heavy"
+        >Es que la gente se aburre cuando entra.</em
+      >
     </h2>
 
     <!--
@@ -19,102 +20,81 @@
       Envueltos en un contenedor para que en el grid de 2 columnas
       ocupen la misma celda y la foto quede naturalmente bajo el texto.
     -->
-    <div class="manifiesto__right">
-
-      <div class="manifiesto__body">
-        <p>
-          Tu web puede ser muy aesthetic.<br>
-          Si suena como todas, el usuario entra, bosteza... y adiós muy buenas.
-        </p>
-        <p>
-          No es que esté mal. Es que promete "wow" y luego es "meh".<br>
-          Maquillaje impecable... y brócoli en los dientes.
-        </p>
-        <p>
-          Yo programo para que la gente lo pille en 5 segundos y actúe sin pensarlo.<br>
-          Rápida, móvil perfecto, cero dramas.          
-        </p>
-        <p>
-          Sí, diseño. Pero lo que vendo es otra cosa:<br>
-          una experiencia que se siente fácil. Y por eso convierte.
-        </p>
-        <p>
-          Lo bonito atrae. Lo claro cierra. El código lo sostiene.<br>
-          Si uno falla, se nota.
-        </p>
-      </div>
-
-      <!--
-        FOTO STICKER — solo desktop (≥1024px).
-        Oculta en móvil/tablet: aparece en HeroSection.
-        mix-blend-mode: multiply elimina el fondo negro del PNG
-        sobre el fondo claro del manifiesto.
-      -->
-      <div class="manifiesto__photo-wrap" aria-hidden="true">
-        <img
-          src="/andrea-fusion.webp"
-          alt="Andrea, diseñadora y desarrolladora web"
-          class="manifiesto__photo"
-          width="280"
-          height="380"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-
+    <div class="manifiesto__body">
+      <p>
+        Tu web puede ser muy aesthetic.<br />
+        Si suena como todas, el usuario entra, bosteza... y adiós muy buenas.
+      </p>
+      <p>
+        No es que esté mal. Es que promete "wow" y luego es "meh".<br />
+        Maquillaje impecable... y brócoli en los dientes.
+      </p>
+      <p>
+        Yo programo para que la gente lo pille en 5 segundos y actúe sin
+        pensarlo.<br />
+        Rápida, móvil perfecto, cero dramas.
+      </p>
+      <p>
+        Sí, diseño. Pero lo que vendo es otra cosa:<br />
+        una experiencia que se siente fácil. Y por eso convierte.
+      </p>
+      <p>
+        Lo bonito atrae. Lo claro cierra. El código lo sostiene.<br />
+        Si uno falla, se nota.
+      </p>
     </div>
 
-    <!--
-      QUOTE REACTIVA AL SCROLL
-      Cada palabra se ilumina en lima según el progreso de scroll.
-    -->
     <blockquote class="manifiesto__quote" id="manifiesto-quote">
-      <p style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Diseño primero para móvil, porque hoy ahí empieza todo.</p>
+      <p
+        style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;"
+      >
+        Diseño primero para móvil, porque hoy ahí empieza todo.
+      </p>
       <span class="manifiesto__quote-bar" aria-hidden="true"></span>
       <span class="manifiesto__quote-text" aria-hidden="true">
         Mobile-first siempre. La primera impresión casi nunca ocurre en un escritorio.
       </span>
     </blockquote>
-
   </div>
 
   <!-- Decoración: círculo de acento lima -->
   <div class="manifiesto__circle" aria-hidden="true"></div>
-
 </section>
 
 <script>
   // ── QUOTE REACTIVA: split por palabras ──
-  const quoteEl = document.querySelector<HTMLElement>('.manifiesto__quote-text');
+  const quoteEl = document.querySelector<HTMLElement>(
+    ".manifiesto__quote-text"
+  );
   if (quoteEl) {
-    const text = quoteEl.textContent?.trim() ?? '';
-    const words = text.split(' ');
+    const text = quoteEl.textContent?.trim() ?? "";
+    const words = text.split(" ");
 
     quoteEl.innerHTML = words
-      .map(w => `<span class="q-word">${w}</span>`)
-      .join(' ');
+      .map((w) => `<span class="q-word">${w}</span>`)
+      .join(" ");
 
-    const wordEls = quoteEl.querySelectorAll<HTMLElement>('.q-word');
+    const wordEls = quoteEl.querySelectorAll<HTMLElement>(".q-word");
     const total = wordEls.length;
 
     const update = () => {
-      const section = document.getElementById('manifiesto');
+      const section = document.getElementById("manifiesto");
       if (!section) return;
 
       const rect = section.getBoundingClientRect();
       const vh = window.innerHeight;
 
       const start = vh * 0.7;
-      const end   = vh * 0.2;
-      const raw   = (start - rect.top) / (start - end);
+      const end = vh * 0.2;
+      const raw = (start - rect.top) / (start - end);
       const progress = Math.min(Math.max(raw, 0), 1);
 
       const activeCount = Math.round(progress * total);
       wordEls.forEach((w, i) => {
         if (i < activeCount) {
-          w.classList.add('is-lit');
+          w.classList.add("is-lit");
         } else {
-          w.classList.remove('is-lit');
+          w.classList.remove("is-lit");
         }
       });
     };
@@ -123,14 +103,17 @@
     const onScroll = () => {
       if (ticking) return;
       ticking = true;
-      requestAnimationFrame(() => { update(); ticking = false; });
+      requestAnimationFrame(() => {
+        update();
+        ticking = false;
+      });
     };
 
-    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     update();
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      wordEls.forEach(w => w.classList.add('is-lit'));
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      wordEls.forEach((w) => w.classList.add("is-lit"));
     }
   }
 </script>
@@ -159,80 +142,68 @@
   .manifiesto__title {
     display: flex;
     flex-direction: column;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: var(--text-h1);
-    line-height: 1.0;
-    letter-spacing: -0.02em;
-    color: var(--color-text-dark);
     gap: 0;
+
+    /* TÍTULO */
+    font-family: var(--font-display);          /* Anton */
+    font-weight: 400;
+    font-size: var(--text-h2-pxl);             /* 40px */
+    line-height: var(--lh-h2-pxl);             /* 48px */
+    letter-spacing: normal;
+    text-transform: uppercase;
+
+    color: var(--color-text-dark);
   }
 
   .manifiesto__title-thin {
-    font-weight: 400;
+    font-weight: 400; /* Anton solo */
+    font-style: normal;
+    color: var(--color-text-dark);
   }
 
   .manifiesto__title-heavy,
   .manifiesto__title em {
+    /* SUBTÍTULO */
+    font-family: var(--font-script);           /* Playfair Display */
     font-style: italic;
-    font-weight: 700;
+    font-weight: 400;
+    font-size: var(--text-subtitle-pxl);       /* 22px */
+    line-height: var(--lh-subtitle-pxl);       /* 26.4px */
+    text-transform: none;
+    letter-spacing: normal;
+
     color: var(--color-text-mid);
-    margin-top: 0.15em;
+    margin-top: 0.35rem;
   }
 
-  /* ── Columna derecha: body + foto ── */
-  .manifiesto__right {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
+
 
   /* ── Cuerpo de texto ── */
   .manifiesto__body {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    max-width: 60ch;
+    width: 100%;
+    max-width: none;
   }
 
   .manifiesto__body p {
-    font-family: var(--font-body);
-    font-size: clamp(1rem, 2.2vw, 1.15rem);
-    line-height: 1.75;
+    font-family: var(--font-body);             /* Lato */
+    font-size: var(--text-body-pxl);           /* 17px */
+    line-height: var(--lh-body-pxl);           /* 21px */
+    font-weight: 400;
     color: var(--color-text-mid);
   }
+ 
 
-  /* ── Foto sticker — solo desktop ── */
-  .manifiesto__photo-wrap {
-    /* Oculta en móvil: la foto vive en HeroSection */
-    display: none;
-  }
-
-  .manifiesto__photo {
-    /* ✅ Sin borde blanco: mix-blend-mode multiply elimina
-       el fondo negro del PNG sobre el fondo claro */
-    mix-blend-mode: multiply;
-
-    /* Tamaño generoso en desktop — más grande que antes */
-    width: clamp(260px, 26vw, 380px);
-    height: auto;
-    object-fit: contain;
-
-    /* Ligera inclinación de sticker */
-    transform: rotate(-3deg);
-
-    /* Anclada a la derecha del contenedor */
-    align-self: flex-end;
-
-    display: block;
-  }
 
   /* ── Quote reactiva ── */
   .manifiesto__quote {
     display: flex;
     align-items: flex-start;
     gap: 1.25rem;
-    max-width: 42ch;
+    max-width: none;
+    width: 100%;
     line-height: 1.3;
     margin: 0;
   }
@@ -250,8 +221,10 @@
 
   .manifiesto__quote-text {
     font-family: var(--font-script);
-    font-size: clamp(1.3rem, 3.5vw, 2rem);
+    font-size: var(--text-subtitle-pxl);
+    line-height: var(--lh-subtitle-pxl);
     font-style: italic;
+    font-weight: 400;
     color: var(--color-text-dark);
   }
 
@@ -287,56 +260,8 @@
   @media (min-width: 768px) {
     .manifiesto__inner {
       padding: 7rem 4rem;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto auto;
-      column-gap: 4rem;
     }
-
-    .section-num          { grid-column: 1 / -1; }
-    .manifiesto__title    { grid-column: 1; align-self: start; }
-    .manifiesto__right    { grid-column: ; padding-top: 0.5rem; }
-    .manifiesto__quote    { grid-column: 2; }
   }
 
-  @media (min-width: 1024px) {
-  /* Mostrar foto sticker en desktop */
-  .manifiesto__photo-wrap {
-    display: block;
-  }
 
-  /* En desktop: dentro de la columna derecha,
-     el body arriba ocupa 2 columnas, y abajo quote (izq) + foto (dcha) */
-  .manifiesto__right {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) clamp(260px, 26vw, 380px);
-    grid-template-rows: auto auto;
-    gap: 2rem 2.25rem;
-    align-items: end;
-  }
-
-  /* Body arriba ocupando todo el ancho de la columna derecha */
-  .manifiesto__body {
-    grid-column: 1 / -1;
-    max-width: none; /* para que no se estreche raro */
-  }
-
-  /* Quote abajo a la izquierda */
-  .manifiesto__quote {
-    grid-column: 1;
-    align-self: end;
-    max-width: 52ch;
-  }
-
-  /* Foto abajo a la derecha */
-  .manifiesto__photo-wrap {
-    grid-column: 2;
-    justify-self: end;
-    align-self: end;
-  }
-
-  .manifiesto__photo {
-    width: 100%;
-    align-self: auto; /* ya no hace falta */
-  }
-}
 </style>

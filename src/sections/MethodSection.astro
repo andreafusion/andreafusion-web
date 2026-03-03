@@ -146,20 +146,20 @@ const STEPS = [
     font-weight: 900;
     font-size: var(--text-h1);
     line-height: 1.05;
-    letter-spacing: -0.02em;
+    letter-spacing: normal;
     color: var(--color-text-dark);
   }
 
   .method__title em {
     font-style: italic;
-    font-family: var(--font-script);
+    font-family: var(--font-display);
     color: var(--color-accent-lime);
     font-weight: 400;
   }
 
   .method__subtitle {
     font-family: var(--font-body);
-    font-size: clamp(1rem, 2.2vw, 1.1rem);
+    font-size: var(text-subtitle);
     line-height: 1.7;
     color: var(--color-text-mid);
     max-width: 44ch;
@@ -205,7 +205,7 @@ const STEPS = [
     line-height: 1;
     color: var(--color-accent-pink);
     opacity: 0.40;
-    letter-spacing: -0.04em;
+    letter-spacing: normal;
     pointer-events: none;
     user-select: none;
   }
@@ -215,14 +215,14 @@ const STEPS = [
     font-size: clamp(1.6rem, 4.5vw, 3rem);
     font-weight: 900;
     line-height: 1.1;
-    letter-spacing: -0.02em;
+    letter-spacing: normal;
     color: var(--color-text-dark);
     margin-top: -0.45em; /* superponer sobre número decorativo */
   }
 
   .method__step-title em {
     font-style: italic;
-    font-family: var(--font-script);
+    font-family: var(--font-display);
     color: var(--color-accent-lime);
     font-weight: 400;
   }

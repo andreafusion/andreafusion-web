@@ -57,9 +57,8 @@ import RotatingWord from '../components/RotatingWord.astro';
 </section>
 
 <script>
-  // ── FOTO STICKER MÓVIL: reveal por scroll ──
+  // ── FOTO STICKER: reveal por scroll (móvil + desktop) ──
   // Misma lógica que Stickers.astro para total consistencia.
-  // Solo activo en móvil/tablet (<1024px).
 
   const photo = document.querySelector<HTMLElement>('.hero__photo');
   if (!photo) throw new Error('[HeroSection] hero__photo no encontrada');
@@ -71,8 +70,6 @@ import RotatingWord from '../components/RotatingWord.astro';
   photo.style.transform = 'translateY(80px) rotate(4deg)';
 
   const update = () => {
-    if (window.innerWidth >= 1024) return; // solo móvil/tablet
-
     const raw   = Math.min(Math.max(window.scrollY / REVEAL_END, 0), 1);
     // Easing ease-out quad (igual que Stickers.astro)
     const eased = 1 - Math.pow(1 - raw, 2);
@@ -82,10 +79,8 @@ import RotatingWord from '../components/RotatingWord.astro';
   };
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    if (window.innerWidth < 1024) {
-      photo.style.opacity   = '1';
-      photo.style.transform = 'translateY(0) rotate(4deg)';
-    }
+    photo.style.opacity   = '1';
+    photo.style.transform = 'translateY(0) rotate(4deg)';
   } else {
     let ticking = false;
     window.addEventListener('scroll', () => {
@@ -93,6 +88,7 @@ import RotatingWord from '../components/RotatingWord.astro';
       ticking = true;
       requestAnimationFrame(() => { update(); ticking = false; });
     }, { passive: true });
+
     update(); // estado inicial
   }
 </script>
@@ -154,8 +150,8 @@ import RotatingWord from '../components/RotatingWord.astro';
   /* ---- Eyebrow ---- */
   .hero__eyebrow {
     font-family: var(--font-body);
-    font-size: clamp(0.7rem, 2vw, 0.85rem);
-    font-weight: 500;
+    font-size: clamp(0.6rem, 1vw, 0.65rem);
+    font-weight: 400;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: #f58f2f;
@@ -171,10 +167,10 @@ import RotatingWord from '../components/RotatingWord.astro';
   .hero__line {
     display: block;
     font-family: var(--font-display);
-    font-weight: 900;
-    font-size: clamp(2.4rem, 10vw, 7.5rem);
+    font-weight: 400;
+    font-size: var(--font-display);
     line-height: 0.95;
-    letter-spacing: -0.02em;
+    letter-spacing: normal;
     color: var(--color-text-hero);
     opacity: 0;
     transform: translateY(30px);
@@ -190,6 +186,7 @@ import RotatingWord from '../components/RotatingWord.astro';
   .hero__line--rotating {
     min-height: 1.1em;
     overflow: visible;
+    font-size: var(--font-script);
   }
 
   @keyframes lineIn {
@@ -209,7 +206,7 @@ import RotatingWord from '../components/RotatingWord.astro';
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.9em 2.2em;
+    padding: 0.6em 1.9em;
     background-color: var(--color-accent-lime);
     color: var(--color-text-dark);
     font-family: var(--font-body);
@@ -240,7 +237,7 @@ import RotatingWord from '../components/RotatingWord.astro';
 
   .hero__microcopy {
     font-family: var(--font-body);
-    font-size: clamp(0.68rem, 1.8vw, 0.78rem);
+    font-size: clamp(0.60rem, 1.0vw, 0.70rem);
     font-style: italic;
     letter-spacing: 0.04em;
     color: rgba(245, 238, 230, 0.75);
@@ -251,11 +248,11 @@ import RotatingWord from '../components/RotatingWord.astro';
   .hero__photo {
     position: absolute;
     bottom: 18%;              /* anclada al borde inferior del hero */
-    right: -2%;               /* pegada al borde derecho */
+    right: 8%;               /* pegada al borde derecho */
     z-index: 20;             /* encima del contenido, por debajo del nav */
 
     /* Tamaño: grande y llamativo en móvil */
-    width: clamp(220px, 62vw, 340px);
+    width: clamp(225px, 67vw, 345px);
     height: auto;
     object-fit: contain;
     object-position: bottom center;
@@ -265,17 +262,9 @@ import RotatingWord from '../components/RotatingWord.astro';
     pointer-events: none;
     will-change: transform, opacity;
     /* transform y opacity gestionados por JS */
-
-    /* Visible solo en móvil/tablet */
-    display: block;
   }
 
-  /* Ocultar en desktop */
-  @media (min-width: 1024px) {
-    .hero__photo {
-      display: none;
-    }
-  }
+    
 
   /* En tablet, un poco más alejada del borde */
   @media (min-width: 768px) and (max-width: 1023px) {

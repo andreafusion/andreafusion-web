@@ -204,11 +204,12 @@
   }
 
   .servicios__title {
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: var(--text-h1);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
+    font-family: var(--font-display);      /* Anton */
+    font-weight: 400;
+    font-size: var(--text-h2-pxl);         /* 40px */
+    line-height: var(--lh-h2-pxl);         /* 48px */
+    letter-spacing: normal;
+    text-transform: uppercase;
     color: var(--color-text-mid);
   }
 
@@ -220,8 +221,11 @@
   }
 
   .servicios__sub {
-    font-family: var(--font-body);
-    font-size: clamp(0.95rem, 2vw, 1.05rem);
+    font-family: var(--font-script);
+    font-style: italic;
+    font-weight: 400;
+    font-size: var(--text-subtitle-pxl);
+    line-height: var(--lh-subtitle-pxl);
     color: var(--color-text-mid);
   }
 
@@ -344,7 +348,7 @@
   /* Título */
   .servicio-card__title {
     font-family: var(--font-display);
-    font-weight: 900;
+    font-weight: 400;
     font-size: clamp(1.4rem, 2.5vw, 1.9rem);
     line-height: 1.1;
     letter-spacing: -0.02em;
@@ -370,8 +374,9 @@
     background: transparent;
     color: var(--color-accent-pink);
     font-family: var(--font-body);
-    font-size: 0.85rem;
-    font-weight: 700;
+    font-size: var(--text-btn-pxl);
+    font-weight: 400;
+    line-height: var(--lh-btn-pxl);
     letter-spacing: 0.04em;
     border: 1.5px solid var(--color-accent-pink);
     border-radius: var(--radius-btn);
